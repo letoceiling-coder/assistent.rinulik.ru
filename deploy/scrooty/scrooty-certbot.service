@@ -1,0 +1,6 @@
+[Unit]
+Description=Renew only SCROOTY certificate
+After=docker.service
+[Service]
+Type=oneshot
+ExecStart=/bin/sh /opt/scrooty.ru/deploy/scrooty/renew-certificate.sh

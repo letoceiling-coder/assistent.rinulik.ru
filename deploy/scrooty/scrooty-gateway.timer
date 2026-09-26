@@ -1,0 +1,8 @@
+[Unit]
+Description=Keep isolated SCROOTY vhost installed
+[Timer]
+OnBootSec=20
+OnUnitActiveSec=30
+Unit=scrooty-gateway.service
+[Install]
+WantedBy=timers.target

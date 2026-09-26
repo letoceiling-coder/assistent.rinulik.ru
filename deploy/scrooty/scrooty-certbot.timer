@@ -1,0 +1,8 @@
+[Unit]
+Description=Check SCROOTY certificate renewal twice daily
+[Timer]
+OnCalendar=*-*-* 04,16:41:00
+RandomizedDelaySec=900
+Persistent=true
+[Install]
+WantedBy=timers.target

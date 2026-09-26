@@ -152,3 +152,15 @@ docker compose exec app php deploy/assign_models.php
 ## Лицензия
 
 Проект распространяется по лицензии MIT.
+
+## Ветка `scrooty` → https://scrooty.ru
+
+Отдельная копия платформы на том же сервере: `/opt/scrooty.ru/` (git-клон ветки `scrooty`), compose-проект `scrooty`, свои Postgres/Redis, внутренний порт `127.0.0.1:18743`, в общий шлюз `rinulik-nginx-1` добавлен только `conf.d/scrooty.conf`.
+
+Деплой (на сервере):
+
+```sh
+sh /opt/scrooty.ru/deploy/scrooty/deploy.sh
+```
+
+Файлы деплоя: `deploy/scrooty/`.

@@ -1,10 +1,10 @@
-name: assistent
+name: scrooty
 x-app: &app
   build:
     context: .
     dockerfile: deploy/Dockerfile
     target: app
-  image: assistent-app:local
+  image: scrooty-app:local
   env_file: .env
   restart: unless-stopped
   volumes:
@@ -54,18 +54,18 @@ services:
       context: .
       dockerfile: deploy/Dockerfile
       target: web
-    image: assistent-web:local
+    image: scrooty-web:local
     restart: unless-stopped
     depends_on: [app]
     networks:
       private: {}
-      gateway: {aliases: [assistent-web]}
-    ports: ['127.0.0.1:18742:80']
+      gateway: {aliases: [scrooty-web]}
+    ports: ['127.0.0.1:18743:80']
     mem_limit: 64m
 networks:
   private:
     ipam:
-      config: [{subnet: 172.30.48.0/24}]
+      config: [{subnet: 172.30.49.0/24}]
   gateway:
     external: true
     name: rinulik_default
