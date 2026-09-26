@@ -18,6 +18,13 @@ export const marketingRoutes = [
 export type MarketingRoute = (typeof marketingRoutes)[number];
 export type MarketingRouteId = MarketingRoute['id'];
 
+/** Path of a marketing route — use this instead of writing route URLs as strings in components. */
+export function routePath(id: MarketingRouteId): string {
+  const route = marketingRoutes.find(r => r.id === id);
+  if (!route) throw new Error(`Unknown marketing route: ${id}`);
+  return route.path;
+}
+
 /** Collapses trailing slashes so `/pricing/` and `/pricing` resolve to the same route. */
 function normalizePath(pathname: string): string {
   const trimmed = pathname.replace(/\/+$/, '');

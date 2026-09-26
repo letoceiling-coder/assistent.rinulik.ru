@@ -1,18 +1,15 @@
 import type {ReactNode} from 'react';
+import type {MarketingRouteId} from '../config/routes';
 import {Container} from '../components/Container';
+import {SiteHeader} from '../components/SiteHeader/SiteHeader';
 
-// Temporary structural shell for the marketing surface: skip link, header, main landmark, footer.
-// Header/footer are placeholders; the real SiteHeader and Footer come in later stages.
-export function MarketingShell({children}: {children: ReactNode}) {
+// Page frame for the marketing surface: skip link, SiteHeader, main landmark, footer.
+// The footer is still a placeholder until the Footer stage.
+export function MarketingShell({currentRouteId, children}: {currentRouteId: MarketingRouteId; children: ReactNode}) {
   return (
     <div className="mk-root">
       <a className="mk-skip-link" href="#main">Перейти к содержанию</a>
-      <header>
-        <Container className="mk-shell-bar">
-          <a href="/">Scrooty</a>
-          <a href="/login">Войти</a>
-        </Container>
-      </header>
+      <SiteHeader currentRouteId={currentRouteId}/>
       <main id="main" tabIndex={-1}>{children}</main>
       <footer>
         <Container className="mk-shell-bar">

@@ -13,7 +13,9 @@
 @import './typography.css';
 @import './layout.css';
 
-/* ---- Temporary marketing shell (placeholders until SiteHeader/Footer stages) ---- */
+/* ---- Marketing shell (footer placeholder until the Footer stage) ----
+ * Component styles live next to their components (e.g. components/SiteHeader/SiteHeader.css)
+ * and are bundled into the same marketing chunk. */
 
 .mk-root {
   min-height: 100vh;
@@ -36,12 +38,6 @@
   align-items: center;
   gap: var(--space-16);
   padding-block: var(--space-16);
-}
-
-.mk-shell-bar a {
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
 }
 
 .mk-dev-marker {

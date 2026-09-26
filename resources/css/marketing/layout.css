@@ -81,13 +81,13 @@
   padding: var(--space-12) var(--space-16);
   border-radius: var(--radius-sm);
   background: var(--color-bg-surface);
-  box-shadow: var(--shadow-card);
   font-size: var(--font-size-label);
   font-weight: var(--font-weight-ui);
 }
 
 .mk-skip-link:focus-visible {
   transform: none;
+  box-shadow: var(--shadow-card); /* only when visible, so no shadow peeks in while hidden */
 }
 
 .mk-visually-hidden {

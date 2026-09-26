@@ -7,7 +7,7 @@ import {SkeletonPage} from './pages/SkeletonPage';
 // Must not import anything from resources/js/product/.
 export function MarketingApp({route}: {route: MarketingRoute}) {
   return (
-    <MarketingShell>
+    <MarketingShell currentRouteId={route.id}>
       <SkeletonPage route={route}/>
     </MarketingShell>
   );

@@ -65,6 +65,7 @@
   --color-signal-mint: var(--accent-mint);
   --color-signal-peach: var(--accent-peach);
   --color-success: var(--success);
+  --color-overlay: rgba(21, 25, 34, 0.32); /* --text-primary at 32% — modal/drawer backdrop */
 
   /* Focus ring: action-hover orange keeps >= 3:1 against canvas, surface and surface-soft (1.4.11). */
   --color-focus-ring: var(--color-action-primary-hover);
@@ -75,6 +76,7 @@
   --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 
   --font-weight-body: 430;
+  --font-weight-nav: 500;
   --font-weight-ui: 600;
   --font-weight-h3: 600;
   --font-weight-h2: 620;
@@ -88,6 +90,9 @@
   --font-size-body-l: clamp(1.125rem, 1.0833rem + 0.1852vw, 1.25rem);      /* 18 -> 20 */
   --font-size-body: 1rem;                                                  /* 16 */
   --font-size-label: 0.8125rem;                                            /* 13 */
+  --font-size-ui: 0.9375rem;                                               /* 15 — nav links, md/lg buttons */
+  --font-size-ui-sm: 0.875rem;                                             /* 14 — sm buttons */
+  --font-size-wordmark: 1.375rem;                                          /* 22 — text wordmark until the SVG asset exists */
   --font-size-eyebrow: clamp(0.6875rem, 0.6667rem + 0.0926vw, 0.75rem);    /* 11 -> 12 */
 
   /* Mobile line-heights; desktop values are applied from 1024px below. */
@@ -121,6 +126,8 @@
   --grid-columns: 4;
   --grid-gap: 12px;
   --section-space: 72px;     /* mobile */
+  --header-height: 64px;     /* mobile; 72px from 768px (spec §10 Section 01) */
+  --z-header: 50;
 
   /* ---- Radii (spec §24) ---- */
   --radius-xl: 28px;
@@ -160,6 +167,7 @@
     --grid-columns: 8;
     --grid-gap: 16px;
     --section-space: 88px;
+    --header-height: 72px;
   }
 }
 
