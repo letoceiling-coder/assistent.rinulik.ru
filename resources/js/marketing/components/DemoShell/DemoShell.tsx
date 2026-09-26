@@ -1,100 +1,55 @@
-import {useEffect, useImperativeHandle, useRef, useState, type Ref} from 'react';
-import type {ChatMessageData, DemoScenario} from '../../demo/types';
-import {ChatInput} from '../ChatInput/ChatInput';
+import type {ReactNode, Ref} from 'react';
+import type {ChatMessageData} from '../../demo/types';
 import {ChatMessage} from '../ChatMessage/ChatMessage';
-import {SuggestionChip} from '../SuggestionChip/SuggestionChip';
 import './DemoShell.css';
 
-export type DemoShellHandle = {
-  /** Brings the composer into view and focuses it (hero primary CTA). */
-  focusInput: () => void;
-  /** Brings the conversation into view, focuses the region and marks it briefly (hero secondary CTA). */
-  reveal: () => void;
-};
-
-const ATTENTION_MS = 1200;
-
 /**
- * Product conversation surface.
- * Stage 04 renders it in `preview` mode: static sample messages, local-only input, no sending.
- * Stage 05 will add a live mode driven by the demo state machine; the shell stays presentational.
+ * Presentational conversation frame (bar, message list, footer slot).
+ * It holds no demo logic: marketing/demo/LiveDemo.tsx feeds it messages and renders the composer or a gate
+ * into `children`. `live` turns the message list into a polite live region for new answers.
  */
-export function DemoShell({ref, id, mode, messages, scenarios}: {
-  ref?: Ref<DemoShellHandle>;
+export function DemoShell({id, frameRef, label, badge, messages, live, typing, attention, children}: {
   id?: string;
-  mode: 'preview';
+  frameRef?: Ref<HTMLElement>;
+  label: string;
+  badge: string;
   messages: readonly ChatMessageData[];
-  scenarios: readonly DemoScenario[];
+  live: boolean;
+  typing?: boolean;
+  attention?: boolean;
+  children: ReactNode;
 }) {
-  const shellRef = useRef<HTMLElement>(null);
-  const inputRef = useRef<HTMLTextAreaElement>(null);
-  const attentionTimer = useRef<number | undefined>(undefined);
-  const [draft, setDraft] = useState('');
-  const [attention, setAttention] = useState(false);
-
-  useImperativeHandle(ref, () => ({
-    focusInput() {
-      // Scroll behaviour follows CSS (smooth unless reduced motion); scroll-padding keeps it below the sticky header.
-      shellRef.current?.scrollIntoView({block: 'nearest'});
-      inputRef.current?.focus({preventScroll: true});
-    },
-    reveal() {
-      shellRef.current?.scrollIntoView({block: 'nearest'});
-      shellRef.current?.focus({preventScroll: true});
-      window.clearTimeout(attentionTimer.current);
-      setAttention(true);
-      attentionTimer.current = window.setTimeout(() => setAttention(false), ATTENTION_MS);
-    },
-  }), []);
-
-  useEffect(() => () => window.clearTimeout(attentionTimer.current), []);
-
-  function applySuggestion(prompt: string) {
-    setDraft(prompt);
-    inputRef.current?.focus();
-  }
-
   return (
-    <section
-      ref={shellRef}
-      id={id}
-      className="mk-demo"
-      data-mode={mode}
-      data-attention={attention || undefined}
-      tabIndex={-1}
-      aria-label="Пример диалога со Scrooty"
-    >
+    <section ref={frameRef} id={id} className="mk-demo" data-attention={attention || undefined} tabIndex={-1} aria-label={label}>
       <div className="mk-demo__bar">
         <div className="mk-demo__identity">
           <span className="mk-demo__name">Scrooty</span>
           <span className="mk-demo__role">AI-менеджер</span>
         </div>
-        {mode === 'preview' && <span className="mk-demo__badge">Пример диалога</span>}
+        <span className="mk-demo__badge">{badge}</span>
       </div>
 
-      <ol role="list" className="mk-demo__messages" aria-label="Сообщения">
-        {messages.map(message => (
-          <ChatMessage key={message.id} author={message.author} text={message.text}/>
-        ))}
-      </ol>
-
-      <div className="mk-demo__composer">
-        <div className="mk-demo__suggestions" role="group" aria-label="Примеры вопросов">
-          {scenarios.map(scenario => (
-            <SuggestionChip key={scenario.id} onClick={() => applySuggestion(scenario.samplePrompt)}>
-              {scenario.label}
-            </SuggestionChip>
+      <div className="mk-demo__scroll">
+        <ol
+          role="list"
+          className="mk-demo__messages"
+          aria-label="Сообщения"
+          aria-live={live ? 'polite' : undefined}
+          aria-relevant={live ? 'additions' : undefined}
+        >
+          {messages.map(message => (
+            <ChatMessage key={message.id} author={message.author} text={message.text} note={message.note}/>
           ))}
-        </div>
-        {/* No onSubmit in preview mode: the send button stays disabled and nothing is sent. */}
-        <ChatInput
-          inputRef={inputRef}
-          value={draft}
-          onChange={setDraft}
-          label="Сообщение для Scrooty"
-          placeholder="Опишите свой бизнес или задайте вопрос"
-        />
+        </ol>
+        {typing && (
+          <p className="mk-demo__typing" role="status">
+            <span className="mk-demo__typing-dots" aria-hidden="true"><i/><i/><i/></span>
+            Scrooty формулирует ответ…
+          </p>
+        )}
       </div>
+
+      <div className="mk-demo__composer">{children}</div>
     </section>
   );
 }

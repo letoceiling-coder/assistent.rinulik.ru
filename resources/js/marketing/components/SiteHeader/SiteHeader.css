@@ -9,7 +9,8 @@
   position: sticky;
   top: 0;
   z-index: var(--z-header);
-  background-color: transparent;
+  /* Canvas colour (looks transparent on the ivory page) gives the logo's multiply blend a backdrop. */
+  background-color: var(--color-bg-page);
   /* Hairline + shadow are both box-shadows, so the scrolled state adds no layout (exact 64/72px height). */
   box-shadow: inset 0 -1px 0 transparent, 0 0 0 transparent;
   transition:
@@ -49,11 +50,12 @@
   text-decoration: none;
 }
 
-.mk-wordmark__text {
-  font-size: var(--font-size-wordmark);
-  font-weight: var(--font-weight-display);
-  letter-spacing: -0.02em;
-  line-height: 1;
+/* The approved logo raster has a light ivory background; multiply blends it into the canvas. */
+.mk-wordmark__img {
+  display: block;
+  width: auto;
+  height: var(--wordmark-height, 32px);
+  mix-blend-mode: multiply;
 }
 
 /* ---- Shared nav link look (desktop) ---- */

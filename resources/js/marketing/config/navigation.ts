@@ -25,6 +25,8 @@ export function anchorHref(key: HomeAnchorKey): string {
 /** Paths owned by the product app (served by existing Laravel routes). Not marketing routes. */
 export const productLinks = {
   login: '/login',
+  /** Existing registration route. `/signup` does not exist on the backend (docs/scrooty/frontend-backend-todo.md). */
+  register: '/register',
 } as const;
 
 export type NavLink = {

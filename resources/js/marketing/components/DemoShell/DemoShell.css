@@ -65,13 +65,105 @@
   line-height: var(--line-height-label);
 }
 
-.mk-demo__messages {
+.mk-demo__scroll {
   display: flex;
   flex: 1;
   flex-direction: column;
   justify-content: flex-end;
-  gap: var(--space-16);
+  min-height: 0;
   padding: var(--space-24) var(--space-20);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.mk-demo__messages {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+}
+
+.mk-demo__typing {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  margin-block-start: var(--space-16);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-ui-sm);
+}
+
+.mk-demo__typing-dots {
+  display: inline-flex;
+  gap: 3px;
+}
+
+.mk-demo__typing-dots i {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-pill);
+  background: var(--color-text-secondary);
+  opacity: 0.4;
+  animation: mk-typing 1s var(--ease-standard) infinite;
+}
+
+.mk-demo__typing-dots i:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.mk-demo__typing-dots i:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+/* Only visible while a reply is pending (well under a second); removed with the indicator. */
+@keyframes mk-typing {
+  50% {
+    opacity: 1;
+  }
+}
+
+.mk-demo__gate {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-12);
+}
+
+.mk-demo__gate-title {
+  font-size: var(--font-size-body-l);
+  font-weight: var(--font-weight-ui);
+  line-height: 1.35;
+}
+
+.mk-demo__gate-title:focus {
+  outline: none;
+}
+
+.mk-demo__gate-body {
+  color: var(--color-text-secondary);
+}
+
+.mk-demo__gate-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-8);
+  margin-block-start: var(--space-4);
+}
+
+.mk-demo__meta {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-label);
+  line-height: var(--line-height-label);
+}
+
+.mk-demo__alert {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-8) var(--space-12);
+  padding: var(--space-12) var(--space-16);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg-surface);
+  box-shadow: inset 0 0 0 1px var(--color-border-strong);
+  font-size: var(--font-size-ui-sm);
 }
 
 .mk-demo__composer {
@@ -101,9 +193,16 @@
     padding: var(--space-12) var(--space-16);
   }
 
+  .mk-demo__scroll {
+    padding: var(--space-20) var(--space-16);
+  }
+
   .mk-demo__messages {
     gap: var(--space-12);
-    padding: var(--space-20) var(--space-16);
+  }
+
+  .mk-demo__scroll {
+    max-height: 26rem;
   }
 
   .mk-demo__composer {

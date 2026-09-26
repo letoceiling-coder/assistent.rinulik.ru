@@ -1,9 +1,10 @@
-import {useRef} from 'react';
+import {track} from '../../analytics/track';
 import {Button} from '../../components/Button/Button';
 import {Container} from '../../components/Container';
-import {DemoShell, type DemoShellHandle} from '../../components/DemoShell/DemoShell';
 import {ctaLabels} from '../../config/cta';
-import {demoScenarios, sampleConversation} from '../../demo/sample';
+import {useDemo} from '../../demo/DemoProvider';
+import {LiveDemo} from '../../demo/LiveDemo';
+import mascotUrl from '../../../../images/marketing/scrooty-mascot.webp';
 import './Hero.css';
 
 /** Anchor target of the demo surface (spec destination `/#demo`). */
@@ -11,10 +12,10 @@ export const HERO_DEMO_ID = 'demo';
 
 /**
  * Homepage hero (spec §10 Section 02). Copy is exact approved copy.
- * Owns layout and CTA wiring only; the conversation surface is DemoShell.
+ * Owns layout and CTA wiring only; the conversation is the page's shared LiveDemo.
  */
 export function Hero() {
-  const demoRef = useRef<DemoShellHandle>(null);
+  const demo = useDemo();
 
   return (
     <section className="mk-hero" aria-labelledby="hero-title">
@@ -31,10 +32,25 @@ export function Hero() {
           </p>
           <div className="mk-hero__actions">
             {/* Action, not navigation: focuses the demo input without leaving the page. */}
-            <Button variant="primary" size="lg" onClick={() => demoRef.current?.focusInput()}>
+            <Button
+              variant="primary"
+              size="lg"
+              onClick={() => {
+                track('hero_cta_clicked', {cta_label: ctaLabels.tryFree});
+                track('hero_demo_focused', {source: 'hero_primary'});
+                demo.surface.current?.focusInput();
+              }}
+            >
               {ctaLabels.tryFree}
             </Button>
-            <Button variant="secondary" size="lg" onClick={() => demoRef.current?.reveal()}>
+            <Button
+              variant="secondary"
+              size="lg"
+              onClick={() => {
+                track('hero_demo_focused', {source: 'hero_secondary'});
+                demo.surface.current?.reveal();
+              }}
+            >
               Посмотреть, как отвечает
             </Button>
           </div>
@@ -45,13 +61,9 @@ export function Hero() {
         </div>
 
         <div className="mk-hero__visual">
-          <DemoShell
-            ref={demoRef}
-            id={HERO_DEMO_ID}
-            mode="preview"
-            messages={sampleConversation}
-            scenarios={demoScenarios}
-          />
+          {/* Approved mascot (decorative next to the product surface; never over input, CTA or messages). */}
+          <img className="mk-hero__mascot" src={mascotUrl} alt="" width={96} height={96} decoding="async" fetchPriority="low"/>
+          <LiveDemo id={HERO_DEMO_ID}/>
         </div>
       </Container>
     </section>

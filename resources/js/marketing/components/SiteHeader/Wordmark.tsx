@@ -1,13 +1,17 @@
 import {routePath} from '../../config/routes';
+import logoUrl from '../../../../images/marketing/scrooty-logo.webp';
+
+/** Intrinsic size of the optimized logo copy (332×96, cropped from the approved logo asset). */
+const LOGO_RATIO = 332 / 96;
 
 /**
- * Text wordmark on Inter until the approved SVG wordmark exists (spec §39 asset checklist).
- * Swap the inner <span> for the real asset here; header layout does not depend on it.
+ * Approved Scrooty logo linking home. Height is set by the caller via CSS (`--wordmark-height`);
+ * width/height attributes reserve space so the logo never shifts layout.
  */
-export function Wordmark({isCurrent, onNavigate}: {isCurrent: boolean; onNavigate?: () => void}) {
+export function Wordmark({isCurrent, onNavigate, height = 32}: {isCurrent: boolean; onNavigate?: () => void; height?: number}) {
   return (
     <a className="mk-wordmark" href={routePath('home')} aria-current={isCurrent ? 'page' : undefined} onClick={onNavigate}>
-      <span className="mk-wordmark__text">Scrooty</span>
+      <img className="mk-wordmark__img" src={logoUrl} alt="Scrooty" width={Math.round(height * LOGO_RATIO)} height={height} decoding="async"/>
     </a>
   );
 }

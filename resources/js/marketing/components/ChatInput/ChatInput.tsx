@@ -2,20 +2,20 @@ import {useId, type FormEvent, type KeyboardEvent, type Ref} from 'react';
 import './ChatInput.css';
 
 /**
- * Accessible chat composer (controlled). Sending is enabled only when the owner passes `onSubmit`.
- * Stage 04: the hero preview passes no handler, so the send button stays disabled and nothing is sent.
- * Stage 05 wires the live demo state here.
+ * Accessible chat composer (controlled). Sending is enabled only when the owner passes `onSubmit`
+ * and does not mark it `sendDisabled` (e.g. while an answer is pending).
  */
-export function ChatInput({inputRef, value, onChange, onSubmit, label, placeholder}: {
+export function ChatInput({inputRef, value, onChange, onSubmit, sendDisabled = false, label, placeholder}: {
   inputRef?: Ref<HTMLTextAreaElement>;
   value: string;
   onChange: (value: string) => void;
   onSubmit?: (text: string) => void;
+  sendDisabled?: boolean;
   label: string;
   placeholder?: string;
 }) {
   const id = useId();
-  const canSend = Boolean(onSubmit) && value.trim().length > 0;
+  const canSend = Boolean(onSubmit) && !sendDisabled && value.trim().length > 0;
 
   function submit(event?: FormEvent) {
     event?.preventDefault();
