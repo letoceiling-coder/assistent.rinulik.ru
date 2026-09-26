@@ -36,6 +36,8 @@ services:
     mem_limit: 192m
   app:
     <<: *app
+    networks:
+      private: {aliases: [scrooty-app]}
     mem_limit: 384m
   worker:
     <<: *app
