@@ -133,6 +133,55 @@ resources/css/app.css (~27 KB, 8 строк minified-стиля) — все ст
 **Не трогать (backend/infra):**
 `app/**`, `routes/**`, `config/**`, `database/**`, `bootstrap/**`, `lang/**`, `tests/**` (PHP), `composer.*`, `compose.yaml`, `deploy/**`, `.env*`, `artisan`, `phpunit.xml`, `public/index.php`, `public/.htaccess`.
 
+## 7a. Stage 01 — marketing/product boundary (реализовано)
+
+> Разделы 2–3 описывают состояние **до** Stage 01. Текущее состояние — здесь.
+
+```text
+app.blade.php  (не менялся: @vite(['resources/css/app.css','resources/js/app.tsx']))
+  └─ resources/js/app.tsx            ← bootstrap entry: единственный createRoot
+       ├─ surface.ts                 ← resolveSurface(location.pathname)
+       │    └─ marketing/config/routes.ts   (типизированный список marketing-путей)
+       ├─ html[data-surface="marketing"|"product"]
+       ├─ import('./marketing/MarketingApp')  → chunk MarketingApp-*.js + MarketingApp-*.css
+       │    ├─ marketing/layout/MarketingShell.tsx  (skip link, header/main/footer placeholders)
+       │    ├─ marketing/pages/SkeletonPage.tsx     (H1 "Scrooty" + dev marker)
+       │    └─ css/marketing/marketing.css          (mk-* классы, html[data-surface=marketing])
+       └─ import('./product/ProductApp')      → chunk ProductApp-*.js (+ lucide-react)
+            └─ бывший app.tsx, перенесён git mv; 3 строки изменены (убран createRoot, путь к ../api, export)
+resources/js/api.ts  — shared API-клиент, остался на месте (пока используется только product)
+```
+
+Правило выбора: marketing — только пути из `marketing/config/routes.ts` (`/`, `/pricing`, `/partners`, `/avito-ai`, `/telegram-ai`, `/max-ai`, `/site-ai`, `/integrations`, `/demo`, с нормализацией trailing slash). Всё остальное (`/login`, `/register`, `/reset-password/*`, `/app/*`, неизвестные пути) — product, поведение как до разделения.
+
+Изменение поведения: `/` теперь marketing и для анонима (раньше — логин), и для авторизованного (раньше — dashboard). Вход — `/login` (существующий backend route), кабинет — `/app/*`.
+
+Build после Stage 01: entry `app-*.js` 225.7 kB (gzip 70.4) = react + react-dom + bootstrap; `ProductApp-*.js` 88.7 kB (gzip 23.1); `MarketingApp-*.js` 0.8 kB + css 0.5 kB. Marketing-посетитель не грузит ProductApp/lucide.
+
+Остаток связности: `resources/css/app.css` (27 kB, Golos Text `@import`) по-прежнему подключается Blade на всех страницах, включая marketing. Marketing CSS нейтрализует его глобальные правила через `html[data-surface="marketing"]` и `mk-` префикс. Полностью убрать product CSS с marketing можно одной правкой Blade (`@vite(['resources/js/app.tsx'])` + `import '../../css/app.css'` в ProductApp + убрать css из `vite.config.js` input) — это серая зона (серверный шаблон), требует согласования.
+
+## 7b. SEO/SERVER ROUTING DEPENDENCY (blocker)
+
+**Факт:** Laravel catch-all (`routes/web.php`) отдаёт один и тот же `view('app')` с HTTP 200 для любого не-API пути: одинаковые `<title>`/description («ASSISTENT…»), пустой `<div id="root">`, нет canonical/OG/robots meta, нет 404 для неизвестных путей. Marketing-пути уже открываются прямой загрузкой, но только как client-rendered SPA.
+
+**Можно сделать frontend-only:**
+- клиентский `document.title` / meta description / canonical из `marketing/config/routes.ts` (видно JS-краулерам, не видно в initial HTML);
+- клиентский 404-экран для неизвестных marketing-путей (HTTP статус останется 200);
+- семантическая разметка, внутренние ссылки, `robots.txt`/`sitemap.xml` как статические файлы в `public/` (sitemap без server-side генерации).
+
+**Невозможно корректно без backend:**
+- meaningful initial HTML (SSR/prerender) на marketing-маршрутах (spec §32);
+- уникальные title/description/canonical/OG в HTML-ответе сервера;
+- `noindex` для auth-страниц в HTML/заголовках;
+- реальный HTTP 404 для неизвестных путей;
+- отдача пре-рендеренных `public/<route>/index.html`: nginx (`deploy/nginx.conf`) использует `index index.php` и `try_files $uri $uri/ /index.php`, поэтому статический html по такому пути не будет отдан без правки infra.
+
+**Минимальный backend contract (на будущее, отдельной задачей):**
+1. Laravel передаёт в шаблон route meta для текущего пути: `title`, `description`, `canonical` (absolute), `robots` (`index|noindex`), `og:image`; источник — общий конфиг, синхронизированный с `marketing/config/routes.ts` (например, JSON, генерируемый/читаемый обеими сторонами).
+2. Для marketing-путей — отдельный Blade layout с `@vite` только marketing entry и meaningful HTML (prerender-вывод или серверный фрагмент), для остальных — текущий `app.blade.php`.
+3. Неизвестные не-API пути вне product-префиксов (`/app/*`, `/login`, `/register`, `/reset-password/*`) → HTTP 404 с marketing 404-страницей.
+4. `sitemap.xml` из того же route-конфига; `noindex` для `/login`, `/register`, `/reset-password/*`, `/app/*`.
+
 ## 8. Risks / architectural debt (зафиксировано, не исправлялось)
 
 1. Монолитный `app.tsx` (69 KB, all-in-one state ~25 useState) — маркетинг нельзя встраивать внутрь `App`.
@@ -150,7 +199,7 @@ resources/css/app.css (~27 KB, 8 строк minified-стиля) — все ст
 ## 9. Recommended implementation path
 
 1. **Stage 1 — tokens/base CSS:** `resources/css/tokens.css`, `reset.css`, `typography.css`, `marketing.css` под Soft Signal Premium; Inter self-hosted (woff2 в `public/fonts` или через npm-пакет шрифта — согласовать). Не трогать `app.css`.
-2. **Stage 2 — разделение marketing/product без backend:**
+2. **Stage 2 — разделение marketing/product без backend** (выполнено как Stage 01, см. §7a):
    - Отдельный Vite entry `resources/js/marketing/main.tsx` + `resources/css/marketing.css`; `app.tsx` остаётся для `/app/*`, `/login`, `/register`, `/reset-password/*`.
    - Выбор entry: либо тонкий bootstrap-entry, который по `location.pathname` делает `import()` нужного приложения (чистый фронт, code-split, кабинетный CSS/JS не грузится на маркетинге), либо per-path `@vite` в Blade (серая зона). Рекомендую первый вариант как стартовый — не требует правок backend.
    - Маленький типизированный route config `resources/js/marketing/config/routes.ts` (path, title, description, h1, robots) — один источник для навигации, `document.title`/meta на клиенте и будущего SSR/meta-шага.

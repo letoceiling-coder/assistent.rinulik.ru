@@ -1,0 +1,64 @@
+/*
+ * Marketing surface stylesheet — entry point.
+ * Imported only by resources/js/marketing/MarketingApp.tsx, so it ships in the marketing chunk
+ * and is never loaded on product/admin pages.
+ *
+ * Boundary rules:
+ * - Surface-level rules target html[data-surface="marketing"] (set by resources/js/app.tsx).
+ * - Component classes use the `mk-` prefix to avoid collisions with product classes in app.css
+ *   (.button, .brand, .footer, .modal, ...).
+ * - resources/css/app.css (product) is still linked globally by app.blade.php, so this file
+ *   neutralises its global element/root rules for the marketing surface. html[data-surface]
+ *   has higher specificity than app.css's :root, so no !important is needed.
+ *
+ * Next stage adds tokens.css / reset.css / typography.css next to this file and imports them here.
+ */
+
+html[data-surface="marketing"] {
+  font-size: 100%;
+  font-family: system-ui, sans-serif;
+  color: CanvasText;
+  background: Canvas;
+}
+
+html[data-surface="marketing"] body {
+  margin: 0;
+}
+
+.mk-root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.mk-root main {
+  flex: 1;
+  padding: 16px;
+}
+
+.mk-root main:focus {
+  outline: none;
+}
+
+.mk-header,
+.mk-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px;
+}
+
+.mk-skip-link {
+  position: absolute;
+  left: 16px;
+  top: -100px;
+}
+
+.mk-skip-link:focus {
+  top: 16px;
+}
+
+.mk-dev-marker {
+  font-family: ui-monospace, monospace;
+  font-size: 0.875rem;
+}
