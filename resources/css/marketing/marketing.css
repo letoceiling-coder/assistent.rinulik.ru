@@ -32,9 +32,3 @@
 .mk-root > main:focus {
   outline: none;
 }
-
-.mk-dev-marker {
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: var(--font-size-label);
-  color: var(--color-text-secondary);
-}

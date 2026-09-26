@@ -1,0 +1,86 @@
+.mk-page-hero {
+  padding-block: var(--space-40) var(--space-56);
+}
+
+@media (min-width: 1024px) {
+  .mk-page-hero {
+    padding-block: var(--space-72) var(--space-72);
+  }
+}
+
+.mk-page-hero__grid {
+  display: grid;
+  gap: var(--space-40);
+  align-items: center;
+}
+
+@media (min-width: 1024px) {
+  .mk-page-hero--split .mk-page-hero__grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--space-56);
+  }
+}
+
+.mk-page-hero__copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-20);
+  min-width: 0;
+  max-width: 46rem;
+}
+
+.mk-page-hero--narrow .mk-page-hero__copy {
+  max-width: 40rem;
+}
+
+.mk-page-hero__eyebrow {
+  padding: var(--space-8) var(--space-12);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-pill);
+  color: var(--color-text-secondary);
+  letter-spacing: 0.04em;
+}
+
+.mk-page-hero__body {
+  display: grid;
+  gap: var(--space-12);
+  color: var(--color-text-secondary);
+}
+
+.mk-page-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-12);
+  margin-block-start: var(--space-8);
+}
+
+@media (max-width: 479px) {
+  .mk-page-hero__actions {
+    flex-direction: column;
+    align-self: stretch;
+  }
+}
+
+.mk-page-hero__note {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-ui-sm);
+}
+
+.mk-page-hero__visual {
+  min-width: 0;
+}
+
+/* Status notice used on channel pages (always states the status in words). */
+.mk-status-note {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-8) var(--space-12);
+  padding: var(--space-12) var(--space-16);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg-surface);
+  color: var(--color-text-primary);
+  font-size: var(--font-size-ui-sm);
+}

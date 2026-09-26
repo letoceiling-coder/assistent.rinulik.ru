@@ -1,0 +1,31 @@
+.mk-demo-page {
+  padding-block: var(--space-40) var(--space-72);
+}
+
+.mk-demo-page__inner {
+  display: grid;
+  gap: var(--space-32);
+  max-width: 52rem;
+}
+
+.mk-demo-page__intro {
+  display: grid;
+  gap: var(--space-16);
+  text-align: center;
+  justify-items: center;
+}
+
+.mk-demo-page__body {
+  max-width: 36rem;
+  color: var(--color-text-secondary);
+}
+
+.mk-demo-page .mk-demo {
+  min-height: 34rem;
+}
+
+@media (min-width: 768px) {
+  .mk-demo-page .mk-demo {
+    max-height: 44rem;
+  }
+}

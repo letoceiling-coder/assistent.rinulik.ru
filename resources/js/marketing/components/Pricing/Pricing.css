@@ -144,3 +144,7 @@
 .mk-pricing-toggle {
   margin-block-end: var(--space-24);
 }
+
+.mk-plans-note {
+  margin-block-start: var(--space-20);
+}

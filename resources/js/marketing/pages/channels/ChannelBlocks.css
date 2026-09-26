@@ -1,0 +1,120 @@
+.mk-chat-preview {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+}
+
+.mk-card-grid {
+  display: grid;
+  gap: var(--space-16);
+}
+
+@media (min-width: 768px) {
+  .mk-card-grid--2,
+  .mk-card-grid--3,
+  .mk-card-grid--4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1120px) {
+  .mk-card-grid--3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .mk-card-grid--4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.mk-card-grid__item {
+  display: grid;
+  align-content: start;
+  gap: var(--space-8);
+}
+
+.mk-card-grid__title {
+  font-size: var(--font-size-body-l);
+  font-weight: var(--font-weight-ui);
+  line-height: 1.3;
+}
+
+.mk-steps-note {
+  margin-block-start: var(--space-16);
+}
+
+.mk-pricing-teaser {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-24);
+  padding: var(--space-32);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-xl);
+  background: var(--gradient-signal), var(--color-bg-surface);
+}
+
+.mk-pricing-teaser > div:first-child {
+  display: grid;
+  gap: var(--space-8);
+  max-width: 40rem;
+}
+
+.mk-pricing-teaser__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-12);
+}
+
+/* Simple data tables (comparison, ownership matrix). Scroll inside on narrow screens, never the page. */
+.mk-table-wrap {
+  max-width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+  background: var(--color-bg-surface);
+}
+
+.mk-table {
+  width: 100%;
+  min-width: 36rem;
+  border-collapse: collapse;
+  font-size: var(--font-size-ui-sm);
+}
+
+.mk-table th,
+.mk-table td {
+  padding: var(--space-12) var(--space-16);
+  border-bottom: 1px solid var(--color-border-default);
+  text-align: start;
+  vertical-align: top;
+}
+
+.mk-table thead th {
+  background: var(--color-bg-surface-soft);
+  font-weight: var(--font-weight-ui);
+}
+
+.mk-table tbody th {
+  font-weight: var(--font-weight-ui);
+}
+
+.mk-table tr:last-child > * {
+  border-bottom: 0;
+}
+
+.mk-max-required {
+  margin-block-end: var(--space-12);
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-ui);
+}
+
+.mk-max-list {
+  max-width: 40rem;
+  font-size: var(--font-size-body-l);
+}
+
+.mk-partners-matrix-title {
+  margin-block-end: var(--space-16);
+}
