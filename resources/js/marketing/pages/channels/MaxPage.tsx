@@ -19,7 +19,7 @@ export function MaxPage() {
   return (
     <>
       <PageHero
-        eyebrow="SCROOTY ДЛЯ MAX"
+        eyebrow="Scrooty ДЛЯ MAX"
         title="AI-менеджер для клиентов в MAX."
         body={<p>Подключите Scrooty к бизнес-боту MAX, чтобы отвечать на вопросы, собирать данные и передавать обращения сотрудникам.</p>}
         actions={<>

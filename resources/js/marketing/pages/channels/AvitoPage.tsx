@@ -18,7 +18,7 @@ export function AvitoPage() {
   return (
     <>
       <PageHero
-        eyebrow="SCROOTY ДЛЯ AVITO"
+        eyebrow="Scrooty ДЛЯ AVITO"
         title="Клиент написал в Avito. Scrooty отвечает, пока интерес ещё горячий."
         body={<p>Scrooty знает контекст объявления, отвечает на частые вопросы, уточняет детали и передаёт менеджеру подготовленное обращение.</p>}
         actions={<>
@@ -46,7 +46,7 @@ export function AvitoPage() {
 
       <CardGrid
         id="avito-flow"
-        eyebrow="ЧТО ДЕЛАЕТ SCROOTY"
+        eyebrow="ЧТО ДЕЛАЕТ Scrooty"
         title="От первого вопроса до подготовленного обращения."
         items={[
           {title: 'Отвечает по объявлению', text: 'Использует описания товаров, условия доставки и оплаты из вашей базы знаний.'},

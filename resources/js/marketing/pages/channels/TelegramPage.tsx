@@ -18,7 +18,7 @@ export function TelegramPage() {
   return (
     <>
       <PageHero
-        eyebrow="SCROOTY ДЛЯ TELEGRAM"
+        eyebrow="Scrooty ДЛЯ TELEGRAM"
         title="Telegram отвечает клиенту сразу. Даже когда команда занята."
         body={<p>Подключите Telegram-бота к знаниям и действиям бизнеса. Scrooty ведёт первый разговор, а ваша команда подключается к важным случаям.</p>}
         actions={<>

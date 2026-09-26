@@ -76,6 +76,8 @@ p {
   font-size: var(--font-size-eyebrow);
   line-height: var(--line-height-eyebrow);
   font-weight: var(--font-weight-eyebrow);
+  /* Eyebrows are written in normal case in source (e.g. «Scrooty») and uppercased visually. */
+  text-transform: uppercase;
 }
 
 .mk-text-secondary {

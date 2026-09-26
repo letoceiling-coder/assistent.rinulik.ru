@@ -21,7 +21,7 @@ export function HowItWorks() {
         <div>
           <SectionHeader
             id="how-title"
-            eyebrow="КАК РАБОТАЕТ SCROOTY"
+            eyebrow="КАК РАБОТАЕТ Scrooty"
             title="Понимает вопрос. Находит данные. Делает следующий шаг."
             description="Один разговор связывает знания компании, актуальные данные, нужное действие и менеджера."
           />

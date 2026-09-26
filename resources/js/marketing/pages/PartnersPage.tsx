@@ -39,7 +39,7 @@ export function PartnersPage() {
   return (
     <>
       <PageHero
-        eyebrow="ПАРТНЁРСКАЯ ПРОГРАММА SCROOTY"
+        eyebrow="ПАРТНЁРСКАЯ ПРОГРАММА Scrooty"
         title="Создавайте AI-менеджеров клиентам. Получайте доход каждый месяц."
         body={<p>Берите оплату за внедрение, настройку и сопровождение. Scrooty платит recurring commission за закреплённых клиентов, пока они пользуются сервисом.</p>}
         actions={<>

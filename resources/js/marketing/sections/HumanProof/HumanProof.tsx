@@ -57,7 +57,7 @@ export function HumanProof() {
     <Section id="human-proof" labelledBy="human-title">
       <SectionHeader
         id="human-title"
-        eyebrow="SCROOTY HUMAN FIRST"
+        eyebrow="Scrooty HUMAN FIRST"
         title="Разговор, который не хочется закрыть."
         description="Scrooty отвечает коротко, помнит контекст и задаёт один уместный вопрос за раз. Если данных не хватает, не придумывает и подключает человека."
       />

@@ -20,7 +20,7 @@ export function UseCases() {
     <Section id="use-cases" labelledBy="usecases-title">
       <SectionHeader
         id="usecases-title"
-        eyebrow="ГДЕ SCROOTY ПОЛЕЗЕН СРАЗУ"
+        eyebrow="ГДЕ Scrooty ПОЛЕЗЕН СРАЗУ"
         title="Для бизнеса, где скорость ответа влияет на выбор."
         description="Начните с повторяющихся входящих вопросов и понятного следующего шага."
       />
