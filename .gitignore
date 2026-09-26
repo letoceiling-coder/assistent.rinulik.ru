@@ -24,3 +24,6 @@ yarn-error.log
 /certbot-work
 /certbot-logs
 *.dump
+
+# Scrooty landing spec: internal, keep local only (repo is public)
+/SCROOTY_LANDING_SPEC.md
