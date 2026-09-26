@@ -46,10 +46,27 @@ Backend was not changed on the `feat/scrooty-marketing-frontend-v1` branch.
 
 - **CURRENT:** no legal documents, requisites, status page or contact channel in the repository.
 - **DESIRED:** texts for Privacy, Personal data processing, Terms, Requisites (legal entity, INN, OGRN), support contact, service status URL.
-- **FRONTEND FALLBACK (shipped):** legal routes are not invented; footer shows these entries as «готовится» without links; no placeholder legal entity data.
+- **FRONTEND FALLBACK (shipped):** legal routes are not invented; footer lists these documents without links with the note «Публикуются перед запуском»; no placeholder legal entity data.
 
 ## 8. Channel / integration reality
 
-- **CURRENT (product code):** channels Telegram, Avito, MAX (+ webhooks); Telegram notifications for leads. No Bitrix24 / Google Sheets / public API / site widget modules in the repository.
+- **CURRENT (product code):** working channel adapters for Telegram and MAX (+ inbound webhooks); the Avito adapter throws «Канал ещё недоступен. Для Avito требуется подтверждение доступа к Messenger API». Leads + Telegram lead notifications exist. No Bitrix24 / Google Sheets / outgoing webhook actions / public API / site widget modules.
 - **DESIRED:** confirmation of launch status for site widget, Bitrix24, Google Sheets, webhook actions and public API.
-- **FRONTEND FALLBACK (shipped):** integration statuses are centralized in `resources/js/marketing/config/integrations.ts`; items without verified implementation are labelled «В планах» or «По запросу», never «Доступно».
+- **FRONTEND FALLBACK (shipped):** integration statuses are centralized in `resources/js/marketing/config/integrations.ts`; items without verified implementation are labelled «Готовится к запуску» or «В планах», never «Доступно».
+
+## 9. Contact channel, help and service status
+
+- **CURRENT:** no public support email/Telegram, help center or status page.
+- **DESIRED:** one public contact channel (for Enterprise, «Обсудить свою систему», partner onboarding) and, later, a status page URL.
+- **FRONTEND FALLBACK (shipped):** Enterprise and partner CTAs lead to `/register`; «Статус сервиса» / «Контакты» are not shown in the footer; «Обсудить свою систему» CTA omitted.
+
+## 10. Favicon and brand icons
+
+- **CURRENT:** `public/favicon.ico` is 0 bytes (shared with the product app); no approved square icon.
+- **DESIRED:** approved favicon set (spec §39) — the approved logo is a wordmark, a square icon must come from the brand owner.
+- **FRONTEND FALLBACK:** none; not invented.
+
+## 11. Knowledge sources vs approved copy
+
+- **CURRENT (product):** knowledge accepts PDF, DOC, DOCX, TXT, MD files and manual text. No website crawling or spreadsheet import.
+- **Approved homepage copy** mentions «сайт … или таблицу» as sources; kept as approved, with the approved microcopy «Поддерживаемые форматы уточняются в интерфейсе загрузки». FAQ lists the real formats. Needs product confirmation or a copy change before launch.

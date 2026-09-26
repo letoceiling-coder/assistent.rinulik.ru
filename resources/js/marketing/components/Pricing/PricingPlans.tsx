@@ -36,6 +36,8 @@ export function BillingToggle({value, onChange}: {value: BillingPeriod; onChange
   );
 }
 
+const enterpriseHighlights = ['Лимиты под ваш объём обращений', 'Индивидуальные интеграции', 'Поддержка по SLA'];
+
 function PlanCard({plan, period, compact}: {plan: Plan; period: BillingPeriod; compact: boolean}) {
   const price = planPrice(plan, period);
   const titleId = `plan-${plan.id}`;
@@ -61,7 +63,9 @@ function PlanCard({plan, period, compact}: {plan: Plan; period: BillingPeriod; c
         {isEnterprise ? 'Обсудить условия' : 'Начать бесплатно'}
       </ButtonLink>
       <ul role="list" className="mk-checks mk-plan__limits" aria-label={`Что входит в ${plan.name}`}>
-        {shown.map(key => <li key={key}>{plan.limits[key]}</li>)}
+        {isEnterprise
+          ? enterpriseHighlights.map(item => <li key={item}>{item}</li>)
+          : shown.map(key => <li key={key}>{plan.limits[key]}</li>)}
       </ul>
     </article>
   );
