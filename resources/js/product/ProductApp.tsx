@@ -1,6 +1,8 @@
 import React,{useEffect,useState,FormEvent,ReactNode} from 'react';
 import {ArrowUpRight,ArrowRight,Plus,Search,LayoutDashboard,Bot,BookOpen,MessagesSquare,Users,Plug,Wallet,ChartNoAxesCombined,Settings,LogOut,Check,ChevronRight,X,Menu,Sparkles,ShieldCheck,Send,FileText,Upload,MoreHorizontal,RefreshCw,Activity,SlidersHorizontal,Command,Globe,AlertCircle,Trash2,Edit} from 'lucide-react';
 import {api,money,date} from '../api';
+// Product styles (incl. Golos Text) ship only in the product chunk.
+import '../../css/app.css';
 
 type Row=Record<string,any>;
 const labels:Row={empty:'Индексация',pending:'В очереди',processing:'Обрабатывается',ready:'Готово',failed:'Ошибка',draft:'Черновик',connected:'Подключено',connecting:'Подключается',disabled:'Отключено',error:'Ошибка',new:'Новый',contacted:'Связались',qualified:'Квалифицирован',won:'Успешно',lost:'Закрыт',bot_active:'Ассистент отвечает',manager:'У менеджера',closed:'Закрыт',completed:'Завершён',started:'В работе',uncertain:'Требует проверки',cost_pending:'Ожидает стоимости',delivered:'Доставлено',processed:'Обработано',pending_delivery:'Отправляется',sending:'Отправляется',delivery_uncertain:'Доставка не подтверждена',registration_bonus:'Бонус за регистрацию',ai_usage:'Использование AI',ai_reserve:'Резерв AI-запроса',refund:'Возврат резерва',admin_credit:'Пополнение администратором',admin_debit:'Корректировка баланса'};

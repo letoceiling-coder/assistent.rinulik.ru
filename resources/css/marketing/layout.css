@@ -1,0 +1,103 @@
+/* Layout primitives: container, section, grid, stack, cluster, section header, skip link. */
+
+.mk-container {
+  width: min(100% - 2 * var(--gutter), var(--container-max));
+  margin-inline: auto;
+}
+
+.mk-section {
+  padding-block: var(--section-space);
+}
+
+.mk-section--tone-canvas {
+  background: var(--color-bg-page);
+}
+
+.mk-section--tone-surface {
+  background: var(--color-bg-surface);
+}
+
+.mk-section--tone-soft {
+  background: var(--color-bg-surface-soft);
+}
+
+/* 4 / 8 / 12 columns from tokens; children may shrink below content width (no overflow at 360px). */
+.mk-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+  gap: var(--grid-gap);
+}
+
+.mk-grid > *,
+.mk-cluster > *,
+.mk-stack > * {
+  min-width: 0;
+}
+
+/* Vertical rhythm: --stack-gap can be overridden per instance with a --space-* token. */
+.mk-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--stack-gap, var(--space-16));
+}
+
+/* Inline group that wraps (buttons, pills, links). */
+.mk-cluster {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--cluster-gap, var(--space-12));
+}
+
+.mk-section-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+  max-width: 48rem;
+  margin-block-end: var(--space-40);
+}
+
+.mk-section-header--center {
+  align-items: center;
+  text-align: center;
+  margin-inline: auto;
+}
+
+.mk-section-header__eyebrow {
+  color: var(--color-text-secondary);
+}
+
+.mk-section-header__description {
+  color: var(--color-text-secondary);
+  max-width: 40rem;
+}
+
+.mk-skip-link {
+  position: absolute;
+  z-index: 100;
+  left: var(--gutter);
+  top: var(--space-12);
+  transform: translateY(calc(-100% - var(--space-24)));
+  padding: var(--space-12) var(--space-16);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg-surface);
+  box-shadow: var(--shadow-card);
+  font-size: var(--font-size-label);
+  font-weight: var(--font-weight-ui);
+}
+
+.mk-skip-link:focus-visible {
+  transform: none;
+}
+
+.mk-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}

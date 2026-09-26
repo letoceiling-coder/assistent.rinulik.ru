@@ -158,7 +158,9 @@ resources/js/api.ts  — shared API-клиент, остался на месте
 
 Build после Stage 01: entry `app-*.js` 225.7 kB (gzip 70.4) = react + react-dom + bootstrap; `ProductApp-*.js` 88.7 kB (gzip 23.1); `MarketingApp-*.js` 0.8 kB + css 0.5 kB. Marketing-посетитель не грузит ProductApp/lucide.
 
-Остаток связности: `resources/css/app.css` (27 kB, Golos Text `@import`) по-прежнему подключается Blade на всех страницах, включая marketing. Marketing CSS нейтрализует его глобальные правила через `html[data-surface="marketing"]` и `mk-` префикс. Полностью убрать product CSS с marketing можно одной правкой Blade (`@vite(['resources/js/app.tsx'])` + `import '../../css/app.css'` в ProductApp + убрать css из `vite.config.js` input) — это серая зона (серверный шаблон), требует согласования.
+Остаток связности (Stage 01) закрыт в Stage 02: `app.blade.php` подключает только `@vite(['resources/js/app.tsx'])`, `resources/css/app.css` импортируется из `product/ProductApp.tsx` и попадает только в chunk `ProductApp-*.css` (содержимое байт-в-байт прежнее), `resources/css/marketing/marketing.css` (Inter + токены) — только в `MarketingApp-*.css`. Маршруты в Blade не добавлялись; единственный источник маршрутов — `marketing/config/routes.ts`. `html[data-surface]` удалён как ненужный.
+
+Stage 02 (visual foundation): `resources/css/marketing/{tokens,reset,typography,layout}.css`, React-примитивы `marketing/components/{Container,Section,SectionHeader}.tsx`, `shared/lib/cx.ts`. Решения: Inter self-hosted из `@fontsource-variable/inter` (только latin, cyrillic, latin-ext; только marketing chunk, без CDN); primary CTA — тёмный foreground `--color-action-primary-foreground: #151922` (5.66:1 / 4.71:1 на hover); `--text-muted` только для декоративных метаданных; `--gradient-signal` — временно реконструированное значение, ждёт финального визуального утверждения. Кабинет по-прежнему грузит Golos Text с Google Fonts (не менялось).
 
 ## 7b. SEO/SERVER ROUTING DEPENDENCY (blocker)
 

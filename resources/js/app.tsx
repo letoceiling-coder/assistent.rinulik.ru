@@ -10,7 +10,6 @@ const container = document.getElementById('root');
 if (!container) throw new Error('Root element #root is missing.');
 
 const surface = resolveSurface(window.location.pathname);
-document.documentElement.dataset.surface = surface.type;
 const root = createRoot(container);
 
 function renderLoadError(error: unknown) {

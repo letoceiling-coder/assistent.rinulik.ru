@@ -1,64 +1,51 @@
 /*
  * Marketing surface stylesheet — entry point.
- * Imported only by resources/js/marketing/MarketingApp.tsx, so it ships in the marketing chunk
- * and is never loaded on product/admin pages.
+ * Imported only by resources/js/marketing/MarketingApp.tsx, so it ships in the marketing chunk.
+ * The product stylesheet (resources/css/app.css) ships only in the product chunk; the two never
+ * load on the same page, so nothing here needs to override product CSS.
  *
- * Boundary rules:
- * - Surface-level rules target html[data-surface="marketing"] (set by resources/js/app.tsx).
- * - Component classes use the `mk-` prefix to avoid collisions with product classes in app.css
- *   (.button, .brand, .footer, .modal, ...).
- * - resources/css/app.css (product) is still linked globally by app.blade.php, so this file
- *   neutralises its global element/root rules for the marketing surface. html[data-surface]
- *   has higher specificity than app.css's :root, so no !important is needed.
- *
- * Next stage adds tokens.css / reset.css / typography.css next to this file and imports them here.
+ * Layer order: fonts (self-hosted Inter) -> tokens -> reset -> typography -> layout -> surface shell.
  */
 
-html[data-surface="marketing"] {
-  font-size: 100%;
-  font-family: system-ui, sans-serif;
-  color: CanvasText;
-  background: Canvas;
-}
+@import './fonts.css';
+@import './tokens.css';
+@import './reset.css';
+@import './typography.css';
+@import './layout.css';
 
-html[data-surface="marketing"] body {
-  margin: 0;
-}
+/* ---- Temporary marketing shell (placeholders until SiteHeader/Footer stages) ---- */
 
 .mk-root {
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
 }
 
-.mk-root main {
+.mk-root > main {
   flex: 1;
-  padding: 16px;
 }
 
-.mk-root main:focus {
+.mk-root > main:focus {
   outline: none;
 }
 
-.mk-header,
-.mk-footer {
+.mk-shell-bar {
   display: flex;
   justify-content: space-between;
-  gap: 16px;
-  padding: 16px;
+  align-items: center;
+  gap: var(--space-16);
+  padding-block: var(--space-16);
 }
 
-.mk-skip-link {
-  position: absolute;
-  left: 16px;
-  top: -100px;
-}
-
-.mk-skip-link:focus {
-  top: 16px;
+.mk-shell-bar a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
 }
 
 .mk-dev-marker {
-  font-family: ui-monospace, monospace;
-  font-size: 0.875rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: var(--font-size-label);
+  color: var(--color-text-secondary);
 }
