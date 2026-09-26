@@ -9,11 +9,11 @@ import {routePath, type MarketingRouteId} from './routes';
  * corresponding homepage stage adds an element with this id. Switch to `live` when it ships.
  */
 export const homeAnchors = {
-  features: {id: 'features', status: 'planned'},
-  howItWorks: {id: 'how-it-works', status: 'planned'},
-  knowledge: {id: 'knowledge', status: 'planned'},
-  actions: {id: 'actions', status: 'planned'},
-  handoff: {id: 'handoff', status: 'planned'},
+  features: {id: 'features', status: 'live'},
+  howItWorks: {id: 'how-it-works', status: 'live'},
+  knowledge: {id: 'knowledge', status: 'live'},
+  actions: {id: 'actions', status: 'live'},
+  handoff: {id: 'handoff', status: 'live'},
 } as const satisfies Record<string, {id: string; status: 'planned' | 'live'}>;
 
 export type HomeAnchorKey = keyof typeof homeAnchors;

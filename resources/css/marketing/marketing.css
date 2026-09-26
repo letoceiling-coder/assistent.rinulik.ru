@@ -12,6 +12,7 @@
 @import './reset.css';
 @import './typography.css';
 @import './layout.css';
+@import './components.css';
 
 /* ---- Marketing shell (footer placeholder until the Footer stage) ----
  * Component styles live next to their components (e.g. components/SiteHeader/SiteHeader.css)

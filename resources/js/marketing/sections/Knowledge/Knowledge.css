@@ -1,0 +1,17 @@
+.mk-knowledge__micro {
+  margin-block-start: var(--space-16);
+}
+
+.mk-knowledge__drop {
+  display: grid;
+  place-items: center;
+  min-height: 88px;
+  margin-block-end: var(--space-8);
+  padding: var(--space-16);
+  border: 1.5px dashed var(--color-border-strong);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-page);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-ui-sm);
+  text-align: center;
+}
