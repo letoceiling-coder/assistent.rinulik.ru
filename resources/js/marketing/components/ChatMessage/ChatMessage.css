@@ -1,0 +1,48 @@
+/* Chat message (spec §27): max width 78%, radius 18, padding 12x14. */
+
+.mk-msg {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  max-width: 78%;
+  min-width: 0;
+}
+
+.mk-msg--customer {
+  align-self: flex-end;
+  align-items: flex-end;
+}
+
+.mk-msg--scrooty {
+  align-self: flex-start;
+  align-items: flex-start;
+}
+
+.mk-msg__author {
+  padding-inline: var(--space-4);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-label);
+  font-weight: var(--font-weight-ui);
+  line-height: var(--line-height-label);
+}
+
+.mk-msg__bubble {
+  padding: var(--space-12) 14px;
+  border-radius: var(--radius-md);
+  color: var(--color-text-primary);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+}
+
+/* Customer: pastel signal surface, tail corner on the right. */
+.mk-msg--customer .mk-msg__bubble {
+  background: var(--color-signal-periwinkle);
+  border-end-end-radius: var(--space-4);
+}
+
+/* Scrooty: soft neutral surface with hairline, tail corner on the left. */
+.mk-msg--scrooty .mk-msg__bubble {
+  background: var(--color-bg-surface-soft);
+  box-shadow: inset 0 0 0 1px var(--color-border-default);
+  border-end-start-radius: var(--space-4);
+}

@@ -32,12 +32,14 @@ p {
   font-size: var(--font-size-display-xl);
   line-height: var(--line-height-display-xl);
   font-weight: var(--font-weight-display);
+  letter-spacing: var(--letter-spacing-display);
 }
 
 .mk-display-l {
   font-size: var(--font-size-display-l);
   line-height: var(--line-height-display-l);
   font-weight: var(--font-weight-display);
+  letter-spacing: var(--letter-spacing-display);
 }
 
 .mk-h2 {

@@ -1,0 +1,116 @@
+/* DemoShell — product conversation surface (spec §10 Section 02, §27). */
+
+.mk-demo {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-xl);
+  background: var(--color-bg-surface);
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+  transition: box-shadow var(--duration-reveal) var(--ease-standard);
+}
+
+.mk-demo:focus {
+  outline: none;
+}
+
+.mk-demo:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+
+/* Secondary CTA: a brief, calm emphasis — a soft peach ring, no glow, no motion. */
+.mk-demo[data-attention] {
+  box-shadow: 0 0 0 6px var(--color-signal-peach), var(--shadow-soft);
+}
+
+.mk-demo__bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-12);
+  padding: var(--space-16) var(--space-20);
+  border-bottom: 1px solid var(--color-border-default);
+}
+
+.mk-demo__identity {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-8);
+  min-width: 0;
+}
+
+.mk-demo__name {
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-ui);
+}
+
+.mk-demo__role {
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+  font-size: var(--font-size-label);
+}
+
+.mk-demo__badge {
+  flex-shrink: 0;
+  padding: var(--space-4) var(--space-12);
+  border-radius: var(--radius-pill);
+  background: var(--color-bg-surface-soft);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-label);
+  font-weight: var(--font-weight-ui);
+  line-height: var(--line-height-label);
+}
+
+.mk-demo__messages {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: var(--space-16);
+  padding: var(--space-24) var(--space-20);
+}
+
+.mk-demo__composer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+  padding: var(--space-16) var(--space-20) var(--space-20);
+  border-top: 1px solid var(--color-border-default);
+  background: var(--color-bg-page);
+}
+
+.mk-demo__suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-8);
+}
+
+/* Narrow phones: keep the bar on one line; the category is already stated by the hero eyebrow. */
+@media (max-width: 399px) {
+  .mk-demo__role {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .mk-demo__bar {
+    padding: var(--space-12) var(--space-16);
+  }
+
+  .mk-demo__messages {
+    gap: var(--space-12);
+    padding: var(--space-20) var(--space-16);
+  }
+
+  .mk-demo__composer {
+    padding: var(--space-12) var(--space-16) var(--space-16);
+  }
+
+  .mk-demo .mk-msg {
+    max-width: 88%;
+  }
+}

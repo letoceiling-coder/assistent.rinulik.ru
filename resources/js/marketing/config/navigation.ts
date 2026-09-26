@@ -1,5 +1,6 @@
 // Marketing navigation: single source of truth for header (desktop + mobile drawer) links and labels.
 // URLs come from routes.ts / homeAnchors / productLinks — never hard-code hrefs in components.
+import {ctaLabels} from './cta';
 import {routePath, type MarketingRouteId} from './routes';
 
 /**
@@ -73,8 +74,8 @@ export const primaryNav: readonly NavEntry[] = [
 ];
 
 export const headerActions = {
-  login: {label: 'Войти', href: productLinks.login},
-  primary: {label: 'Попробовать бесплатно', shortLabel: 'Попробовать', href: routePath('demo'), routeId: 'demo'},
+  login: {label: ctaLabels.login, href: productLinks.login},
+  primary: {label: ctaLabels.tryFree, shortLabel: ctaLabels.tryFreeShort, href: routePath('demo'), routeId: 'demo'},
 } as const;
 
 export function isGroupActive(group: NavGroup, currentRouteId: MarketingRouteId): boolean {

@@ -1,0 +1,59 @@
+.mk-chat-input {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-8);
+  padding: var(--space-8);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-surface);
+  transition: border-color var(--duration-hover) var(--ease-standard);
+}
+
+.mk-chat-input:focus-within {
+  border-color: var(--color-text-secondary);
+}
+
+.mk-chat-input__field {
+  flex: 1;
+  min-width: 0;
+  min-height: 44px;
+  max-height: 8rem;
+  padding: 10px var(--space-8);
+  border: 0;
+  background: transparent;
+  color: var(--color-text-primary);
+  font-size: var(--font-size-body);
+  line-height: 1.5;
+  resize: none;
+  field-sizing: content;
+}
+
+/* The composer shows focus on its container; keep a visible ring on the field for keyboard users. */
+.mk-chat-input__field:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-focus-ring);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+.mk-chat-input__field::placeholder {
+  color: var(--color-text-secondary);
+}
+
+.mk-chat-input__send {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: var(--color-text-primary);
+  color: var(--color-bg-surface);
+  transition: opacity var(--duration-hover) var(--ease-standard);
+}
+
+.mk-chat-input__send:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}

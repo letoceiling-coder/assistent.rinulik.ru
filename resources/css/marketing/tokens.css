@@ -83,6 +83,9 @@
   --font-weight-display: 650;
   --font-weight-eyebrow: 650;
 
+  /* Display tracking: Inter at 40-72px reads loose at 0; -0.02em is a typographic refinement (not in spec §25). */
+  --letter-spacing-display: -0.02em;
+
   --font-size-display-xl: clamp(2.5rem, 1.8333rem + 2.963vw, 4.5rem);      /* 40 -> 72 */
   --font-size-display-l: clamp(2.375rem, 1.9167rem + 2.037vw, 3.75rem);    /* 38 -> 60 */
   --font-size-h2: clamp(2rem, 1.6667rem + 1.4815vw, 3rem);                 /* 32 -> 48 */

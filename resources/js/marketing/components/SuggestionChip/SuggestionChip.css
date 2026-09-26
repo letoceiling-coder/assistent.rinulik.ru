@@ -1,0 +1,35 @@
+.mk-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding-inline: var(--space-12);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-pill);
+  background: var(--color-bg-surface);
+  color: var(--color-text-primary);
+  font-size: var(--font-size-ui-sm);
+  font-weight: var(--font-weight-nav);
+  line-height: 1.2;
+  white-space: nowrap;
+  transition:
+    background-color var(--duration-hover) var(--ease-standard),
+    border-color var(--duration-hover) var(--ease-standard);
+}
+
+.mk-chip:hover {
+  background: var(--color-bg-surface-soft);
+  border-color: var(--color-text-secondary);
+}
+
+/* Keep a 44px touch target on coarse pointers without inflating the visual pill. */
+@media (pointer: coarse) {
+  .mk-chip {
+    position: relative;
+  }
+
+  .mk-chip::after {
+    content: '';
+    position: absolute;
+    inset: -4px 0;
+  }
+}
