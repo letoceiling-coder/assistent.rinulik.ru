@@ -1,0 +1,8 @@
+[Unit]
+Description=Keep isolated ASSISTENT vhost installed
+[Timer]
+OnBootSec=20
+OnUnitActiveSec=30
+Unit=assistent-gateway.service
+[Install]
+WantedBy=timers.target

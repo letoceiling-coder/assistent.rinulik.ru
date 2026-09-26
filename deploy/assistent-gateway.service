@@ -1,0 +1,7 @@
+[Unit]
+Description=Restore ASSISTENT vhost after shared gateway recreation
+After=docker.service
+Requires=docker.service
+[Service]
+Type=oneshot
+ExecStart=/bin/sh /opt/assistent/deploy/ensure-gateway.sh

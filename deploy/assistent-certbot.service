@@ -1,0 +1,6 @@
+[Unit]
+Description=Renew only ASSISTENT certificate
+After=docker.service
+[Service]
+Type=oneshot
+ExecStart=/bin/sh /opt/assistent/deploy/renew-certificate.sh
