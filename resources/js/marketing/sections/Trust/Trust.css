@@ -1,0 +1,29 @@
+.mk-trust {
+  display: grid;
+  gap: var(--space-16);
+}
+
+@media (min-width: 768px) {
+  .mk-trust {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1120px) {
+  .mk-trust {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.mk-trust__tile {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: var(--space-12);
+  justify-items: start;
+}
+
+.mk-trust__title {
+  font-size: var(--font-size-body-l);
+  font-weight: var(--font-weight-ui);
+  line-height: 1.3;
+}

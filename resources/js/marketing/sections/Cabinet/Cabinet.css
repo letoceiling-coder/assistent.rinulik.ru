@@ -1,0 +1,98 @@
+.mk-cabinet__tabs {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-12);
+  padding-inline: var(--space-8) var(--space-20);
+  border-bottom: 1px solid var(--color-border-default);
+}
+
+.mk-cabinet__tabs .mk-tabs--underline {
+  min-width: 0;
+  border-bottom: 0;
+}
+
+.mk-cabinet__caption {
+  flex-shrink: 0;
+  padding-block-end: var(--space-12);
+}
+
+@media (max-width: 767px) {
+  .mk-cabinet__caption {
+    display: none;
+  }
+}
+
+.mk-cabinet__panel {
+  display: grid;
+  align-content: start;
+  gap: var(--space-16);
+  min-height: 18rem;
+}
+
+.mk-cabinet__lead {
+  color: var(--color-text-secondary);
+}
+
+.mk-cabinet__wizard {
+  display: grid;
+  gap: var(--space-8);
+}
+
+@media (min-width: 768px) {
+  .mk-cabinet__wizard {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.mk-cabinet__wizard li {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  column-gap: var(--space-12);
+  align-items: center;
+  padding: var(--space-12) var(--space-16);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-sm);
+  font-weight: var(--font-weight-ui);
+}
+
+.mk-cabinet__wizard li small {
+  grid-column: 2;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-label);
+  font-weight: var(--font-weight-body);
+}
+
+.mk-cabinet__wizard li span {
+  grid-row: span 2;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-pill);
+  background: var(--color-bg-surface-soft);
+  font-size: var(--font-size-label);
+}
+
+.mk-cabinet__wizard li.is-done span {
+  background: var(--color-signal-mint);
+}
+
+.mk-cabinet__wizard li.is-current {
+  border-color: var(--color-border-strong);
+  box-shadow: var(--shadow-card);
+}
+
+.mk-cabinet__stages {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-8);
+}
+
+.mk-cabinet__empty {
+  padding: var(--space-24);
+  border: 1.5px dashed var(--color-border-strong);
+  border-radius: var(--radius-md);
+  color: var(--color-text-secondary);
+  text-align: center;
+}

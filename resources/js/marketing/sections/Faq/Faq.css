@@ -1,0 +1,77 @@
+.mk-faq {
+  display: grid;
+  gap: var(--space-32);
+}
+
+@media (min-width: 1024px) {
+  .mk-faq {
+    grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
+    gap: var(--space-56);
+    align-items: start;
+  }
+}
+
+.mk-faq__list {
+  border-top: 1px solid var(--color-border-strong);
+}
+
+.mk-faq__item {
+  border-bottom: 1px solid var(--color-border-strong);
+}
+
+.mk-faq__question {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-16);
+  min-height: 56px;
+  padding-block: var(--space-16);
+  font-size: var(--font-size-body-l);
+  font-weight: var(--font-weight-ui);
+  line-height: 1.35;
+  list-style: none;
+  cursor: pointer;
+}
+
+.mk-faq__question::-webkit-details-marker {
+  display: none;
+}
+
+.mk-faq__question:focus-visible {
+  border-radius: var(--radius-sm);
+}
+
+/* Plus that turns into minus: state is also conveyed natively by <details> (expanded/collapsed). */
+.mk-faq__icon {
+  position: relative;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+}
+
+.mk-faq__icon::before,
+.mk-faq__icon::after {
+  content: '';
+  position: absolute;
+  top: 7px;
+  left: 0;
+  width: 16px;
+  height: 2px;
+  border-radius: var(--radius-pill);
+  background: var(--color-text-primary);
+  transition: transform var(--duration-popover) var(--ease-standard);
+}
+
+.mk-faq__icon::after {
+  transform: rotate(90deg);
+}
+
+.mk-faq__item[open] .mk-faq__icon::after {
+  transform: rotate(0deg);
+}
+
+.mk-faq__answer {
+  max-width: 44rem;
+  padding-block-end: var(--space-20);
+  color: var(--color-text-secondary);
+}

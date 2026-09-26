@@ -14,7 +14,7 @@
 @import './layout.css';
 @import './components.css';
 
-/* ---- Marketing shell (footer placeholder until the Footer stage) ----
+/* ---- Marketing shell ----
  * Component styles live next to their components (e.g. components/SiteHeader/SiteHeader.css)
  * and are bundled into the same marketing chunk. */
 
@@ -31,14 +31,6 @@
 
 .mk-root > main:focus {
   outline: none;
-}
-
-.mk-shell-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: var(--space-16);
-  padding-block: var(--space-16);
 }
 
 .mk-dev-marker {
