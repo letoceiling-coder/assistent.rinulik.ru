@@ -21,3 +21,6 @@ yarn-error.log
 /.nova
 /.vscode
 /.zed
+/certbot-work
+/certbot-logs
+*.dump
