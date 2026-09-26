@@ -1,66 +1,154 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# ASSISTENT — AI-ассистенты для бизнеса
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Платформа для создания AI-ассистентов, которые помогают бизнесу общаться с клиентами: отвечают на вопросы, используют базы знаний, собирают заявки и ведут диалог как живой человек.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Возможности
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### 🤖 Ассистенты
+- **Создание ассистента за минуту** — мастер из 3 шагов: «Задача» → «Общение» → «Знания».
+- **AI-генерация конфигурации** — опишите бизнес, и AI сам заполнит цель, стиль общения, приветствие, инструкции и обработку нехватки информации.
+- **Готовые ниши** — автосалон, клиника, отель, фитнес, недвижимость и другие. Шаблон подставляется автоматически.
+- **Своё направление** — если ниша не подходит, можно вписать любую (например, «генерация видео»), и AI учтёт специфику.
+- **Кнопка «Подставить пример»** — мгновенно вставляет шаблон описания бизнеса.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 📚 Базы знаний
+- Загрузка документов: **PDF, DOC, DOCX, TXT, MD** (до 20 МБ, несколько файлов).
+- Добавление информации текстом/Markdown.
+- **AI-черновик** — генерация черновика базы знаний из описания бизнеса.
+- Автоматическая индексация: документ разбивается на чанки, создаются векторные эмбеддинги (pgvector).
+- Привязка баз знаний к ассистентам.
 
-## Learning Laravel
+### 💬 Диалоги
+- **Тестовый чат** для проверки ассистента.
+- Ассистент **использует прикреплённые базы знаний** и отвечает по фактам.
+- **Человечный диалог** — учитывает историю, задаёт уточняющие вопросы, предлагает варианты.
+- Определение **лидов** (телефон, email, намерение купить) с уведомлениями в Telegram.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 🔌 Интеграции
+- **Telegram**, **Avito**, **MAX** — подключение каналов связи.
+- Токены хранятся в зашифрованном виде.
+- Вебхуки для входящих сообщений.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### 💰 Баланс и использование
+- Кошелёк пользователя, история операций.
+- Учёт AI-запросов: модели, токены, стоимость, статус.
+- Резервирование средств и возврат при ошибках.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 🛠 Администрирование
+- Дашборд платформы, управление пользователями.
+- Настройка ключа **OpenRouter**, курса валют, коэффициента наценки.
+- Маршрутизация моделей по задачам (ответ, обработка знаний, генерация, embedding, лиды, память, проверка фактов).
+- Синхронизация моделей, аудит действий, проверка здоровья сервисов.
 
-## Laravel Sponsors
+---
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## Технологии
 
-### Premium Partners
+| Слой | Технология |
+|------|------------|
+| Бэкенд | PHP 8.3, Laravel |
+| Фронтенд | React + TypeScript (Vite) |
+| БД | PostgreSQL + **pgvector** (векторный поиск) |
+| Кеш/очереди | Redis |
+| AI | OpenRouter (модели Gemini, GPT, DeepSeek) |
+| Контейнеры | Docker Compose (nginx + php-fpm + workers) |
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+---
 
-## Contributing
+## Архитектура
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```mermaid
+graph LR
+  Web[nginx / web] --> App[php-fpm / app]
+  App --> Worker[queue worker - AI]
+  App --> Docs[queue worker - documents]
+  App --> PG[(PostgreSQL + pgvector)]
+  App --> Redis[(Redis)]
+  Worker --> OR[OpenRouter]
+  Docs --> OR
+```
 
-## Code of Conduct
+- **`app`** — PHP-FPM, обрабатывает HTTP-запросы.
+- **`web`** — nginx, раздаёт статику и проксирует API.
+- **`worker`** — очередь `integrations, ai, notifications, default` (ответы ассистента, лиды).
+- **`documents`** — очередь `documents` (индексация документов, чанки, эмбеддинги).
+- **`scheduler`** — планировщик задач (отложенная индексация и т.д.).
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+## Структура проекта
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```
+app/
+  Http/Controllers/   — API-контроллеры (Auth, Assistant, Knowledge, Conversation, ...)
+  Jobs/                — фоновые задачи (GenerateAssistantReply, ProcessKnowledgeDocument, ...)
+  Models/              — Eloquent-модели (Assistant, KnowledgeBase, Conversation, Lead, ...)
+  Services/            — OpenRouterGateway, ConversationEngine, Retriever, Settings, ...
+config/assistent.php   — настройки AI (модели, пороги, тарифы)
+deploy/                — Dockerfile, nginx, скрипты развёртывания
+database/migrations/   — схема БД
+resources/js/app.tsx   — фронтенд (React SPA)
+routes/web.php         — маршруты API
+```
 
-## License
+---
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Быстрый старт
+
+### 1. Клонирование и настройка
+
+```bash
+git clone git@github.com:letoceiling-coder/assistent.rinulik.ru.git
+cd assistent.rinulik.ru
+cp .env.example .env
+```
+
+Заполните в `.env`:
+
+```dotenv
+APP_URL=https://assistent.rinulik.ru
+DB_PASSWORD=<секрет>
+OPENROUTER_API_KEY=<ваш ключ OpenRouter>
+ADMIN_EMAIL=admin@example.com
+ADMIN_INITIAL_PASSWORD=<пароль администратора>
+```
+
+### 2. Сборка и запуск (Docker)
+
+```bash
+docker compose up -d --build
+docker compose exec app php artisan migrate --seed
+docker compose exec app php deploy/assign_models.php
+```
+
+### 3. Доступ
+
+- Панель: `https://assistent.rinulik.ru`
+- API: `https://assistent.rinulik.ru/api/v1`
+
+---
+
+## Настройка AI (OpenRouter)
+
+Платформа использует **OpenRouter** как единый AI-провайдер. Для каждой задачи назначается модель:
+
+| Задача | Назначение |
+|--------|-----------|
+| `conversation` | Ответ ассистента |
+| `knowledge_processing` | Обработка знаний |
+| `knowledge_generator` | Генерация знаний |
+| `assistant_generator` | Генерация ассистента |
+| `embedding` | Векторные эмбеддинги |
+| `lead_detection` | Определение лида |
+| `summary` | Память диалога |
+| `grounding` | Проверка фактов |
+
+Модели можно сменить в разделе **Администрирование → AI и модели**.
+
+---
+
+## Лицензия
+
+Проект распространяется по лицензии MIT.
