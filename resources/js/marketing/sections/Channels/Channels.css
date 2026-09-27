@@ -1,25 +1,69 @@
+/* Channels — cool colourful proof. Each tab has its own Scrooty signal atmosphere (crossfade 350ms). */
+
+.mk-channels {
+  overflow: clip;
+}
+
+.mk-channels__atmos {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  pointer-events: none;
+}
+
+.mk-channels__atmos span {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 360ms var(--ease-standard);
+}
+
+.mk-channels__atmos span[data-for='avito'] { background: radial-gradient(55% 60% at 80% 40%, rgba(245, 199, 177, 0.75), transparent 70%), radial-gradient(40% 50% at 95% 90%, rgba(242, 138, 87, 0.18), transparent 70%); }
+.mk-channels__atmos span[data-for='telegram'] { background: radial-gradient(55% 60% at 80% 40%, rgba(174, 203, 247, 0.8), transparent 70%); }
+.mk-channels__atmos span[data-for='max'] { background: radial-gradient(55% 60% at 80% 40%, rgba(205, 216, 248, 0.9), transparent 70%), radial-gradient(40% 50% at 95% 95%, rgba(174, 203, 247, 0.35), transparent 70%); }
+.mk-channels__atmos span[data-for='site'] { background: radial-gradient(55% 60% at 80% 40%, rgba(202, 228, 209, 0.9), transparent 70%); }
+
+.mk-channels__atmos[data-channel='avito'] span[data-for='avito'],
+.mk-channels__atmos[data-channel='telegram'] span[data-for='telegram'],
+.mk-channels__atmos[data-channel='max'] span[data-for='max'],
+.mk-channels__atmos[data-channel='site'] span[data-for='site'] {
+  opacity: 1;
+}
+
 .mk-channels__list {
   display: grid;
   gap: var(--space-8);
 }
 
 .mk-channels__link {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: var(--space-12);
-  min-height: 52px;
-  padding: var(--space-8) var(--space-16);
-  border: 1px solid var(--color-border-default);
-  border-radius: var(--radius-sm);
-  background: var(--color-bg-page);
+  min-height: 56px;
+  padding: var(--space-8) var(--space-16) var(--space-8) var(--space-20);
+  border-radius: var(--radius-md);
   text-decoration: none;
-  transition: border-color var(--duration-hover) var(--ease-standard);
+  overflow: hidden;
 }
 
-.mk-channels__link:hover {
-  border-color: var(--color-text-secondary);
+/* Small signal colour marker per channel (shape + text label, never colour alone). */
+.mk-channels__link::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 12px;
+  bottom: 12px;
+  width: 4px;
+  border-radius: 0 4px 4px 0;
+  background: var(--channel-signal, var(--accent-blue));
 }
+
+[data-channel='avito'] { --channel-signal: var(--accent-peach); --channel-strong: var(--accent-orange); }
+[data-channel='telegram'] { --channel-signal: var(--accent-blue); --channel-strong: var(--accent-blue); }
+[data-channel='max'] { --channel-signal: var(--accent-periwinkle); --channel-strong: var(--accent-blue); }
+[data-channel='site'] { --channel-signal: var(--accent-mint); --channel-strong: var(--success); }
 
 .mk-channels__name {
   font-weight: var(--font-weight-ui);
@@ -29,23 +73,57 @@
   margin-block-start: var(--space-16);
 }
 
+.mk-channels__hub {
+  border-radius: var(--radius-stage);
+  transform: translateY(0);
+}
+
+@media (min-width: 1024px) {
+  .mk-channels__hub {
+    transform: translateY(12px);
+  }
+}
+
 .mk-channels__tabs {
   padding-inline: var(--space-8);
+  border-bottom: 1px solid var(--color-border-default);
+}
+
+.mk-channels__tabs .mk-tabs--underline {
+  border-bottom: 0;
 }
 
 .mk-channels__panel {
   display: flex;
   flex-direction: column;
   gap: var(--space-16);
-  min-height: 22rem;
+  min-height: 24rem;
 }
 
-.mk-channels__source,
-.mk-channels__foot {
-  display: flex;
-  flex-wrap: wrap;
+.mk-channels__source {
+  display: grid;
+  grid-template-columns: auto minmax(40px, 1fr) auto;
   align-items: center;
-  gap: var(--space-8);
+  gap: var(--space-12);
+}
+
+.mk-channels__badge,
+.mk-channels__scrooty {
+  padding: 5px var(--space-12);
+  border-radius: var(--radius-pill);
+  font-size: var(--font-size-label);
+  font-weight: var(--font-weight-ui);
+  line-height: var(--line-height-label);
+}
+
+.mk-channels__badge {
+  background: var(--channel-signal);
+  transition: background-color 360ms var(--ease-standard);
+}
+
+.mk-channels__scrooty {
+  background: var(--color-text-primary);
+  color: var(--color-bg-surface);
 }
 
 .mk-channels__thread {
@@ -54,4 +132,11 @@
   flex-direction: column;
   justify-content: center;
   gap: var(--space-16);
+}
+
+.mk-channels__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-8);
 }

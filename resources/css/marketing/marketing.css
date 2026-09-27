@@ -13,6 +13,8 @@
 @import './typography.css';
 @import './layout.css';
 @import './components.css';
+@import './atmosphere.css';
+@import './reveal.css';
 
 /* ---- Marketing shell ----
  * Component styles live next to their components (e.g. components/SiteHeader/SiteHeader.css)

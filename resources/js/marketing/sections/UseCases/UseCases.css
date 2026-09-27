@@ -1,3 +1,11 @@
+/* Use cases — editorial soft-colour grid: two lead cards + four compact; the customer message is the hero of each card. */
+
+[data-tone='peach'] { --tone: var(--accent-peach); }
+[data-tone='blue'] { --tone: var(--accent-blue); }
+[data-tone='mint'] { --tone: var(--accent-mint); }
+[data-tone='butter'] { --tone: var(--accent-butter); }
+[data-tone='periwinkle'] { --tone: var(--accent-periwinkle); }
+
 .mk-usecases {
   display: grid;
   gap: var(--space-16);
@@ -11,7 +19,16 @@
 
 @media (min-width: 1120px) {
   .mk-usecases {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .mk-usecases > :nth-child(-n + 2) {
+    grid-column: span 2;
+  }
+
+  .mk-usecases > :nth-child(-n + 2) .mk-usecase__message {
+    font-size: var(--font-size-h3);
+    line-height: var(--line-height-h3);
   }
 }
 
@@ -19,12 +36,32 @@
   display: grid;
   align-content: start;
   gap: var(--space-16);
+  min-width: 0;
+  padding: var(--space-24);
+  border: 1px solid color-mix(in srgb, var(--tone) 60%, transparent);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(160deg, color-mix(in srgb, var(--tone) 45%, var(--bg-surface)), var(--bg-surface) 70%);
 }
 
 .mk-usecase__title {
-  font-size: var(--font-size-body-l);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-ui-sm);
   font-weight: var(--font-weight-ui);
   line-height: 1.3;
+}
+
+/* The customer's words, as a chat bubble. */
+.mk-usecase__message {
+  width: fit-content;
+  max-width: 100%;
+  padding: var(--space-12) var(--space-16);
+  border-radius: var(--radius-md);
+  border-end-start-radius: var(--space-4);
+  background: var(--bg-surface);
+  box-shadow: var(--depth-1);
+  font-size: var(--font-size-body-l);
+  font-weight: var(--font-weight-nav);
+  line-height: 1.4;
 }
 
 .mk-usecase__flow {
@@ -36,11 +73,7 @@
   display: grid;
   gap: 2px;
   padding-inline-start: var(--space-12);
-  border-inline-start: 2px solid var(--color-border-default);
-}
-
-.mk-usecase__flow div:last-child {
-  border-inline-start-color: var(--color-signal-mint);
+  border-inline-start: 2px solid var(--tone);
 }
 
 .mk-usecase__flow dt {

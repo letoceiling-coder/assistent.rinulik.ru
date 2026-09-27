@@ -36,7 +36,7 @@ export function MaxPage() {
         ]}/>}
       />
 
-      <Section id="max-now" labelledBy="max-now-title" tone="surface">
+      <Section id="max-now" labelledBy="max-now-title" tone="cool">
         <SectionHeader id="max-now-title" eyebrow="ЧТО РАБОТАЕТ СЕЙЧАС" title="Диалоги с клиентами в бизнес-боте MAX."/>
         <ul role="list" className="mk-checks mk-max-list">
           <li>Ответы по вашей базе знаний</li>
@@ -59,7 +59,7 @@ export function MaxPage() {
 
       <StepsSection
         id="max-setup"
-        tone="surface"
+        tone="mixed"
         eyebrow="ПОДКЛЮЧЕНИЕ"
         title="Как запустить Scrooty в MAX."
         steps={['Подключитесь к платформе MAX для партнёров и верифицируйте профиль бизнеса.', 'Создайте бота и пройдите модерацию.', 'Создайте AI-менеджера в Scrooty и проверьте ответы в тестовом чате.', 'Добавьте токен бота в разделе «Интеграции».']}

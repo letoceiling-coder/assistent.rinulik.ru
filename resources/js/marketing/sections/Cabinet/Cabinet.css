@@ -96,3 +96,36 @@
   color: var(--color-text-secondary);
   text-align: center;
 }
+
+/* Large product stage: the cabinet window sits on a soft product gradient and fills most of the viewport width. */
+.mk-cabinet__stage {
+  position: relative;
+  padding: var(--space-12);
+  border-radius: var(--radius-stage);
+  background: var(--gradient-product);
+  box-shadow: var(--glass-highlight), var(--depth-2);
+}
+
+@media (min-width: 768px) {
+  .mk-cabinet__stage {
+    padding: var(--space-32) var(--space-32) 0;
+    /* The window crosses the stage's lower edge: a deliberate section transition. */
+    margin-block-end: var(--space-32);
+  }
+
+  .mk-cabinet__stage .mk-cabinet {
+    margin-block-end: calc(-1 * var(--space-32));
+  }
+}
+
+.mk-cabinet__stage .mk-cabinet {
+  border-radius: var(--radius-xl);
+  box-shadow: var(--depth-3);
+}
+
+@media (min-width: 1024px) {
+  .mk-cabinet__panel {
+    min-height: 24rem;
+    padding: var(--space-32);
+  }
+}

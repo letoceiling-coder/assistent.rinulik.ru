@@ -86,8 +86,33 @@
   box-shadow: var(--shadow-card);
 }
 
-.mk-plan--popular {
-  border: 2px solid var(--color-action-primary);
+/* Start: neutral. Business: thin warm gradient border + soft warm tint. Pro: cool elevated. Enterprise: graphite. */
+.mk-plan--business {
+  border: 1.5px solid transparent;
+  background:
+    linear-gradient(180deg, rgba(244, 222, 157, 0.22), var(--bg-surface) 45%) padding-box,
+    var(--gradient-border-warm) border-box;
+  box-shadow: var(--depth-2);
+}
+
+.mk-plan--pro {
+  background: linear-gradient(180deg, rgba(174, 203, 247, 0.28), var(--bg-surface) 50%);
+  border-color: rgba(174, 203, 247, 0.7);
+}
+
+.mk-plan--enterprise {
+  --color-text-primary: var(--dark-text);
+  --color-text-secondary: var(--dark-text-secondary);
+  --color-bg-surface: rgba(255, 255, 255, 0.08);
+  --color-border-strong: rgba(255, 255, 255, 0.24);
+  --color-focus-ring: #F5C7B1;
+  border-color: transparent;
+  background: var(--atmo-dark);
+  color: var(--dark-text);
+}
+
+.mk-plan--enterprise .mk-checks > li::before {
+  border-color: var(--dark-text);
 }
 
 .mk-plan__head {

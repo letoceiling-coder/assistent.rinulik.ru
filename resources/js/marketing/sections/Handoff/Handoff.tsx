@@ -4,13 +4,12 @@ import {Section} from '../../components/Section';
 import {SectionHeader} from '../../components/SectionHeader';
 import {homeAnchors} from '../../config/navigation';
 import {routePath} from '../../config/routes';
-import mascotUrl from '../../../../images/marketing/scrooty-mascot.webp';
 import './Handoff.css';
 
 /** Homepage Section 08 — human handoff (spec §10). Example content; rules are configured per manager. */
 export function Handoff() {
   return (
-    <Section id={homeAnchors.handoff.id} labelledBy="handoff-title">
+    <Section id={homeAnchors.handoff.id} labelledBy="handoff-title" tone="warm">
       <SectionHeader
         id="handoff-title"
         eyebrow="ЧЕЛОВЕК ПОДКЛЮЧАЕТСЯ ВОВРЕМЯ"
@@ -19,7 +18,7 @@ export function Handoff() {
       />
 
       <div className="mk-handoff">
-        <figure className="mk-window mk-handoff__thread">
+        <figure className="mk-window mk-glass mk-glass--elevated mk-handoff__thread">
           <div className="mk-window__bar">
             <span>Диалог с клиентом</span>
             <span className="mk-window__caption">Пример</span>
@@ -32,12 +31,12 @@ export function Handoff() {
         </figure>
 
         <div className="mk-handoff__connector">
-          <img className="mk-handoff__mascot" src={mascotUrl} alt="" width={64} height={64} loading="lazy" decoding="async"/>
-          <span className="mk-pill mk-pill--plain mk-handoff__pill">Условие: запрос сметы</span>
-          <span className="mk-handoff__line" aria-hidden="true"/>
+          <span className="mk-signal-line mk-handoff__line" aria-hidden="true"/>
+          <span className="mk-glass mk-handoff__pill">Условие: запрос сметы</span>
+          <span className="mk-signal-line mk-handoff__line" aria-hidden="true"/>
         </div>
 
-        <article className="mk-window mk-handoff__summary" aria-label="Карточка для менеджера">
+        <article className="mk-window mk-handoff__summary" aria-label="Карточка для менеджера" data-reveal="scale-soft">
           <div className="mk-window__bar">
             <span>Передано менеджеру</span>
             <span className="mk-pill mk-pill--info mk-pill--plain">Новый</span>

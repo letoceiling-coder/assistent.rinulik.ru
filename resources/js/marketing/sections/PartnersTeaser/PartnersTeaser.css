@@ -21,6 +21,21 @@
   display: grid;
   gap: var(--space-4);
   padding: var(--space-20);
+  border-radius: var(--radius-lg);
+}
+
+/* Lead economics tile: the strongest number of the section on a warm gradient. */
+.mk-partners-teaser__lead {
+  background: var(--gradient-warm);
+  box-shadow: var(--depth-2);
+}
+
+.mk-partners-teaser__lead .mk-partners-teaser__rate {
+  font-size: var(--font-size-h2);
+}
+
+.mk-partners-teaser__lead .mk-card__text {
+  color: var(--color-text-primary);
 }
 
 .mk-partners-teaser__rate {

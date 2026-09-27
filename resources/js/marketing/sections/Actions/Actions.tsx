@@ -20,7 +20,7 @@ const actions: ReadonlyArray<{title: string; text: string; status: IntegrationSt
 /** Homepage Section 07 — actions (spec §10). Only verified capabilities are marked available. */
 export function Actions() {
   return (
-    <Section id={homeAnchors.actions.id} labelledBy="actions-title" tone="surface">
+    <Section id={homeAnchors.actions.id} labelledBy="actions-title" tone="dark" stage>
       <SectionHeader
         id="actions-title"
         eyebrow="НЕ ТОЛЬКО ОТВЕЧАЕТ"
@@ -29,14 +29,14 @@ export function Actions() {
       />
 
       <div className="mk-actions__flow">
-        <div className="mk-actions__source mk-card mk-card--soft">
+        <div className="mk-actions__source mk-glass--dark">
           <span className="mk-row__meta">Клиент в диалоге</span>
           <p>«Хочу записаться на пятницу. Оставлю номер для связи.»</p>
         </div>
         <span className="mk-actions__arrow" aria-hidden="true">→</span>
-        <ul role="list" className="mk-actions__grid" aria-label="Что Scrooty может сделать дальше">
+        <ul role="list" className="mk-actions__grid" aria-label="Что Scrooty может сделать дальше" data-reveal-group>
           {actions.map(action => (
-            <li key={action.title} className="mk-card mk-actions__card">
+            <li key={action.title} className="mk-glass--dark mk-lift mk-actions__card" data-reveal="fade-up">
               <span className={`mk-pill mk-pill--${action.status}`}>{statusLabel[action.status]}</span>
               <h3 className="mk-actions__title">{action.title}</h3>
               <p className="mk-card__text">{action.text}</p>

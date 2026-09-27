@@ -15,7 +15,7 @@ const documents = [
 /** Homepage Section 06 — company knowledge (spec §10). */
 export function Knowledge() {
   return (
-    <Section id={homeAnchors.knowledge.id} labelledBy="knowledge-title">
+    <Section id={homeAnchors.knowledge.id} labelledBy="knowledge-title" tone="cool">
       <div className="mk-split mk-split--reverse">
         <div>
           <SectionHeader
@@ -31,7 +31,11 @@ export function Knowledge() {
           <p className="mk-microcopy mk-knowledge__micro">Поддерживаемые форматы уточняются в интерфейсе загрузки.</p>
         </div>
 
-        <figure className="mk-window">
+        <figure className="mk-knowledge__stack">
+          {/* Partially visible document surfaces behind the repository window: depth, not decoration. */}
+          <span className="mk-knowledge__sheet mk-knowledge__sheet--1" aria-hidden="true"/>
+          <span className="mk-knowledge__sheet mk-knowledge__sheet--2" aria-hidden="true"/>
+          <div className="mk-window mk-glass mk-glass--elevated mk-knowledge__window">
           <div className="mk-window__bar">
             <span>Базы знаний</span>
             <span className="mk-window__caption">Иллюстрация интерфейса</span>
@@ -49,6 +53,7 @@ export function Knowledge() {
                 </li>
               ))}
             </ul>
+          </div>
           </div>
           <figcaption className="mk-visually-hidden">Пример списка документов со статусами обработки.</figcaption>
         </figure>

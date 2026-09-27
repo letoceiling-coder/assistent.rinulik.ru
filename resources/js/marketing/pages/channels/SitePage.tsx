@@ -27,7 +27,7 @@ export function SitePage() {
 
       <SplitSection
         id="site-first"
-        tone="surface"
+        tone="mixed"
         eyebrow="НЕ ЧАТ ПОДДЕРЖКИ"
         title="Первый менеджер, который встречает каждого посетителя."
         description="Посетитель не ищет ответ по страницам и не ждёт обратного звонка: он сразу получает ответ и понятный следующий шаг."
@@ -50,7 +50,7 @@ export function SitePage() {
         columns={4}
       />
 
-      <PricingTeaser tone="surface"/>
+      <PricingTeaser tone="cool"/>
       <FinalCta/>
     </>
   );

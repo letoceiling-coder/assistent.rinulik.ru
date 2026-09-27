@@ -6,7 +6,18 @@
 }
 
 .mk-section {
+  position: relative;
+  isolation: isolate;
   padding-block: var(--section-space);
+}
+
+/* Larger, more editorial section headlines with more air (art direction pass). */
+.mk-section-header .mk-h2 {
+  max-width: 24ch;
+}
+
+.mk-section-header--wide .mk-h2 {
+  max-width: 24ch;
 }
 
 .mk-section--tone-canvas {
@@ -100,25 +111,4 @@
   clip: rect(0 0 0 0);
   white-space: nowrap;
   border: 0;
-}
-
-/*
- * Section reveal (spec §28: ~420ms-feel, 12px). Progressive enhancement with scroll-driven animations:
- * no JavaScript, no layout shift, content is fully visible where unsupported or with reduced motion.
- */
-@keyframes mk-reveal {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-}
-
-@supports (animation-timeline: view()) {
-  @media (prefers-reduced-motion: no-preference) {
-    .mk-section > .mk-container {
-      animation: mk-reveal linear both;
-      animation-timeline: view();
-      animation-range: entry 0% entry 35%;
-    }
-  }
 }

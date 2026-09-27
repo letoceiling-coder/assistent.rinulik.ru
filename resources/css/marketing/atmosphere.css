@@ -1,0 +1,216 @@
+/*
+ * Soft Signal Premium 2.0 — visual system layer.
+ * Gradients, section atmospheres, glass, depth and the signal-line motif.
+ * Every colour below is an approved brand colour or an opacity/mix of one. No purple, no neon.
+ */
+
+:root {
+  /* ---- Brand gradients ---- */
+  --gradient-warm: linear-gradient(135deg, #F4DE9D 0%, #F5C7B1 48%, #F28A57 100%);
+  --gradient-cool: linear-gradient(135deg, #AECBF7 0%, #CDD8F8 50%, #CAE4D1 100%);
+  --gradient-human: linear-gradient(135deg, rgba(245, 199, 177, 0.82), rgba(244, 222, 157, 0.68));
+  --gradient-product: linear-gradient(135deg, rgba(174, 203, 247, 0.72), rgba(205, 216, 248, 0.58), rgba(202, 228, 209, 0.55));
+  /* Thin border gradient for the highlighted plan / key surfaces. */
+  --gradient-border-warm: linear-gradient(135deg, #F4DE9D, #F5C7B1 40%, #F28A57);
+  --gradient-line: linear-gradient(90deg, #AECBF7, #CDD8F8 35%, #F5C7B1 70%, #F28A57);
+
+  /* ---- Atmospheres: soft light fields (radial) layered over a base ---- */
+  --atmo-cool:
+    radial-gradient(60% 70% at 85% 10%, rgba(174, 203, 247, 0.55), transparent 70%),
+    radial-gradient(50% 60% at 10% 90%, rgba(202, 228, 209, 0.5), transparent 70%),
+    radial-gradient(40% 50% at 45% 55%, rgba(205, 216, 248, 0.45), transparent 75%),
+    #F4F6FB;
+  --atmo-warm:
+    radial-gradient(55% 70% at 15% 15%, rgba(244, 222, 157, 0.55), transparent 70%),
+    radial-gradient(55% 65% at 90% 85%, rgba(245, 199, 177, 0.6), transparent 70%),
+    radial-gradient(30% 40% at 70% 20%, rgba(242, 138, 87, 0.14), transparent 75%),
+    #FAF4EC;
+  --atmo-mixed:
+    radial-gradient(50% 60% at 12% 20%, rgba(174, 203, 247, 0.5), transparent 70%),
+    radial-gradient(45% 55% at 88% 25%, rgba(245, 199, 177, 0.5), transparent 70%),
+    radial-gradient(50% 55% at 50% 100%, rgba(202, 228, 209, 0.45), transparent 70%),
+    #F7F5F1;
+  --atmo-dark:
+    radial-gradient(45% 55% at 85% 0%, rgba(174, 203, 247, 0.16), transparent 70%),
+    radial-gradient(40% 50% at 5% 100%, rgba(242, 138, 87, 0.14), transparent 70%),
+    radial-gradient(35% 45% at 50% 50%, rgba(202, 228, 209, 0.07), transparent 75%),
+    #151922;
+
+  /* ---- Glass ---- */
+  --glass-bg: rgba(255, 255, 255, 0.58);
+  --glass-bg-strong: rgba(255, 255, 255, 0.76);
+  --glass-border: rgba(255, 255, 255, 0.72);
+  --glass-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.65);
+  --glass-blur: blur(18px) saturate(120%);
+  --glass-dark-bg: rgba(255, 255, 255, 0.06);
+  --glass-dark-border: rgba(255, 255, 255, 0.12);
+
+  /* ---- Depth ---- */
+  --depth-1: 0 1px 2px rgba(20, 24, 32, 0.04), 0 8px 24px rgba(20, 24, 32, 0.05);
+  --depth-2: 0 2px 6px rgba(20, 24, 32, 0.04), 0 24px 56px rgba(20, 24, 32, 0.09);
+  --depth-3: 0 4px 12px rgba(20, 24, 32, 0.06), 0 32px 72px rgba(20, 24, 32, 0.12);
+
+  /* ---- Dark signal palette (text on #151922) ---- */
+  --dark-text: #F7F5F1;          /* 16.2:1 */
+  --dark-text-secondary: rgba(247, 245, 241, 0.74); /* ≈ 10:1 */
+
+  /* ---- Radius language ---- */
+  --radius-stage: 32px;
+}
+
+@media (max-width: 767px) {
+  :root {
+    --glass-blur: blur(10px) saturate(115%);
+  }
+}
+
+/* ============ Section atmospheres ============ */
+
+.mk-section--tone-cool { background: var(--atmo-cool); }
+.mk-section--tone-warm { background: var(--atmo-warm); }
+.mk-section--tone-mixed { background: var(--atmo-mixed); }
+
+/* Dark signal: remap semantic colours inside so every component reads correctly. */
+.mk-section--tone-dark {
+  --color-text-primary: var(--dark-text);
+  --color-text-secondary: var(--dark-text-secondary);
+  --color-border-default: rgba(255, 255, 255, 0.1);
+  --color-border-strong: rgba(255, 255, 255, 0.18);
+  --color-bg-surface: rgba(255, 255, 255, 0.06);
+  --color-bg-surface-soft: rgba(255, 255, 255, 0.08);
+  --color-bg-page: #151922;
+  --color-focus-ring: #F5C7B1;
+  background: var(--atmo-dark);
+  color: var(--dark-text);
+}
+
+/* Rounded "stage" sections that float on the canvas instead of running edge to edge. */
+.mk-stage {
+  position: relative;
+  isolation: isolate;
+  margin-inline: auto;
+  width: min(100% - 2 * var(--space-8), 1440px);
+  border-radius: var(--radius-stage);
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .mk-stage {
+    width: min(100% - 2 * var(--space-16), 1440px);
+  }
+}
+
+/* ============ Glass ============ */
+/* Only used over a coloured field: never white glass on white. */
+
+.mk-glass {
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg);
+  box-shadow: var(--glass-highlight), var(--depth-1);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+}
+
+.mk-glass--elevated {
+  background: var(--glass-bg-strong);
+  box-shadow: var(--glass-highlight), var(--depth-2);
+}
+
+.mk-glass--dark {
+  border: 1px solid var(--glass-dark-border);
+  background: var(--glass-dark-bg);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 24px 56px rgba(0, 0, 0, 0.25);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .mk-glass { background: rgba(255, 255, 255, 0.86); }
+  .mk-glass--dark { background: rgba(255, 255, 255, 0.08); }
+}
+
+/* Interactive lift for cards/panels: -2px max, soft shadow response. */
+.mk-lift {
+  transition:
+    transform var(--duration-hover) var(--ease-standard),
+    box-shadow var(--duration-hover) var(--ease-standard),
+    border-color var(--duration-hover) var(--ease-standard);
+}
+
+@media (hover: hover) {
+  .mk-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--glass-highlight), var(--depth-2);
+  }
+}
+
+/* ============ Signal line motif ============ */
+/* 1–2px gradient path with a small travelling highlight. Used in hero, how-it-works and handoff only. */
+
+.mk-signal-line {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  border-radius: var(--radius-pill);
+  background: var(--gradient-line);
+  opacity: 0.85;
+}
+
+.mk-signal-line--h { height: 2px; width: 100%; }
+.mk-signal-line--v { width: 2px; height: 100%; background: linear-gradient(180deg, #AECBF7, #CDD8F8 35%, #F5C7B1 70%, #F28A57); }
+
+.mk-signal-line::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.95), transparent);
+  background-size: 40% 100%;
+  background-repeat: no-repeat;
+  animation: mk-signal-travel 3.6s var(--ease-standard) infinite;
+}
+
+.mk-signal-line--v::after {
+  background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.95), transparent);
+  background-size: 100% 40%;
+  background-repeat: no-repeat;
+  animation-name: mk-signal-travel-v;
+}
+
+@keyframes mk-signal-travel {
+  from { background-position: -60% 0; }
+  to { background-position: 160% 0; }
+}
+
+@keyframes mk-signal-travel-v {
+  from { background-position: 0 -60%; }
+  to { background-position: 0 160%; }
+}
+
+/* Very slow ambient drift for background light fields (barely perceptible). */
+@keyframes mk-ambient {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(10px, -8px, 0) scale(1.03); }
+}
+
+/* Calm idle for the mascot: 2–3px. */
+@keyframes mk-idle {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-3px) rotate(-1deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mk-signal-line::after { animation: none; opacity: 0; }
+}
+
+/* On coloured atmospheres, supporting text is a deeper derivative of --text-secondary (≥ 4.5:1 on every pastel). */
+.mk-section--tone-cool,
+.mk-section--tone-warm,
+.mk-section--tone-mixed,
+.mk-final,
+.mk-usecase,
+.mk-human__reply--scrooty,
+.mk-hero,
+.mk-plan--business,
+.mk-plan--pro {
+  --color-text-secondary: color-mix(in srgb, var(--text-secondary), var(--text-primary) 38%);
+}

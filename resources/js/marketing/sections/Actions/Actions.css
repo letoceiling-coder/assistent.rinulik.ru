@@ -1,3 +1,5 @@
+/* Actions — the dark premium break: graphite atmosphere, dark glass, pastel status signals. */
+
 .mk-actions__flow {
   display: grid;
   gap: var(--space-16);
@@ -14,18 +16,27 @@
 .mk-actions__source {
   display: grid;
   gap: var(--space-8);
+  padding: var(--space-24);
+  border-radius: var(--radius-lg);
+  font-size: var(--font-size-body-l);
+  line-height: var(--line-height-body-l);
 }
 
 .mk-actions__arrow {
   justify-self: center;
-  color: var(--color-text-secondary);
-  font-size: 1.5rem;
-  transform: rotate(90deg);
+  width: 2px;
+  height: 32px;
+  overflow: hidden;
+  border-radius: var(--radius-pill);
+  background: var(--gradient-line);
+  color: transparent;
+  font-size: 0;
 }
 
 @media (min-width: 1024px) {
   .mk-actions__arrow {
-    transform: none;
+    width: 48px;
+    height: 2px;
   }
 }
 
@@ -44,6 +55,11 @@
   .mk-actions__grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
+
+  /* Editorial rhythm: the two available actions lead with more room. */
+  .mk-actions__grid > :nth-child(-n + 2) {
+    grid-column: span 1;
+  }
 }
 
 .mk-actions__card {
@@ -51,10 +67,21 @@
   align-content: start;
   gap: var(--space-8);
   padding: var(--space-20);
+  border-radius: var(--radius-lg);
 }
 
 .mk-actions__title {
   font-size: var(--font-size-body-l);
   font-weight: var(--font-weight-ui);
   line-height: 1.3;
+}
+
+/* Pastel status pills keep dark text on light fills (AA on any background). */
+.mk-section--tone-dark .mk-pill {
+  color: #151922;
+}
+
+.mk-section--tone-dark .mk-pill--planned {
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: none;
 }

@@ -34,7 +34,7 @@ export function TelegramPage() {
 
       <CardGrid
         id="telegram-scenarios"
-        tone="surface"
+        tone="mixed"
         eyebrow="СЦЕНАРИИ"
         title="Что Scrooty берёт на себя в Telegram."
         items={[
@@ -59,7 +59,7 @@ export function TelegramPage() {
 
       <StepsSection
         id="telegram-setup"
-        tone="surface"
+        tone="mixed"
         eyebrow="ПОДКЛЮЧЕНИЕ"
         title="Запуск в Telegram — в несколько шагов."
         steps={['Создайте AI-менеджера: задача, стиль общения, знания.', 'Проверьте ответы в тестовом чате.', 'Создайте бота в Telegram и скопируйте его токен.', 'Вставьте токен в разделе «Интеграции» кабинета.']}

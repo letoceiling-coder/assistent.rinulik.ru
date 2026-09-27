@@ -10,6 +10,8 @@ import './Hero.css';
 /** Anchor target of the demo surface (spec destination `/#demo`). */
 export const HERO_DEMO_ID = 'demo';
 
+const heroSources = ['Avito', 'Telegram', 'MAX', 'Сайт'] as const;
+
 /**
  * Homepage hero (spec §10 Section 02). Copy is exact approved copy.
  * Owns layout and CTA wiring only; the conversation is the page's shared LiveDemo.
@@ -19,6 +21,8 @@ export function Hero() {
 
   return (
     <section className="mk-hero" aria-labelledby="hero-title">
+      {/* Soft light fields (cool, warm, mint). Light, not blobs; drift almost imperceptibly. */}
+      <div className="mk-hero__fields" aria-hidden="true"><span/><span/><span/></div>
       <Container className="mk-hero__grid">
         <div className="mk-hero__copy">
           <p className="mk-eyebrow mk-hero__eyebrow">AI-МЕНЕДЖЕР ДЛЯ ВХОДЯЩИХ ОБРАЩЕНИЙ</p>
@@ -61,9 +65,17 @@ export function Hero() {
         </div>
 
         <div className="mk-hero__visual">
-          {/* Approved mascot (decorative next to the product surface; never over input, CTA or messages). */}
-          <img className="mk-hero__mascot" src={mascotUrl} alt="" width={96} height={96} decoding="async" fetchPriority="low"/>
-          <LiveDemo id={HERO_DEMO_ID}/>
+          <div className="mk-hero__stage">
+            {/* Source rail: where conversations come from, flowing into Scrooty along the signal line. Decorative:
+                the channels are already named in the copy. */}
+            <div className="mk-hero__sources" aria-hidden="true">
+              <span className="mk-signal-line mk-hero__rail"/>
+              {heroSources.map(source => <span key={source} className="mk-glass mk-hero__source">{source}</span>)}
+            </div>
+            {/* Approved mascot as a calm character accent on the stage edge; never over input, CTA or messages. */}
+            <img className="mk-hero__mascot" src={mascotUrl} alt="" width={88} height={88} decoding="async" fetchPriority="low"/>
+            <LiveDemo id={HERO_DEMO_ID}/>
+          </div>
         </div>
       </Container>
     </section>

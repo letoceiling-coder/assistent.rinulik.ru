@@ -15,3 +15,38 @@
   font-size: var(--font-size-ui-sm);
   text-align: center;
 }
+
+/* Layered repository: glass window over two partially visible document sheets. */
+.mk-knowledge__stack {
+  position: relative;
+  isolation: isolate;
+  padding: var(--space-16) var(--space-16) 0 0;
+}
+
+.mk-knowledge__sheet {
+  position: absolute;
+  z-index: -1;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  background: var(--glass-bg);
+  box-shadow: var(--depth-1);
+}
+
+.mk-knowledge__sheet--1 {
+  inset: 0 0 var(--space-32) var(--space-32);
+  transform: rotate(2deg);
+}
+
+.mk-knowledge__sheet--2 {
+  inset: var(--space-8) var(--space-8) var(--space-16) var(--space-16);
+  background: rgba(202, 228, 209, 0.55);
+  transform: rotate(-1.5deg);
+}
+
+.mk-knowledge__window {
+  border-radius: var(--radius-xl);
+}
+
+.mk-knowledge__window .mk-knowledge__drop {
+  background: rgba(255, 255, 255, 0.6);
+}

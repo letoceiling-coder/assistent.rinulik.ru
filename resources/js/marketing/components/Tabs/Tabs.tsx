@@ -1,4 +1,4 @@
-import {useRef, type KeyboardEvent} from 'react';
+import {useLayoutEffect, useRef, useState, type KeyboardEvent} from 'react';
 import {cx} from '../../../shared/lib/cx';
 import './Tabs.css';
 
@@ -26,6 +26,18 @@ export function Tabs<T extends string>({label, idPrefix, items, value, onChange,
   className?: string;
 }) {
   const refs = useRef<Array<HTMLButtonElement | null>>([]);
+  const [indicator, setIndicator] = useState<{x: number; w: number} | null>(null);
+
+  // Sliding active surface: measure the selected tab and move one shared indicator to it.
+  useLayoutEffect(() => {
+    const measure = () => {
+      const el = refs.current[items.findIndex(i => i.id === value)];
+      if (el) setIndicator({x: el.offsetLeft, w: el.offsetWidth});
+    };
+    measure();
+    window.addEventListener('resize', measure);
+    return () => window.removeEventListener('resize', measure);
+  }, [value, items]);
 
   function onKeyDown(event: KeyboardEvent<HTMLButtonElement>, index: number) {
     const last = items.length - 1;
@@ -42,7 +54,10 @@ export function Tabs<T extends string>({label, idPrefix, items, value, onChange,
   }
 
   return (
-    <div role="tablist" aria-label={label} className={cx('mk-tabs', `mk-tabs--${variant}`, className)}>
+    <div role="tablist" aria-label={label} className={cx('mk-tabs', `mk-tabs--${variant}`, indicator && 'has-indicator', className)}>
+      {indicator && (
+        <span className="mk-tabs__indicator" aria-hidden="true" style={{transform: `translateX(${indicator.x}px)`, width: indicator.w}}/>
+      )}
       {items.map((item, index) => {
         const selected = item.id === value;
         return (

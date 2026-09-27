@@ -26,37 +26,36 @@
   text-align: center;
 }
 
-.mk-handoff__mascot {
-  width: 56px;
-  height: 56px;
-  border-radius: var(--radius-pill);
-  object-fit: cover;
-  box-shadow: 0 0 0 3px var(--color-bg-surface), var(--shadow-card);
-}
-
-@media (min-width: 1024px) {
-  .mk-handoff__mascot {
-    width: 64px;
-    height: 64px;
-  }
-}
-
 .mk-handoff__pill {
+  padding: var(--space-8) var(--space-12);
+  border-radius: var(--radius-pill);
+  font-size: var(--font-size-label);
+  font-weight: var(--font-weight-ui);
   white-space: normal;
 }
 
 .mk-handoff__line {
   width: 2px;
-  height: 32px;
-  background: linear-gradient(var(--color-border-strong), transparent);
+  height: 28px;
 }
 
 @media (min-width: 1024px) {
-  .mk-handoff__line {
-    width: 100%;
-    height: 2px;
-    background: linear-gradient(90deg, var(--color-border-strong), var(--color-action-primary));
+  .mk-handoff__connector {
+    flex-direction: row;
+    gap: var(--space-8);
   }
+
+  .mk-handoff__line {
+    flex: 1;
+    width: auto;
+    height: 2px;
+  }
+}
+
+/* The manager card is the result: solid white surface, strongest depth in the section. */
+.mk-handoff__summary {
+  border-radius: var(--radius-xl);
+  box-shadow: var(--depth-3);
 }
 
 .mk-handoff__facts {

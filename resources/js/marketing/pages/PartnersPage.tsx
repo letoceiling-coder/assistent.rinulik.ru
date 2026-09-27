@@ -49,7 +49,7 @@ export function PartnersPage() {
         note="Подключение к партнёрской программе — после регистрации аккаунта."
       />
 
-      <Section id="economics" labelledBy="economics-title" tone="surface">
+      <Section id="economics" labelledBy="economics-title" tone="cool">
         <SectionHeader id="economics-title" eyebrow="ЭКОНОМИКА" title="Внедрение оплачивает вашу работу. Recurring создаёт предсказуемый доход."/>
         <ul role="list" className="mk-card-grid mk-card-grid--3">
           <li className="mk-card mk-card-grid__item"><h3 className="mk-card-grid__title">100% стоимости внедрения остаётся вам.</h3></li>
@@ -85,7 +85,7 @@ export function PartnersPage() {
         </div>
       </Section>
 
-      <Section id="calculator-section" labelledBy="calculator-title" tone="surface">
+      <Section id="calculator-section" labelledBy="calculator-title" tone="warm" stage>
         <SectionHeader id="calculator-title" eyebrow="КАЛЬКУЛЯТОР" title="Посчитайте recurring-доход." description="Формула видна целиком: клиенты × подписка × ваш процент."/>
         <PartnerCalculator id="calculator"/>
       </Section>

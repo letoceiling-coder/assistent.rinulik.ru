@@ -25,11 +25,11 @@ export function PricingPreview() {
   }, []);
 
   return (
-    <Section id="pricing" labelledBy="pricing-title">
+    <Section id="pricing" labelledBy="pricing-title" tone="canvas">
       <SectionHeader
         id="pricing-title"
         eyebrow="ПРОЗРАЧНЫЕ ТАРИФЫ"
-        title="Начните с 2 490 ₽ в месяц."
+        title="Начните с 2 490 ₽ в месяц."
         description="Во всех тарифах есть 7 дней бесплатно без карты. Вы платите за объём диалогов и возможности, а не за название модели."
       />
       <div className="mk-pricing-toggle">

@@ -33,6 +33,36 @@
   cursor: pointer;
 }
 
+.mk-faq__question {
+  margin-inline: calc(-1 * var(--space-12));
+  padding-inline: var(--space-12);
+  border-radius: var(--radius-sm);
+  transition: background-color var(--duration-hover) var(--ease-standard);
+}
+
+@media (hover: hover) {
+  .mk-faq__question:hover {
+    background: color-mix(in srgb, var(--accent-periwinkle) 35%, transparent);
+  }
+}
+
+/* Controlled open transition where supported (progressive enhancement). */
+@supports (interpolate-size: allow-keywords) {
+  .mk-faq__list {
+    interpolate-size: allow-keywords;
+  }
+
+  .mk-faq__item::details-content {
+    height: 0;
+    overflow: clip;
+    transition: height var(--duration-modal) var(--ease-standard), content-visibility var(--duration-modal) allow-discrete;
+  }
+
+  .mk-faq__item[open]::details-content {
+    height: auto;
+  }
+}
+
 .mk-faq__question::-webkit-details-marker {
   display: none;
 }

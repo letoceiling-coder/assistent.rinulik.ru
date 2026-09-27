@@ -66,3 +66,17 @@
 .mk-calc__formula {
   font-variant-numeric: tabular-nums;
 }
+
+/* Calculator as a glass panel on the warm field; the revenue number is the section's typographic moment. */
+.mk-section--tone-warm .mk-calc {
+  border-color: var(--glass-border);
+  background: var(--glass-bg-strong);
+  box-shadow: var(--glass-highlight), var(--depth-2);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+}
+
+.mk-calc__value {
+  font-size: var(--font-size-display-l);
+  letter-spacing: -0.02em;
+}

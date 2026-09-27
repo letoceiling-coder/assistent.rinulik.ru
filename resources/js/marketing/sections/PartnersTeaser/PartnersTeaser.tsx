@@ -9,7 +9,7 @@ import './PartnersTeaser.css';
 /** Homepage Section 13 — partners (spec §10). */
 export function PartnersTeaser() {
   return (
-    <Section id="partners" labelledBy="partners-title" tone="surface">
+    <Section id="partners" labelledBy="partners-title" tone="warm" stage>
       <div className="mk-split">
         <div>
           <SectionHeader
@@ -25,12 +25,12 @@ export function PartnersTeaser() {
           <p className="mk-microcopy mk-partners-teaser__micro">Комиссия начисляется по правилам партнёрской программы. Условия фиксации клиента и выплат раскрыты до регистрации.</p>
         </div>
         <ul role="list" className="mk-partners-teaser__levels">
-          <li className="mk-card mk-card--soft">
+          <li className="mk-partners-teaser__lead">
             <span className="mk-partners-teaser__rate">100%</span>
             <span className="mk-card__text">оплаты за внедрение остаётся вам</span>
           </li>
           {partnerLevels.map(level => (
-            <li key={level.id} className="mk-card">
+            <li key={level.id} className="mk-glass mk-lift">
               <span className="mk-partners-teaser__rate">{percent(level.rate)}</span>
               <span><strong>{level.name}</strong> · <span className="mk-card__text">{level.requirement}</span></span>
             </li>

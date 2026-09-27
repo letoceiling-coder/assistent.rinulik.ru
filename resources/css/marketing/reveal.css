@@ -1,0 +1,31 @@
+/*
+ * Reveal system: elements with [data-reveal] start hidden only after JS has armed the page
+ * (html[data-reveal-ready]); an IntersectionObserver then sets [data-revealed].
+ * Variants: fade-up (default), fade, scale-soft. Groups ([data-reveal-group]) stagger at most 4 children.
+ * Reduced motion: nothing is hidden or animated.
+ */
+
+@media (prefers-reduced-motion: no-preference) {
+  html[data-reveal-ready] [data-reveal]:not([data-revealed]) {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  html[data-reveal-ready] [data-reveal='fade']:not([data-revealed]) {
+    transform: none;
+  }
+
+  html[data-reveal-ready] [data-reveal='scale-soft']:not([data-revealed]) {
+    transform: translateY(8px) scale(0.985);
+  }
+
+  html[data-reveal-ready] [data-reveal] {
+    transition:
+      opacity 460ms var(--ease-enter),
+      transform 460ms var(--ease-enter);
+  }
+
+  html[data-reveal-ready] [data-reveal-group] > [data-reveal]:nth-child(2) { transition-delay: 70ms; }
+  html[data-reveal-ready] [data-reveal-group] > [data-reveal]:nth-child(3) { transition-delay: 140ms; }
+  html[data-reveal-ready] [data-reveal-group] > [data-reveal]:nth-child(n + 4) { transition-delay: 210ms; }
+}

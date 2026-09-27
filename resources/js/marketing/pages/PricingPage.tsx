@@ -35,7 +35,7 @@ export function PricingPage() {
         <p className="mk-microcopy mk-plans-note">{dialogDefinition}</p>
       </Section>
 
-      <Section id="compare" labelledBy="compare-title" tone="surface">
+      <Section id="compare" labelledBy="compare-title" tone="mixed">
         <SectionHeader id="compare-title" eyebrow="СРАВНЕНИЕ" title="Что входит в каждый тариф."/>
         <div className="mk-table-wrap" role="region" aria-labelledby="compare-title" tabIndex={0}>
           <table className="mk-table">

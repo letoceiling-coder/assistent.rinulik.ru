@@ -69,11 +69,11 @@ export function HumanProof() {
           <p><span className="mk-human__label">Клиент</span> {scenario.customer}</p>
         </div>
         <div className="mk-human__compare">
-          <article className="mk-card mk-card--soft mk-human__reply" aria-label="Ответ обычного бота">
+          <article className="mk-human__reply mk-human__reply--bot" aria-label="Ответ обычного бота">
             <h3 className="mk-human__who">Обычный бот</h3>
             <p>{scenario.bot}</p>
           </article>
-          <article className="mk-card mk-human__reply mk-human__reply--scrooty" aria-label="Ответ Scrooty">
+          <article className="mk-human__reply mk-human__reply--scrooty" aria-label="Ответ Scrooty">
             <h3 className="mk-human__who">Scrooty</h3>
             <p>{scenario.scrooty}</p>
             <p className="mk-human__why">{scenario.why}</p>

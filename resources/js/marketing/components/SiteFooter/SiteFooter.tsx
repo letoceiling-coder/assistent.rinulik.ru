@@ -48,7 +48,8 @@ export function SiteFooter({isHome}: {isHome: boolean}) {
       <Container>
         <div className="mk-footer__grid">
           <div className="mk-footer__brand">
-            <Wordmark isCurrent={isHome} height={32}/>
+            {/* The approved logo has a light background and no light variant: it sits on a light plate, unaltered. */}
+            <span className="mk-footer__logo-plate"><Wordmark isCurrent={isHome} height={32}/></span>
             <p className="mk-footer__tagline">AI-менеджер, который отвечает клиентам быстро и по-человечески.</p>
           </div>
           {groups.map(group => (

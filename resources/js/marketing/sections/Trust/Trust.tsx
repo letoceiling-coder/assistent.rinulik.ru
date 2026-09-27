@@ -20,16 +20,17 @@ const tiles = [
 /** Homepage Section 11 — trust (spec §10, §37). */
 export function Trust() {
   return (
-    <Section id="trust" labelledBy="trust-title" tone="surface">
+    <Section id="trust" labelledBy="trust-title" tone="mixed" stage>
       <SectionHeader
         id="trust-title"
         eyebrow="НЕ ОБЕЩАНИЕ. РАБОТАЮЩИЙ ПРОДУКТ."
         title="Проверьте Scrooty на своём вопросе."
         description="Посмотрите демо-разговор, интерфейс, доступные интеграции и прозрачные тарифы. Реальные кейсы появятся только с разрешения клиентов."
       />
-      <ul role="list" className="mk-trust">
-        {tiles.map(tile => (
-          <li key={tile.title} className="mk-card mk-trust__tile">
+      <ul role="list" className="mk-trust" data-reveal-group>
+        {tiles.map((tile, index) => (
+          <li key={tile.title} className="mk-glass mk-lift mk-trust__tile" data-reveal="fade-up">
+            <span className="mk-trust__index" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
             <h3 className="mk-trust__title">{tile.title}</h3>
             <p className="mk-card__text">{tile.text}</p>
             <ButtonLink variant="text" size="sm" href={tile.href}>{tile.cta}</ButtonLink>

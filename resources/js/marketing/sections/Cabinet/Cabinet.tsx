@@ -77,13 +77,14 @@ const tabs: ReadonlyArray<{id: TabId; label: string}> = [
 export function Cabinet() {
   const [active, setActive] = useState<TabId>('managers');
   return (
-    <Section id="cabinet" labelledBy="cabinet-title" tone="surface">
+    <Section id="cabinet" labelledBy="cabinet-title">
       <SectionHeader
         id="cabinet-title"
         eyebrow="ОДИН КАБИНЕТ"
         title="Создайте, обучите, проверьте и запустите своего менеджера."
         description="Настройте роль и стиль, добавьте знания, протестируйте разговор, подключите каналы и следите за обращениями."
       />
+      <div className="mk-cabinet__stage" data-reveal="scale-soft">
       <div className="mk-window mk-cabinet">
         <div className="mk-cabinet__tabs">
           <Tabs label="Раздел кабинета" idPrefix="cabinet" variant="underline" items={tabs} value={active} onChange={setActive}/>
@@ -92,6 +93,7 @@ export function Cabinet() {
         <div {...tabPanelProps('cabinet', active)} className="mk-window__body mk-cabinet__panel">
           <Panel tab={active}/>
         </div>
+      </div>
       </div>
       <div className="mk-section-cta">
         <ButtonLink variant="secondary" href={productLinks.register}>Создать Scrooty</ButtonLink>

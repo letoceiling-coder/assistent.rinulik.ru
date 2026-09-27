@@ -40,7 +40,18 @@ export function Channels() {
   const scene = channelScenes[active];
 
   return (
-    <Section id={homeAnchors.features.id} labelledBy="channels-title" tone="surface">
+    <Section
+      id={homeAnchors.features.id}
+      labelledBy="channels-title"
+      tone="cool"
+      className="mk-channels"
+      backdrop={
+        // Per-channel Scrooty signal atmosphere (section colours, not the channels' own brand colours); crossfades.
+        <div className="mk-channels__atmos" data-channel={active} aria-hidden="true">
+          {channels.map(c => <span key={c.id} data-for={c.id}/>)}
+        </div>
+      }
+    >
       <div className="mk-split">
         <div>
           <SectionHeader
@@ -52,7 +63,7 @@ export function Channels() {
           <ul role="list" className="mk-channels__list">
             {channels.map(c => (
               <li key={c.id}>
-                <a href={routePath(c.routeId)} className="mk-channels__link">
+                <a href={routePath(c.routeId)} className="mk-glass mk-lift mk-channels__link" data-channel={c.id}>
                   <span className="mk-channels__name">Scrooty для {c.id === 'site' ? 'сайта' : c.name}</span>
                   <span className={`mk-pill mk-pill--${c.status}`}>{statusLabel[c.status]}</span>
                 </a>
@@ -62,7 +73,7 @@ export function Channels() {
           <p className="mk-microcopy mk-channels__micro">Доступность конкретного подключения зависит от аккаунта и требований канала.</p>
         </div>
 
-        <div className="mk-window mk-channels__hub">
+        <div className="mk-window mk-glass mk-glass--elevated mk-channels__hub" data-channel={active}>
           <div className="mk-window__bar">
             <span>Диалоги · один AI-менеджер</span>
             <span className="mk-window__caption">Пример диалога</span>
@@ -79,9 +90,11 @@ export function Channels() {
           </div>
           <div {...tabPanelProps('channels', active)} className="mk-window__body mk-channels__panel">
             <div className="mk-channels__source">
-              <span className="mk-pill mk-pill--info mk-pill--plain">{channel.name}</span>
-              <span className="mk-row__meta">{scene.source}</span>
+              <span className="mk-channels__badge">{channel.name}</span>
+              <span className="mk-signal-line mk-signal-line--h mk-channels__signal" aria-hidden="true"/>
+              <span className="mk-channels__scrooty">Scrooty</span>
             </div>
+            <p className="mk-row__meta">{scene.source}</p>
             <ol role="list" className="mk-channels__thread">
               <ChatMessage author="customer" text={scene.customer}/>
               <ChatMessage author="scrooty" text={scene.answer}/>

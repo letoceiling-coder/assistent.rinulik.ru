@@ -50,7 +50,7 @@ export function IntegrationsPage() {
         </ul>
       </Section>
 
-      <Section id="roadmap" labelledBy="roadmap-title" tone="surface">
+      <Section id="roadmap" labelledBy="roadmap-title" tone="cool">
         <SectionHeader
           id="roadmap-title"
           eyebrow="В ПЛАНАХ"
