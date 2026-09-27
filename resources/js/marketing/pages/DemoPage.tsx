@@ -27,7 +27,7 @@ export function DemoPage() {
           <p className="mk-body-l mk-demo-page__body">Опишите свой бизнес или задайте вопрос о продукте. Первые четыре сообщения доступны без регистрации.</p>
         </div>
         <div className="mk-demo-page__stage">
-          <LiveDemo id="demo"/>
+          <LiveDemo id="demo" size="page"/>
         </div>
       </Container>
     </section>

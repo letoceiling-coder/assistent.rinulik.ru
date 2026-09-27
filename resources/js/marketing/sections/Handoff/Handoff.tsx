@@ -1,21 +1,14 @@
-import {ButtonLink} from '../../components/Button/Button';
 import {ChatMessage} from '../../components/ChatMessage/ChatMessage';
 import {Section} from '../../components/Section';
 import {SectionHeader} from '../../components/SectionHeader';
 import {homeAnchors} from '../../config/navigation';
-import {routePath} from '../../config/routes';
 import './Handoff.css';
 
-/** Homepage Section 08 — human handoff (spec §10). Example content; rules are configured per manager. */
+/** Homepage — human handoff, shown not told. Example content; rules are configured per manager. */
 export function Handoff() {
   return (
     <Section id={homeAnchors.handoff.id} labelledBy="handoff-title" tone="warm">
-      <SectionHeader
-        id="handoff-title"
-        eyebrow="ЧЕЛОВЕК ПОДКЛЮЧАЕТСЯ ВОВРЕМЯ"
-        title="Scrooty отвечает сам. Менеджер включается там, где действительно нужен."
-        description="Scrooty распознаёт заданные условия передачи и отправляет сотруднику не просто уведомление, а готовый контекст разговора."
-      />
+      <SectionHeader id="handoff-title" align="center" title="Человек подключается вовремя."/>
 
       <div className="mk-handoff">
         <figure className="mk-window mk-glass mk-glass--elevated mk-handoff__thread">
@@ -24,15 +17,15 @@ export function Handoff() {
             <span className="mk-window__caption">Пример</span>
           </div>
           <ol role="list" className="mk-window__body mk-handoff__messages">
-            <ChatMessage author="customer" text="Нужно оборудовать переговорную на 12 человек. Сделаете смету?"/>
-            <ChatMessage author="scrooty" text="Да, поможем. Подскажите город и к какому сроку нужно — передам запрос менеджеру вместе с деталями."/>
+            <ChatMessage author="customer" text="Сделаете смету на переговорную для 12 человек?"/>
+            <ChatMessage author="scrooty" text="Да. Какой город и срок? Передам менеджеру с деталями."/>
             <ChatMessage author="customer" text="Москва, к концу месяца."/>
           </ol>
         </figure>
 
         <div className="mk-handoff__connector">
           <span className="mk-signal-line mk-handoff__line" aria-hidden="true" data-reveal="draw"/>
-          <span className="mk-glass mk-handoff__pill">Условие: запрос сметы</span>
+          <span className="mk-glass mk-handoff__pill">Нужна смета</span>
           <span className="mk-signal-line mk-handoff__line" aria-hidden="true" data-reveal="draw"/>
         </div>
 
@@ -42,18 +35,14 @@ export function Handoff() {
             <span className="mk-pill mk-pill--info mk-pill--plain">Новый</span>
           </div>
           <dl className="mk-window__body mk-handoff__facts">
-            <div><dt>Запрос</dt><dd>Оборудование переговорной на 12 человек, нужна смета</dd></div>
+            <div><dt>Запрос</dt><dd>Смета на переговорную, 12 человек</dd></div>
             <div><dt>Город</dt><dd>Москва</dd></div>
             <div><dt>Срок</dt><dd>К концу месяца</dd></div>
-            <div><dt>Причина передачи</dt><dd>Клиент просит индивидуальный расчёт</dd></div>
+            <div><dt>Причина</dt><dd>Индивидуальный расчёт</dd></div>
           </dl>
         </article>
       </div>
 
-      <div className="mk-section-cta">
-        <ButtonLink variant="secondary" href={`${routePath('demo')}?scenario=handoff`}>Посмотреть сценарий</ButtonLink>
-        <p className="mk-microcopy">Правила передачи задаются отдельно для каждого AI-менеджера.</p>
-      </div>
     </Section>
   );
 }

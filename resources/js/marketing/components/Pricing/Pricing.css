@@ -24,6 +24,19 @@
   cursor: pointer;
 }
 
+/* Phones: tighter segments so both periods stay on one line down to 360px. */
+@media (max-width: 479px) {
+  .mk-billing__option {
+    gap: 6px;
+    padding-inline: 10px;
+    font-size: var(--font-size-ui-sm);
+  }
+
+  .mk-billing .mk-billing__hint {
+    padding-inline: 6px;
+  }
+}
+
 .mk-billing__option input {
   position: absolute;
   opacity: 0;

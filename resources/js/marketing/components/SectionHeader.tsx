@@ -1,5 +1,8 @@
 import type {ReactNode} from 'react';
 import {cx} from '../../shared/lib/cx';
+import {typo} from '../../shared/lib/typography';
+
+const t = (node: ReactNode) => (typeof node === 'string' ? typo(node) : node);
 
 /**
  * Eyebrow + title + description block.
@@ -18,8 +21,8 @@ export function SectionHeader({id, level = 2, eyebrow, title, description, align
   return (
     <div className={cx('mk-section-header', align === 'center' && 'mk-section-header--center')}>
       {eyebrow && <p className="mk-eyebrow mk-section-header__eyebrow">{eyebrow}</p>}
-      <Heading id={id} className={level === 1 ? 'mk-display-l' : 'mk-h2'}>{title}</Heading>
-      {description && <p className="mk-body-l mk-section-header__description">{description}</p>}
+      <Heading id={id} className={level === 1 ? 'mk-display-l' : 'mk-h2'}>{t(title)}</Heading>
+      {description && <p className="mk-body-l mk-section-header__description">{t(description)}</p>}
     </div>
   );
 }

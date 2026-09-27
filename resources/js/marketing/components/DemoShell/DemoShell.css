@@ -1,4 +1,4 @@
-/* DemoShell — product conversation surface (spec §10 Section 02, §27). */
+/* DemoShell — the product conversation surface (hero and /demo). */
 
 .mk-demo {
   display: flex;
@@ -26,21 +26,29 @@
   box-shadow: 0 0 0 6px var(--color-signal-peach), var(--shadow-soft);
 }
 
+/* ---- Header: avatar, name, live status, subtle counter ---- */
 .mk-demo__bar {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
   gap: var(--space-12);
-  padding: var(--space-16) var(--space-20);
+  padding: var(--space-12) var(--space-20);
   border-bottom: 1px solid var(--color-border-default);
+}
+
+.mk-demo__avatar {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-pill);
+  object-fit: cover;
 }
 
 .mk-demo__identity {
   display: flex;
-  align-items: baseline;
-  gap: var(--space-8);
+  flex: 1;
+  flex-direction: column;
   min-width: 0;
+  line-height: 1.25;
 }
 
 .mk-demo__name {
@@ -48,87 +56,145 @@
   font-weight: var(--font-weight-ui);
 }
 
-.mk-demo__role {
+.mk-demo__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   color: var(--color-text-secondary);
-  white-space: nowrap;
   font-size: var(--font-size-label);
 }
 
-.mk-demo__badge {
-  flex-shrink: 0;
-  padding: var(--space-4) var(--space-12);
+.mk-demo__status i {
+  width: 7px;
+  height: 7px;
   border-radius: var(--radius-pill);
-  background: var(--color-bg-surface-soft);
-  color: var(--color-text-secondary);
-  font-size: var(--font-size-label);
-  font-weight: var(--font-weight-ui);
-  line-height: var(--line-height-label);
+  background: #3FA46A; /* status green (derived from --success, darkened for a visible dot) */
+  box-shadow: 0 0 0 3px rgba(154, 200, 170, 0.35);
 }
 
+.mk-demo__counter {
+  flex-shrink: 0;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-label);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- Conversation: scrolls inside, never grows the page ---- */
 .mk-demo__scroll {
   display: flex;
   flex: 1;
   flex-direction: column;
   justify-content: flex-end;
   min-height: 0;
-  padding: var(--space-24) var(--space-20);
+  padding: var(--space-20);
   overflow-y: auto;
   overscroll-behavior: contain;
+  scrollbar-width: thin;
 }
 
 .mk-demo__messages {
   display: flex;
   flex-direction: column;
-  gap: var(--space-16);
+  gap: var(--space-12);
+}
+
+.mk-demo__messages.is-preview {
+  opacity: 0.7;
+}
+
+.mk-demo__preview-label {
+  align-self: center;
+  margin-block-end: var(--space-12);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-label);
 }
 
 .mk-demo__typing {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   gap: var(--space-8);
-  margin-block-start: var(--space-16);
-  color: var(--color-text-secondary);
-  font-size: var(--font-size-ui-sm);
+  margin-block-start: var(--space-12);
 }
 
 .mk-demo__typing-dots {
   display: inline-flex;
-  gap: 3px;
+  gap: 4px;
+  padding: 14px 16px;
+  border-radius: var(--radius-md);
+  border-end-start-radius: var(--space-4);
+  background: var(--bg-surface-soft);
 }
 
 .mk-demo__typing-dots i {
   width: 6px;
   height: 6px;
   border-radius: var(--radius-pill);
-  background: var(--color-text-secondary);
-  opacity: 0.4;
+  background: var(--text-secondary);
+  opacity: 0.35;
   animation: mk-typing 1s var(--ease-standard) infinite;
 }
 
-.mk-demo__typing-dots i:nth-child(2) {
-  animation-delay: 0.15s;
-}
+.mk-demo__typing-dots i:nth-child(2) { animation-delay: 0.15s; }
+.mk-demo__typing-dots i:nth-child(3) { animation-delay: 0.3s; }
 
-.mk-demo__typing-dots i:nth-child(3) {
-  animation-delay: 0.3s;
-}
-
-/* Only visible while a reply is pending (well under a second); removed with the indicator. */
+/* Only while a reply is actually in flight. */
 @keyframes mk-typing {
   50% {
     opacity: 1;
+    transform: translateY(-2px);
   }
 }
 
-.mk-demo__gate {
+/* ---- Composer ---- */
+.mk-demo__composer {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  gap: var(--space-8);
+  padding: var(--space-12) var(--space-20) var(--space-16);
+  border-top: 1px solid var(--color-border-default);
+  background: var(--color-bg-page);
+}
+
+.mk-demo__suggestions {
+  display: flex;
+  gap: var(--space-8);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.mk-demo__suggestions::-webkit-scrollbar {
+  display: none;
+}
+
+.mk-demo__suggestions .mk-chip {
+  flex-shrink: 0;
+}
+
+.mk-demo__note {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-label);
+  line-height: var(--line-height-label);
+}
+
+/* Gate / alert callouts: short, visual, one action row. */
+.mk-demo__gate {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
   gap: var(--space-12);
+  padding: var(--space-12) var(--space-4);
+}
+
+.mk-demo__gate-copy {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+  flex: 1 1 16rem;
 }
 
 .mk-demo__gate-title {
-  font-size: var(--font-size-body-l);
+  font-size: var(--font-size-body);
   font-weight: var(--font-weight-ui);
   line-height: 1.35;
 }
@@ -139,25 +205,20 @@
 
 .mk-demo__gate-body {
   color: var(--color-text-secondary);
+  font-size: var(--font-size-ui-sm);
 }
 
 .mk-demo__gate-actions {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-8);
-  margin-block-start: var(--space-4);
-}
-
-.mk-demo__meta {
-  color: var(--color-text-secondary);
-  font-size: var(--font-size-label);
-  line-height: var(--line-height-label);
 }
 
 .mk-demo__alert {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: space-between;
   gap: var(--space-8) var(--space-12);
   padding: var(--space-12) var(--space-16);
   border-radius: var(--radius-sm);
@@ -166,56 +227,36 @@
   font-size: var(--font-size-ui-sm);
 }
 
-.mk-demo__composer {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-12);
-  padding: var(--space-16) var(--space-20) var(--space-20);
-  border-top: 1px solid var(--color-border-default);
-  background: var(--color-bg-page);
+/* ---- Sizes ---- */
+.mk-demo--hero .mk-demo__scroll {
+  height: 20rem;
 }
 
-.mk-demo__suggestions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-8);
+.mk-demo--page .mk-demo__scroll {
+  height: min(32rem, 55vh);
 }
 
-/* Narrow phones: keep the bar on one line; the category is already stated by the hero eyebrow. */
-@media (max-width: 399px) {
-  .mk-demo__role {
-    display: none;
+@media (min-width: 768px) {
+  .mk-demo--hero .mk-demo__scroll {
+    height: 22rem;
   }
 }
 
 @media (max-width: 767px) {
-  .mk-demo__bar {
-    padding: var(--space-12) var(--space-16);
-  }
-
-  .mk-demo__scroll {
-    padding: var(--space-20) var(--space-16);
-  }
-
-  .mk-demo__messages {
-    gap: var(--space-12);
-  }
-
-  .mk-demo__scroll {
-    max-height: 26rem;
-  }
-
+  .mk-demo__bar,
   .mk-demo__composer {
-    padding: var(--space-12) var(--space-16) var(--space-16);
+    padding-inline: var(--space-16);
+  }
+
+  .mk-demo__scroll {
+    padding: var(--space-16);
+  }
+
+  .mk-demo--hero .mk-demo__scroll {
+    height: 18rem;
   }
 
   .mk-demo .mk-msg {
-    max-width: 88%;
+    max-width: 90%;
   }
-}
-
-.mk-demo__note {
-  display: inline-block;
-  margin-block-start: 2px;
-  color: var(--color-text-secondary);
 }

@@ -30,74 +30,35 @@
   opacity: 1;
 }
 
-.mk-channels__list {
-  display: grid;
-  gap: var(--space-8);
-}
-
-.mk-channels__link {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-12);
-  min-height: 56px;
-  padding: var(--space-8) var(--space-16) var(--space-8) var(--space-20);
-  border-radius: var(--radius-md);
-  text-decoration: none;
-  overflow: hidden;
-}
-
-/* Small signal colour marker per channel (shape + text label, never colour alone). */
-.mk-channels__link::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 12px;
-  bottom: 12px;
-  width: 4px;
-  border-radius: 0 4px 4px 0;
-  background: var(--channel-signal, var(--accent-blue));
-}
-
 [data-channel='avito'] { --channel-signal: var(--accent-peach); --channel-strong: var(--accent-orange); }
 [data-channel='telegram'] { --channel-signal: var(--accent-blue); --channel-strong: var(--accent-blue); }
 [data-channel='max'] { --channel-signal: var(--accent-periwinkle); --channel-strong: var(--accent-blue); }
 [data-channel='site'] { --channel-signal: var(--accent-mint); --channel-strong: var(--success); }
 
-.mk-channels__name {
-  font-weight: var(--font-weight-ui);
-}
-
-.mk-channels__micro {
-  margin-block-start: var(--space-16);
-}
-
 .mk-channels__hub {
+  max-width: 52rem;
+  margin-inline: auto;
   border-radius: var(--radius-stage);
-  transform: translateY(0);
-}
-
-@media (min-width: 1024px) {
-  .mk-channels__hub {
-    transform: translateY(12px);
-  }
 }
 
 .mk-channels__tabs {
-  padding-inline: var(--space-8);
-  border-bottom: 1px solid var(--color-border-default);
-}
-
-.mk-channels__tabs .mk-tabs--underline {
-  border-bottom: 0;
+  display: flex;
+  justify-content: center;
+  padding: var(--space-16) var(--space-16) 0;
 }
 
 .mk-channels__panel {
   display: flex;
   flex-direction: column;
-  gap: var(--space-16);
-  min-height: 24rem;
+  gap: var(--space-20);
+  min-height: 17rem;
+  padding: var(--space-24) var(--space-24) var(--space-20);
+}
+
+@media (max-width: 767px) {
+  .mk-channels__panel {
+    padding: var(--space-20) var(--space-16) var(--space-16);
+  }
 }
 
 .mk-channels__source {
@@ -117,6 +78,10 @@
 }
 
 .mk-channels__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding-inline-start: 4px;
   background: var(--channel-signal);
   transition: background-color 360ms var(--ease-standard);
 }
@@ -138,5 +103,16 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: var(--space-8);
+  justify-content: space-between;
+  gap: var(--space-8) var(--space-16);
+}
+
+.mk-channels__more {
+  font-size: var(--font-size-ui-sm);
+  font-weight: var(--font-weight-ui);
+  text-underline-offset: 0.2em;
+}
+
+.mk-channels__badge .mk-channel-icon {
+  background: rgba(255, 255, 255, 0.6);
 }

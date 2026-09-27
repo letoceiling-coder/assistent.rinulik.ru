@@ -1,4 +1,4 @@
-/* How it works — a visual signal journey over the mixed atmosphere, then the product moment. */
+/* How it works — four short steps on one signal path over the mixed atmosphere. */
 
 [data-node='understand'] { --node: var(--accent-blue); }
 [data-node='knowledge'] { --node: var(--accent-periwinkle); }
@@ -7,7 +7,7 @@
 
 .mk-journey {
   position: relative;
-  margin-block: var(--space-8) var(--space-56);
+  margin-block: var(--space-8) 0;
 }
 
 .mk-journey__nodes {
@@ -76,11 +76,12 @@
     gap: var(--space-24);
   }
 
+  /* From the first dot to the last: dots sit at the centre of four equal columns (gap 24px). */
   .mk-journey__line {
     top: 19px;
     bottom: auto;
-    left: 20px;
-    right: 20px;
+    left: calc((100% - 72px) / 8);
+    right: calc((100% - 72px) / 8);
     width: auto;
     height: 2px;
   }
@@ -100,75 +101,12 @@
 
   .mk-journey__node {
     grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
     row-gap: var(--space-12);
+    text-align: center;
   }
 
   .mk-journey__dot {
     grid-row: auto;
   }
-}
-
-/* Product moment: large glass stage holding the real conversation. */
-.mk-how__stage {
-  padding: var(--space-12);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-stage);
-  background: var(--glass-bg);
-  box-shadow: var(--glass-highlight), var(--depth-2);
-  -webkit-backdrop-filter: var(--glass-blur);
-  backdrop-filter: var(--glass-blur);
-}
-
-@media (min-width: 768px) {
-  .mk-how__stage {
-    padding: var(--space-20);
-  }
-}
-
-.mk-how__window {
-  border-radius: var(--radius-lg);
-  box-shadow: var(--depth-1);
-}
-
-.mk-how__body {
-  display: grid;
-  gap: var(--space-24);
-}
-
-@media (min-width: 1024px) {
-  .mk-how__body {
-    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-    align-items: center;
-    padding: var(--space-32);
-  }
-}
-
-.mk-how__thread {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-16);
-}
-
-.mk-how__markers {
-  display: grid;
-  gap: var(--space-12);
-  font-size: var(--font-size-ui-sm);
-}
-
-.mk-how__markers li {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-8);
-  padding: var(--space-12) var(--space-16);
-  border-radius: var(--radius-md);
-  background: color-mix(in srgb, var(--node) 35%, var(--bg-surface));
-}
-
-.mk-how__marker {
-  padding: 2px var(--space-8);
-  border-radius: var(--radius-pill);
-  background: var(--node);
-  font-size: var(--font-size-label);
-  font-weight: var(--font-weight-ui);
 }

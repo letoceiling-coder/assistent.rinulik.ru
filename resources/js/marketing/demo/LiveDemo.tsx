@@ -21,7 +21,7 @@ const gateCopy = {
   },
   hard: {
     title: 'Продолжите уже со своим Scrooty.',
-    body: 'Создайте аккаунт и настройте своего менеджера на ваших данных. 7 дней теста, карта не нужна.',
+    body: '7 дней бесплатно, карта не нужна.',
     primary: 'Создать аккаунт',
     secondary: 'Посмотреть тарифы',
   },
@@ -31,7 +31,7 @@ const gateCopy = {
  * The interactive demo surface, answered live by the rate-limited demo endpoint (POST /api/v1/demo/messages).
  * Rendered once per page; registers itself as the page's demo surface for CTAs.
  */
-export function LiveDemo({id}: {id?: string}) {
+export function LiveDemo({id, size = 'hero'}: {id?: string; size?: 'hero' | 'page'}) {
   const demo = useDemo();
   const {view, session, draft, busy, remaining, started} = demo;
   const frameRef = useRef<HTMLElement>(null);
@@ -101,8 +101,10 @@ export function LiveDemo({id}: {id?: string}) {
     const copy = view === 'soft-gate' ? gateCopy.soft : gateCopy.hard;
     footer = (
       <div className="mk-demo__gate">
-        <h2 ref={gateTitleRef} tabIndex={-1} className="mk-demo__gate-title">{copy.title}</h2>
-        <p className="mk-demo__gate-body">{copy.body}</p>
+        <div className="mk-demo__gate-copy">
+          <h2 ref={gateTitleRef} tabIndex={-1} className="mk-demo__gate-title">{copy.title}</h2>
+          <p className="mk-demo__gate-body">{copy.body}</p>
+        </div>
         <div className="mk-demo__gate-actions">
           <ButtonLink variant="primary" href={productLinks.register} onClick={() => trackSignup(view === 'soft-gate' ? 'demo_soft_gate' : 'demo_hard_gate')}>
             {copy.primary}
@@ -152,15 +154,9 @@ export function LiveDemo({id}: {id?: string}) {
           sendDisabled={busy}
           label="Сообщение для Scrooty"
           maxLength={800}
-          placeholder="Опишите свой бизнес или задайте вопрос"
+          placeholder="Напишите вопрос…"
         />
-        <p className="mk-demo__meta">
-          {started
-            ? `Демо-версия · отвечает нейросеть Scrooty · без регистрации осталось сообщений: ${remaining}`
-            : 'Демо-версия · отвечает нейросеть Scrooty · 4 сообщения без регистрации'}
-          <br/>
-          <span className="mk-demo__note">Демо без вашей базы знаний: ответы общие, факты о вашем бизнесе Scrooty уточнит.</span>
-        </p>
+        <p className="mk-demo__note">Ответы общие — демо без вашей базы знаний.</p>
       </>
     );
   }
@@ -169,10 +165,13 @@ export function LiveDemo({id}: {id?: string}) {
     <div className="mk-live-demo">
       <DemoShell
         id={id}
+        size={size}
         frameRef={frameRef}
-        label={started ? 'Демо-диалог со Scrooty' : 'Пример диалога со Scrooty'}
-        badge={started ? 'Демо' : 'Пример диалога'}
+        label={started ? 'Демо-диалог со Scrooty' : 'Живое демо Scrooty'}
+        status="Живое демо · отвечает AI"
+        counter={started ? `осталось ${remaining} из 4` : undefined}
         messages={started ? session.messages : sampleConversation}
+        preview={!started}
         live={started}
         typing={view === 'typing' || view === 'sending'}
         attention={attention}

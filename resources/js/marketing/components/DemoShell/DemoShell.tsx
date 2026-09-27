@@ -1,51 +1,73 @@
 import type {ReactNode, Ref} from 'react';
 import type {ChatMessageData} from '../../demo/types';
+import mascotUrl from '../../../../images/marketing/scrooty-mascot.webp';
 import {ChatMessage} from '../ChatMessage/ChatMessage';
 import './DemoShell.css';
 
 /**
- * Presentational conversation frame (bar, message list, footer slot).
- * It holds no demo logic: marketing/demo/LiveDemo.tsx feeds it messages and renders the composer or a gate
- * into `children`. `live` turns the message list into a polite live region for new answers.
+ * Presentational conversation frame: a clean header (avatar, name, live status, subtle counter), the message list and
+ * a footer slot. No demo logic: marketing/demo/LiveDemo.tsx feeds it. `live` makes the list a polite live region.
+ * `preview` marks idle example messages, which are replaced as soon as a real conversation starts.
  */
-export function DemoShell({id, frameRef, label, badge, messages, live, typing, attention, children}: {
+export function DemoShell({id, frameRef, label, status, counter, messages, preview, live, typing, attention, size = 'hero', children}: {
   id?: string;
   frameRef?: Ref<HTMLElement>;
   label: string;
-  badge: string;
+  status: string;
+  counter?: string;
   messages: readonly ChatMessageData[];
+  preview?: boolean;
   live: boolean;
   typing?: boolean;
   attention?: boolean;
+  size?: 'hero' | 'page';
   children: ReactNode;
 }) {
   return (
-    <section ref={frameRef} id={id} className="mk-demo" data-live={live || undefined} data-attention={attention || undefined} tabIndex={-1} aria-label={label}>
+    <section
+      ref={frameRef}
+      id={id}
+      className={`mk-demo mk-demo--${size}`}
+      data-live={live || undefined}
+      data-attention={attention || undefined}
+      tabIndex={-1}
+      aria-label={label}
+    >
       <div className="mk-demo__bar">
+        <img className="mk-demo__avatar" src={mascotUrl} alt="" width={36} height={36} decoding="async"/>
         <div className="mk-demo__identity">
           <span className="mk-demo__name">Scrooty</span>
-          <span className="mk-demo__role">AI-менеджер</span>
+          <span className="mk-demo__status"><i aria-hidden="true"/>{status}</span>
         </div>
-        <span className="mk-demo__badge">{badge}</span>
+        {counter && <span className="mk-demo__counter">{counter}</span>}
       </div>
 
       <div className="mk-demo__scroll">
+        {preview && <p className="mk-demo__preview-label">Пример разговора</p>}
         <ol
           role="list"
-          className="mk-demo__messages"
+          className={preview ? 'mk-demo__messages is-preview' : 'mk-demo__messages'}
           aria-label="Сообщения"
           aria-live={live ? 'polite' : undefined}
           aria-relevant={live ? 'additions' : undefined}
         >
           {messages.map(message => (
-            <ChatMessage key={message.id} author={message.author} text={message.text} note={message.note}/>
+            <ChatMessage
+              key={message.id}
+              author={message.author}
+              text={message.text}
+              note={message.note}
+              authorName={message.author === 'customer' && live ? 'Вы' : undefined}
+              avatar
+            />
           ))}
         </ol>
         {typing && (
-          <p className="mk-demo__typing" role="status">
+          <div className="mk-demo__typing" role="status">
+            <img className="mk-msg__avatar" src={mascotUrl} alt="" width={28} height={28}/>
             <span className="mk-demo__typing-dots" aria-hidden="true"><i/><i/><i/></span>
-            Scrooty формулирует ответ…
-          </p>
+            <span className="mk-visually-hidden">Scrooty печатает…</span>
+          </div>
         )}
       </div>
 

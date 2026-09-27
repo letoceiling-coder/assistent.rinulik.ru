@@ -86,10 +86,6 @@
   }
 }
 
-.mk-final__eyebrow {
-  color: var(--color-text-secondary);
-}
-
 .mk-final__title {
   max-width: 44rem;
 }

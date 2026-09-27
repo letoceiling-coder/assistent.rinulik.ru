@@ -1,21 +1,41 @@
-/* Chat message (spec §27): max width 78%, radius 18, padding 12x14. */
+/* Chat message: compact customer bubble, lighter Scrooty reply with a mini avatar. */
 
 .mk-msg {
   display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
-  max-width: 78%;
+  align-items: flex-end;
+  gap: var(--space-8);
+  max-width: 82%;
   min-width: 0;
 }
 
 .mk-msg--customer {
   align-self: flex-end;
-  align-items: flex-end;
+  justify-content: flex-end;
+  max-width: 72%;
 }
 
 .mk-msg--scrooty {
   align-self: flex-start;
-  align-items: flex-start;
+}
+
+.mk-msg__body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.mk-msg--customer .mk-msg__body {
+  align-items: flex-end;
+}
+
+.mk-msg__avatar {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-pill);
+  object-fit: cover;
+  box-shadow: 0 0 0 2px var(--bg-surface);
 }
 
 .mk-msg__author {
@@ -26,35 +46,36 @@
   line-height: var(--line-height-label);
 }
 
-.mk-msg__bubble {
-  padding: var(--space-12) 14px;
-  border-radius: var(--radius-md);
-  color: var(--color-text-primary);
-  font-size: var(--font-size-body);
-  line-height: var(--line-height-body);
+.mk-msg__note {
+  font-weight: var(--font-weight-body);
 }
 
-/* Customer: pastel signal surface, tail corner on the right. */
+.mk-msg__bubble {
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-size: var(--font-size-body);
+  line-height: 1.5;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+
+/* Customer: compact pastel bubble, tail corner on the right. */
 .mk-msg--customer .mk-msg__bubble {
-  background: var(--color-signal-periwinkle);
+  background: var(--accent-periwinkle);
   border-end-end-radius: var(--space-4);
 }
 
-/* Scrooty: soft neutral surface with hairline, tail corner on the left. */
+/* Scrooty: light neutral bubble, tail corner at the avatar. */
 .mk-msg--scrooty .mk-msg__bubble {
-  background: var(--color-bg-surface-soft);
-  box-shadow: inset 0 0 0 1px var(--color-border-default);
+  background: var(--bg-surface-soft);
   border-end-start-radius: var(--space-4);
-}
-
-.mk-msg__note {
-  font-weight: var(--font-weight-body);
 }
 
 /* System/demo notes: centred, full width, no bubble tail — clearly not a participant. */
 .mk-msg--system {
   align-self: stretch;
-  align-items: center;
+  justify-content: center;
   max-width: none;
   text-align: center;
 }
@@ -64,10 +85,9 @@
   box-shadow: inset 0 0 0 1px var(--color-border-strong);
   color: var(--color-text-secondary);
   font-size: var(--font-size-ui-sm);
-  line-height: 1.5;
 }
 
-/* New messages settle in (spec: message ~180ms, 8px). Existing messages don't re-animate: only on mount. */
+/* New messages settle in (spec: message ~180ms, 8px). Only on mount. */
 @media (prefers-reduced-motion: no-preference) {
   .mk-demo[data-live] .mk-msg {
     animation: mk-msg-in var(--duration-message) var(--ease-enter) both;

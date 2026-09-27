@@ -1,45 +1,47 @@
-.mk-partners-teaser__micro {
-  margin-block-start: var(--space-16);
-}
+/* Partners teaser — one row: headline, two big numbers, one action. */
 
-.mk-partners-teaser__levels {
+.mk-partners-teaser {
   display: grid;
-  gap: var(--space-12);
+  gap: var(--space-24);
+  align-items: center;
 }
 
-@media (min-width: 560px) {
-  .mk-partners-teaser__levels {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .mk-partners-teaser__levels > :first-child {
-    grid-column: 1 / -1;
-  }
+.mk-partners-teaser .mk-section-header {
+  margin-block-end: 0;
 }
 
-.mk-partners-teaser__levels li {
+.mk-partners-teaser__numbers {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-16);
+}
+
+.mk-partners-teaser__numbers div {
   display: grid;
   gap: var(--space-4);
-  padding: var(--space-20);
-  border-radius: var(--radius-lg);
+  min-width: 0;
 }
 
-/* Lead economics tile: the strongest number of the section on a warm gradient. */
-.mk-partners-teaser__lead {
-  background: var(--gradient-warm);
-  box-shadow: var(--depth-2);
-}
-
-.mk-partners-teaser__lead .mk-partners-teaser__rate {
-  font-size: var(--font-size-h2);
-}
-
-.mk-partners-teaser__lead .mk-card__text {
-  color: var(--color-text-primary);
+.mk-partners-teaser__numbers dd {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-ui-sm);
 }
 
 .mk-partners-teaser__rate {
-  font-size: var(--font-size-h3);
+  font-size: var(--font-size-h2);
   font-weight: var(--font-weight-display);
-  line-height: 1.1;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.mk-partners-teaser .mk-button {
+  justify-self: start;
+}
+
+@media (min-width: 1024px) {
+  .mk-partners-teaser {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 5fr) auto;
+    gap: var(--space-40);
+  }
 }

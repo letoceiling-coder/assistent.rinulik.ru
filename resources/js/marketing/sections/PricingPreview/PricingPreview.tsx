@@ -4,10 +4,11 @@ import {ButtonLink} from '../../components/Button/Button';
 import {BillingToggle, PricingPlans} from '../../components/Pricing/PricingPlans';
 import {Section} from '../../components/Section';
 import {SectionHeader} from '../../components/SectionHeader';
-import {dialogDefinition, type BillingPeriod} from '../../config/pricing';
+import {dialogDefinition, trialNote, type BillingPeriod} from '../../config/pricing';
 import {routePath} from '../../config/routes';
+import './PricingPreview.css';
 
-/** Homepage Section 12 — pricing preview (spec §10). Same config as /pricing. */
+/** Homepage — compact pricing preview. Same config as /pricing. */
 export function PricingPreview() {
   const [period, setPeriod] = useState<BillingPeriod>('monthly');
 
@@ -25,20 +26,15 @@ export function PricingPreview() {
   }, []);
 
   return (
-    <Section id="pricing" labelledBy="pricing-title" tone="canvas">
-      <SectionHeader
-        id="pricing-title"
-        eyebrow="ПРОЗРАЧНЫЕ ТАРИФЫ"
-        title="Начните с 2 490 ₽ в месяц."
-        description="Во всех тарифах есть 7 дней бесплатно без карты. Вы платите за объём диалогов и возможности, а не за название модели."
-      />
+    <Section id="pricing" labelledBy="pricing-title" tone="canvas" className="mk-pricing-preview">
+      <SectionHeader id="pricing-title" align="center" title={'Тарифы от 2\u00a0490\u00a0₽ в\u00a0месяц.'}/>
       <div className="mk-pricing-toggle">
         <BillingToggle value={period} onChange={setPeriod}/>
       </div>
       <PricingPlans period={period} only={['start', 'business', 'pro']} compact/>
-      <div className="mk-section-cta">
-        <ButtonLink variant="secondary" href={routePath('pricing')}>Сравнить тарифы</ButtonLink>
-        <p className="mk-microcopy">{dialogDefinition} Enterprise — индивидуальные условия.</p>
+      <div className="mk-section-cta mk-pricing-preview__foot">
+        <p className="mk-microcopy">{trialNote} {dialogDefinition}</p>
+        <ButtonLink variant="text" href={routePath('pricing')}>Сравнить все тарифы</ButtonLink>
       </div>
     </Section>
   );

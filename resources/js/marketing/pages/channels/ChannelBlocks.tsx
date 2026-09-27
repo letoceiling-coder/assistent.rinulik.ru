@@ -10,6 +10,7 @@ import {productLinks} from '../../config/navigation';
 import {formatRub, plans, trialNote} from '../../config/pricing';
 import {routePath} from '../../config/routes';
 import type {ChatMessageData} from '../../demo/types';
+import {typo} from '../../../shared/lib/typography';
 import './ChannelBlocks.css';
 
 export function ChannelStatus({id}: {id: ChannelId}) {
@@ -52,8 +53,8 @@ export function CardGrid({id, eyebrow, title, description, items, tone, columns 
         {items.map(item => (
           <li key={item.title} className="mk-card mk-card-grid__item">
             {item.tag}
-            <h3 className="mk-card-grid__title">{item.title}</h3>
-            <p className="mk-card__text">{item.text}</p>
+            <h3 className="mk-card-grid__title">{typo(item.title)}</h3>
+            <p className="mk-card__text">{typo(item.text)}</p>
           </li>
         ))}
       </ul>
@@ -76,7 +77,7 @@ export function StepsSection({id, eyebrow, title, steps, note, tone, aside}: {
         <div>
           <SectionHeader id={`${id}-title`} eyebrow={eyebrow} title={title}/>
           <ol role="list" className="mk-steps">
-            {steps.map(step => <li key={step}><span>{step}</span></li>)}
+            {steps.map(step => <li key={step}><span>{typo(step)}</span></li>)}
           </ol>
           {note && <p className="mk-microcopy mk-steps-note">{note}</p>}
         </div>

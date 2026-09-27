@@ -10,11 +10,12 @@ export type ChatMessageData = {
   note?: string;
 };
 
-/** Scenario selectors from spec §18. */
-export type DemoScenarioId = 'my-business' | 'avito' | 'site' | 'handoff';
+/** Suggestion chips (short visible label, full prompt inserted into the input). */
+export type DemoScenarioId = 'coffee' | 'beauty' | 'avito' | 'handoff';
 
 export type DemoScenario = {
   id: DemoScenarioId;
+  /** Short chip label (1–2 words). */
   label: string;
   /** Text a suggestion chip puts into the input. Never sent automatically. */
   samplePrompt: string;

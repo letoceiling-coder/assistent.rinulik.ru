@@ -3,6 +3,7 @@ import {track} from '../../analytics/track';
 import {Section} from '../../components/Section';
 import {SectionHeader} from '../../components/SectionHeader';
 import type {FaqItem} from '../../config/faq';
+import {typo} from '../../../shared/lib/typography';
 import './Faq.css';
 
 /**
@@ -40,10 +41,10 @@ export function Faq({id = 'faq', items, eyebrow = 'КОРОТКО О ГЛАВН�
               }}
             >
               <summary className="mk-faq__question">
-                <span>{item.question}</span>
+                <span>{typo(item.question)}</span>
                 <span className="mk-faq__icon" aria-hidden="true"/>
               </summary>
-              <p className="mk-faq__answer">{item.answer}</p>
+              <p className="mk-faq__answer">{typo(item.answer)}</p>
             </details>
           ))}
         </div>

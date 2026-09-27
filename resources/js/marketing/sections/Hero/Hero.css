@@ -1,14 +1,13 @@
 /*
- * Homepage hero — the main product moment.
- * Layers: canvas → soft light fields → glass product stage → DemoShell → floating sources + mascot.
- * Mobile/tablet: stacked (copy, then stage). From 1120px (same breakpoint as the full header nav): two columns.
+ * Homepage hero — one focus: short message → CTA → channels → the live demo (centred, the main object).
+ * Compact on purpose: at 1440×900 the demo is clearly visible above the fold.
  */
 
 .mk-hero {
   position: relative;
   isolation: isolate;
   overflow: clip;
-  padding-block: var(--space-32) calc(var(--space-56) + var(--space-8)); /* 32 / 64 */
+  padding-block: var(--space-32) var(--space-56);
 }
 
 /* ---- Light fields ---- */
@@ -26,113 +25,134 @@
   animation: mk-ambient 26s ease-in-out infinite;
 }
 
-/* cool field — behind the product stage */
 .mk-hero__fields span:nth-child(1) {
-  top: 18%;
-  right: -12%;
-  width: 70%;
-  height: 80%;
+  top: 30%;
+  right: -10%;
+  width: 60%;
+  height: 70%;
   background: radial-gradient(closest-side, rgba(174, 203, 247, 0.55), rgba(205, 216, 248, 0.25) 60%, transparent);
 }
 
-/* warm field — near CTA / mascot */
 .mk-hero__fields span:nth-child(2) {
-  bottom: -10%;
-  left: -8%;
+  top: 35%;
+  left: -12%;
   width: 55%;
-  height: 60%;
-  background: radial-gradient(closest-side, rgba(245, 199, 177, 0.5), rgba(244, 222, 157, 0.25) 60%, transparent);
+  height: 65%;
+  background: radial-gradient(closest-side, rgba(245, 199, 177, 0.5), rgba(244, 222, 157, 0.22) 60%, transparent);
   animation-delay: -9s;
 }
 
-/* mint whisper */
 .mk-hero__fields span:nth-child(3) {
-  top: -10%;
-  left: 38%;
+  top: -15%;
+  left: 30%;
   width: 40%;
   height: 45%;
   background: radial-gradient(closest-side, rgba(202, 228, 209, 0.45), transparent);
   animation-delay: -17s;
 }
 
-.mk-hero__grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
+.mk-hero__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   gap: var(--space-40);
 }
 
-/* ---- Copy ---- */
-.mk-hero__copy {
-  /* H1 size is capped by this column's width so "Клиент написал." always stays on one line. */
-  container-type: inline-size;
+/* ---- Intro ---- */
+.mk-hero__intro {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  min-width: 0;
-  max-width: 40rem;
+  align-items: center;
+  max-width: 56rem;
+  text-align: center;
   animation: mk-hero-rise 460ms var(--ease-enter) both;
-}
-
-.mk-hero__eyebrow {
-  padding: var(--space-8) var(--space-12);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-pill);
-  background: var(--glass-bg);
-  box-shadow: var(--glass-highlight);
-  color: var(--color-text-primary);
-  letter-spacing: 0.04em;
-}
-
-.mk-hero__title {
-  margin-block-start: var(--space-20);
-  /* ~8.1em is the width of "Клиент написал." with display tracking; 12.2cqi keeps it on one line. */
-  font-size: min(var(--font-size-display-xl), 12.2cqi);
 }
 
 .mk-hero__title-line {
   display: block;
 }
 
+/* Smallest phones: keep «Клиент написал.» on one line (3 lines total, never 4). */
+@media (max-width: 389px) {
+  .mk-hero__title {
+    font-size: min(40px, 10.4vw);
+  }
+}
+
 .mk-hero__body {
   max-width: 34rem;
-  margin-block-start: var(--space-20);
+  margin-block-start: var(--space-16);
   color: var(--color-text-secondary);
 }
 
 .mk-hero__actions {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-12);
-  margin-block-start: var(--space-32);
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-8) var(--space-16);
+  margin-block-start: var(--space-24);
+}
+
+.mk-hero__link {
+  gap: var(--space-4);
+  text-decoration: none;
+}
+
+.mk-hero__link:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
 }
 
 .mk-hero__support {
-  margin-block-start: var(--space-16);
+  margin-block-start: var(--space-12);
   color: var(--color-text-secondary);
-  font-size: var(--font-size-label);
-  line-height: var(--line-height-label);
+  font-size: var(--font-size-ui-sm);
 }
 
-.mk-hero__support > span {
-  white-space: nowrap;
+/* Channel row: compact visual proof, not a section. */
+.mk-hero__channels {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-8);
+  margin-block-start: var(--space-24);
 }
 
-/* ---- Product stage ---- */
-.mk-hero__visual {
-  position: relative;
-  min-width: 0;
-  padding-block-start: var(--space-32);
-  animation: mk-hero-rise 540ms var(--ease-enter) 60ms both;
+.mk-hero__channel {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-8);
+  min-height: 40px;
+  padding: 4px var(--space-12) 4px 5px;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-pill);
+  background: var(--glass-bg);
+  box-shadow: var(--glass-highlight);
+  font-size: var(--font-size-ui-sm);
+  font-weight: var(--font-weight-ui);
+  text-decoration: none;
+  transition: transform var(--duration-hover) var(--ease-standard), box-shadow var(--duration-hover) var(--ease-standard);
 }
 
+.mk-hero__channel:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--glass-highlight), var(--depth-1);
+}
+
+.mk-hero__channel .mk-channel-icon {
+  border-radius: var(--radius-pill);
+}
+
+/* ---- The live demo: the object of the page ---- */
 .mk-hero__stage {
-  --mascot-size: 56px;
-  position: relative;
-  padding: var(--space-12);
+  width: min(100%, 64rem);
+  padding: var(--space-8);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-stage);
   background: var(--gradient-product);
   box-shadow: var(--glass-highlight), var(--depth-2);
+  animation: mk-hero-rise 560ms var(--ease-enter) 80ms both;
 }
 
 .mk-hero__stage .mk-demo {
@@ -141,57 +161,60 @@
   box-shadow: var(--depth-3);
 }
 
-/* Sources: a small glass rail feeding the conversation. Mobile: a row above the chat. */
-.mk-hero__sources {
-  position: relative;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-8);
-  /* Leaves room on the right for the mascot sitting on the stage edge. */
-  padding: var(--space-4) calc(var(--mascot-size) + var(--space-8)) var(--space-12) var(--space-4);
+@media (min-width: 768px) {
+  .mk-hero {
+    padding-block: var(--space-40) var(--space-72);
+  }
+
+  .mk-hero__stage {
+    padding: var(--space-12);
+  }
 }
 
-.mk-hero__rail {
-  position: absolute;
-  z-index: 0;
-  left: var(--space-12);
-  right: var(--space-12);
-  top: calc(50% - 5px);
-  width: auto;
-  height: 2px;
+@media (min-width: 1120px) {
+  .mk-hero {
+    padding-block: var(--space-40) var(--space-96);
+  }
+
+  .mk-hero__inner {
+    gap: var(--space-40);
+  }
 }
 
-.mk-hero__source {
-  position: relative;
-  z-index: 1;
-  padding: 5px var(--space-12);
-  border-radius: var(--radius-pill);
-  color: var(--color-text-primary);
-  font-size: var(--font-size-label);
-  font-weight: var(--font-weight-ui);
-  line-height: var(--line-height-label);
-}
+/* Phones: full-width primary action, compact channel chips, the demo starts right under the copy. */
+@media (max-width: 479px) {
+  .mk-hero__actions {
+    flex-direction: column;
+    align-self: stretch;
+  }
 
-/* Mascot on the stage edge, looking into the conversation. */
-.mk-hero__mascot {
-  position: absolute;
-  z-index: 2;
-  top: calc(-1 * var(--mascot-size) + var(--space-16));
-  right: var(--space-24);
-  width: var(--mascot-size);
-  height: var(--mascot-size);
-  border-radius: var(--radius-pill);
-  object-fit: cover;
-  box-shadow: 0 0 0 3px var(--color-bg-surface), var(--depth-2);
-  animation: mk-idle 6s ease-in-out infinite;
-  transition: transform var(--duration-mascot-short) var(--ease-standard);
-}
+  .mk-hero__actions .mk-button--primary {
+    width: 100%;
+  }
 
-/* Calm reaction when the visitor is about to start: the mascot leans in a touch. */
-.mk-hero:has(.mk-hero__actions .mk-button:hover, .mk-chat-input:focus-within) .mk-hero__mascot {
-  animation-play-state: paused;
-  transform: translateY(-3px) rotate(-2deg) scale(1.02);
+  .mk-hero__channels {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    justify-content: center;
+    gap: 6px;
+    margin-block-start: var(--space-16);
+  }
+
+  .mk-hero__channel {
+    gap: 6px;
+    min-height: 36px;
+    padding: 3px 10px 3px 3px;
+  }
+
+  .mk-hero__stage {
+    margin-inline: calc(-1 * var(--space-8));
+    width: calc(100% + 2 * var(--space-8));
+    padding: var(--space-4);
+  }
+
+  .mk-hero__inner {
+    gap: var(--space-24);
+  }
 }
 
 @keyframes mk-hero-rise {
@@ -201,160 +224,10 @@
   }
 }
 
-/* ---- Mobile ---- */
-@media (max-width: 479px) {
-  .mk-hero__actions {
-    flex-direction: column;
-    align-self: stretch;
-  }
-
-  .mk-hero__actions .mk-button {
-    width: 100%;
-  }
-
-  .mk-hero__stage {
-    margin-inline: calc(-1 * var(--space-4));
-    padding: var(--space-8);
-  }
-
-  .mk-hero__fields span {
-    filter: blur(28px);
-  }
-}
-
-/* Tablet (820–1119, e.g. 834 portrait and 1024 landscape): a real two-column composition, not a stretched phone.
-   The H1 scales with its column (cqi cap) so «Клиент написал.» still holds one line. */
-@media (min-width: 820px) and (max-width: 1119px) {
-  .mk-hero__grid {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    align-items: center;
-    gap: var(--space-32);
-  }
-
-  .mk-hero__visual {
-    max-width: none;
-  }
-
-  .mk-hero__actions .mk-button {
-    flex: 1 1 100%;
-  }
-
-  /* In a half-width stage the source row would wrap; the channels are already named in the copy. */
-  .mk-hero__sources {
-    display: none;
-  }
-
-  .mk-hero__stage {
-    margin-block-start: var(--space-16);
-  }
-}
-
-@media (min-width: 768px) {
-  .mk-hero {
-    padding-block: var(--space-40) calc(var(--space-72) + var(--space-8)); /* 40 / 80 */
-  }
-
-  .mk-hero__grid {
-    gap: var(--space-56);
-  }
-
-  .mk-hero__visual {
-    max-width: 50rem;
-  }
-
-  .mk-hero__stage {
-    --mascot-size: 72px;
-    padding: var(--space-16);
-  }
-}
-
-/* ---- Desktop: copy + stage, sources become a vertical rail on the stage's left edge ---- */
-@media (min-width: 1120px) {
-  .mk-hero {
-    padding-block: var(--space-56) calc(var(--space-72) + var(--space-16)); /* 56 / 88 */
-  }
-
-  .mk-hero__grid {
-    /* ~48 / 52: wide enough for a one-line «Клиент написал.» at 72px and an inline CTA pair from ~1280px. */
-    /* 1120–1279: copy slightly wider so the CTA pair stays on one line; from 1280 the stage leads (12:13). */
-    grid-template-columns: minmax(0, 13fr) minmax(0, 12fr);
-    align-items: center;
-    gap: var(--space-56);
-    min-height: 704px;
-  }
-
-  .mk-hero__visual {
-    max-width: none;
-    padding-block-start: var(--space-40);
-    padding-inline-start: var(--space-24);
-  }
-
-  .mk-hero__stage {
-    --mascot-size: 88px;
-    padding: var(--space-20);
-  }
-
-  .mk-hero__stage .mk-demo {
-    min-height: 568px;
-    max-height: 640px;
-  }
-
-  .mk-hero__sources {
-    position: absolute;
-    z-index: 3;
-    top: 50%;
-    left: calc(-1 * var(--space-72) - var(--space-12));
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--space-12);
-    padding: 0;
-    transform: translateY(-50%);
-  }
-
-  .mk-hero__rail {
-    left: var(--space-16);
-    right: auto;
-    top: var(--space-8);
-    bottom: var(--space-8);
-    width: 2px;
-    height: auto;
-    background: linear-gradient(180deg, #AECBF7, #CDD8F8 35%, #F5C7B1 70%, #F28A57);
-  }
-
-  .mk-hero__rail::after {
-    background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.95), transparent);
-    background-size: 100% 40%;
-    background-repeat: no-repeat;
-    animation-name: mk-signal-travel-v;
-  }
-
-  .mk-hero__source {
-    padding: 6px var(--space-12);
-    box-shadow: var(--glass-highlight), var(--depth-2);
-  }
-
-  .mk-hero__source:nth-child(odd) {
-    margin-inline-start: var(--space-4);
-  }
-}
-
-@media (min-width: 1280px) {
-  .mk-hero__grid {
-    grid-template-columns: minmax(0, 12fr) minmax(0, 13fr);
-  }
-}
-
-@media (max-width: 767px) {
-  .mk-hero__support {
-    font-size: var(--font-size-ui-sm);
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .mk-hero__copy,
-  .mk-hero__visual,
-  .mk-hero__fields span,
-  .mk-hero__mascot {
+  .mk-hero__intro,
+  .mk-hero__stage,
+  .mk-hero__fields span {
     animation: none;
   }
 }

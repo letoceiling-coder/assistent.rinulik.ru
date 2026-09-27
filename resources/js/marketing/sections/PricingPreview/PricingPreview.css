@@ -1,0 +1,17 @@
+/* Homepage pricing preview: centred toggle, three compact cards, one quiet line under them. */
+
+/* text-align, not flex: the toggle keeps its natural one-line width. */
+.mk-pricing-preview .mk-pricing-toggle {
+  text-align: center;
+}
+
+.mk-pricing-preview .mk-plans {
+  max-width: 68rem;
+  margin-inline: auto;
+}
+
+.mk-pricing-preview__foot {
+  flex-direction: column;
+  gap: var(--space-8);
+  text-align: center;
+}

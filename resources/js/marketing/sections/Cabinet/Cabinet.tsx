@@ -1,10 +1,7 @@
 import {useState} from 'react';
-import {ButtonLink} from '../../components/Button/Button';
 import {Section} from '../../components/Section';
 import {SectionHeader} from '../../components/SectionHeader';
 import {Tabs, tabPanelProps} from '../../components/Tabs/Tabs';
-import {productLinks} from '../../config/navigation';
-import {routePath} from '../../config/routes';
 import './Cabinet.css';
 
 type TabId = 'managers' | 'knowledge' | 'dialogs' | 'leads' | 'integrations';
@@ -73,18 +70,13 @@ const tabs: ReadonlyArray<{id: TabId; label: string}> = [
   {id: 'integrations', label: 'Интеграции'},
 ];
 
-/** Homepage Section 09 — one cabinet (spec §10). */
+/** Homepage — one cabinet, shown as a large honest UI illustration. */
 export function Cabinet() {
   const [active, setActive] = useState<TabId>('managers');
   return (
     <Section id="cabinet" labelledBy="cabinet-title">
-      <SectionHeader
-        id="cabinet-title"
-        eyebrow="ОДИН КАБИНЕТ"
-        title="Создайте, обучите, проверьте и запустите своего менеджера."
-        description="Настройте роль и стиль, добавьте знания, протестируйте разговор, подключите каналы и следите за обращениями."
-      />
-      <div className="mk-cabinet__stage" data-reveal="scale-soft">
+      <SectionHeader id="cabinet-title" align="center" title="Всё в одном кабинете."/>
+      <div className="mk-cabinet__stage">
       <div className="mk-window mk-cabinet">
         <div className="mk-cabinet__tabs">
           <Tabs label="Раздел кабинета" idPrefix="cabinet" variant="underline" items={tabs} value={active} onChange={setActive}/>
@@ -94,11 +86,6 @@ export function Cabinet() {
           <Panel tab={active}/>
         </div>
       </div>
-      </div>
-      <div className="mk-section-cta">
-        <ButtonLink variant="secondary" href={productLinks.register}>Создать Scrooty</ButtonLink>
-        <ButtonLink variant="text" href={routePath('demo')}>Попробовать демо</ButtonLink>
-        <p className="mk-microcopy">Без кода для базового запуска.</p>
       </div>
     </Section>
   );

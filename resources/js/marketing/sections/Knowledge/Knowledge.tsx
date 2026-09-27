@@ -1,61 +1,62 @@
-import {ButtonLink} from '../../components/Button/Button';
 import {Section} from '../../components/Section';
 import {SectionHeader} from '../../components/SectionHeader';
-import {anchorHref, homeAnchors, productLinks} from '../../config/navigation';
+import {integrations, statusLabel, type IntegrationStatus} from '../../config/integrations';
+import {homeAnchors} from '../../config/navigation';
 import './Knowledge.css';
 
-/** Document statuses mirror the product's knowledge base labels (Готово / Обрабатывается / Ошибка). */
+/** Document statuses mirror the product's knowledge base labels (Готово / Обрабатывается). */
 const documents = [
-  {name: 'Прайс-лист.pdf', meta: 'PDF · база «Основная»', status: 'available', label: 'Готово'},
-  {name: 'Условия доставки.docx', meta: 'DOCX · база «Основная»', status: 'available', label: 'Готово'},
-  {name: 'Частые вопросы.md', meta: 'Markdown · база «Основная»', status: 'processing', label: 'Обрабатывается'},
-  {name: 'Инструкция по возврату.txt', meta: 'Не удалось прочитать файл · можно повторить', status: 'error', label: 'Ошибка'},
+  {name: 'Прайс-лист.pdf', status: 'available', label: 'Готово'},
+  {name: 'Условия доставки.docx', status: 'available', label: 'Готово'},
+  {name: 'Частые вопросы.md', status: 'processing', label: 'Обрабатывается'},
 ] as const;
 
-/** Homepage Section 06 — company knowledge (spec §10). */
+const byId = (id: string) => integrations.find(i => i.id === id)!;
+
+/** Built-in capabilities first; integration statuses come from config/integrations.ts (never marked available without code). */
+const actions: ReadonlyArray<{title: string; status: IntegrationStatus}> = [
+  {title: 'Создать лид', status: 'available'},
+  {title: 'Уведомить в Telegram', status: 'available'},
+  {title: 'Записать в таблицу', status: byId('google-sheets').status},
+  {title: 'Вызвать webhook', status: byId('webhook').status},
+  {title: 'Передать в CRM', status: byId('bitrix24').status},
+];
+
+/** Homepage — knowledge + actions in one screen: what Scrooty knows and what it can do next. */
 export function Knowledge() {
   return (
     <Section id={homeAnchors.knowledge.id} labelledBy="knowledge-title" tone="cool">
-      <div className="mk-split mk-split--reverse">
-        <div>
-          <SectionHeader
-            id="knowledge-title"
-            eyebrow="ЗНАНИЯ ВАШЕЙ КОМПАНИИ"
-            title="Scrooty знает то, что знает ваша компания."
-            description="Добавьте сайт, документы, инструкции, FAQ, прайс или таблицу. Scrooty использует эти материалы в ответах и не должен додумывать бизнес-факты."
-          />
-          <div className="mk-section-cta">
-            <ButtonLink variant="secondary" href={productLinks.register}>Добавить базу знаний</ButtonLink>
-            <ButtonLink variant="text" href={anchorHref('howItWorks')}>Как устроены знания</ButtonLink>
-          </div>
-          <p className="mk-microcopy mk-knowledge__micro">Поддерживаемые форматы уточняются в интерфейсе загрузки.</p>
-        </div>
+      <SectionHeader id="knowledge-title" align="center" title="Знает ваш бизнес. И может сделать следующий шаг."/>
 
-        <figure className="mk-knowledge__stack">
-          {/* Partially visible document surfaces behind the repository window: depth, not decoration. */}
-          <span className="mk-knowledge__sheet mk-knowledge__sheet--1" aria-hidden="true"/>
-          <span className="mk-knowledge__sheet mk-knowledge__sheet--2" aria-hidden="true"/>
-          <div className="mk-window mk-glass mk-glass--elevated mk-knowledge__window">
-          <div className="mk-window__bar">
-            <span>Базы знаний</span>
-            <span className="mk-window__caption">Иллюстрация интерфейса</span>
-          </div>
-          <div className="mk-window__body">
-            <div className="mk-knowledge__drop" aria-hidden="true">Перетащите документы или добавьте текст</div>
-            <ul role="list" aria-label="Документы базы знаний">
-              {documents.map(doc => (
-                <li key={doc.name} className="mk-row">
-                  <span className="mk-row__main">
-                    <span className="mk-row__title">{doc.name}</span>
-                    <span className="mk-row__meta">{doc.meta}</span>
-                  </span>
-                  <span className={`mk-pill mk-pill--${doc.status}`}>{doc.label}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-          </div>
-          <figcaption className="mk-visually-hidden">Пример списка документов со статусами обработки.</figcaption>
+      <div className="mk-kb">
+        <figure className="mk-window mk-glass mk-glass--elevated mk-kb__panel">
+          <figcaption className="mk-kb__head">
+            <h3 className="mk-kb__title">Знания</h3>
+            <p className="mk-kb__text">Документы, прайс, FAQ и&nbsp;сайт.</p>
+          </figcaption>
+          <ul role="list" className="mk-kb__list" aria-label="Пример базы знаний">
+            {documents.map(doc => (
+              <li key={doc.name} className="mk-row">
+                <span className="mk-row__title">{doc.name}</span>
+                <span className={`mk-pill mk-pill--${doc.status}`}>{doc.label}</span>
+              </li>
+            ))}
+          </ul>
+        </figure>
+
+        <figure id={homeAnchors.actions.id} className="mk-window mk-glass mk-glass--elevated mk-kb__panel">
+          <figcaption className="mk-kb__head">
+            <h3 className="mk-kb__title">Действия</h3>
+            <p className="mk-kb__text">Заявка, уведомление, передача данных.</p>
+          </figcaption>
+          <ul role="list" className="mk-kb__list" aria-label="Действия после разговора">
+            {actions.map(action => (
+              <li key={action.title} className="mk-row">
+                <span className="mk-row__title">{action.title}</span>
+                <span className={`mk-pill mk-pill--${action.status}`}>{statusLabel[action.status]}</span>
+              </li>
+            ))}
+          </ul>
         </figure>
       </div>
     </Section>

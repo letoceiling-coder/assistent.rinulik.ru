@@ -1,0 +1,18 @@
+.mk-channel-icon {
+  display: inline-grid;
+  place-items: center;
+  flex-shrink: 0;
+  border-radius: 8px;
+  object-fit: contain;
+}
+
+/* Neutral stand-in: Scrooty signal colours, not the channels' brand colours. */
+.mk-channel-icon--fallback {
+  background: var(--channel-signal, var(--accent-periwinkle));
+  color: var(--text-primary);
+}
+
+.mk-channel-icon--fallback[data-channel='avito'] { --channel-signal: var(--accent-peach); }
+.mk-channel-icon--fallback[data-channel='telegram'] { --channel-signal: var(--accent-blue); }
+.mk-channel-icon--fallback[data-channel='max'] { --channel-signal: var(--accent-periwinkle); }
+.mk-channel-icon--fallback[data-channel='site'] { --channel-signal: var(--accent-mint); }

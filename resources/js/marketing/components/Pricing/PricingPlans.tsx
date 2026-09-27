@@ -56,14 +56,14 @@ function PlanCard({plan, period, compact}: {plan: Plan; period: BillingPeriod; c
   const price = planPrice(plan, period);
   const titleId = `plan-${plan.id}`;
   const isEnterprise = plan.monthly === null;
-  const shown = compact ? (['dialogs', 'managers', 'channels', 'integrations'] as const) : (Object.keys(limitLabels) as Array<keyof Plan['limits']>);
+  const shown = compact ? (['dialogs', 'managers', 'channels'] as const) : (Object.keys(limitLabels) as Array<keyof Plan['limits']>);
   return (
     <article className={cx('mk-plan', 'mk-lift', `mk-plan--${plan.id}`, plan.popular && 'mk-plan--popular')} aria-labelledby={titleId}>
       <div className="mk-plan__head">
         <h3 id={titleId} className="mk-plan__name">{plan.name}</h3>
         {plan.popular && <span className="mk-pill mk-pill--plain mk-plan__badge">Популярный</span>}
       </div>
-      <p className="mk-plan__tagline">{plan.tagline}</p>
+      {!compact && <p className="mk-plan__tagline">{plan.tagline}</p>}
       <p className="mk-plan__price">
         <span key={price.main} className="mk-plan__amount">{price.main}</span> {price.unit && <span className="mk-plan__unit">{price.unit}</span>}
       </p>
