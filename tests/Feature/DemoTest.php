@@ -50,6 +50,13 @@ class DemoTest extends TestCase
         $this->assertSame(0, DB::table('ai_usage')->count());
     }
 
+    public function test_markdown_is_stripped_from_reply(): void
+    {
+        $this->fakeProvider("**Да**, уточню.\n\n*(В рабочей версии — по базе знаний.)*\n## Итог\n* пункт");
+        $this->send([['role' => 'user', 'content' => 'Есть доставка?']])
+            ->assertOk()->assertJson(['reply' => "Да, уточню.\n\n(В рабочей версии — по базе знаний.)\nИтог\n— пункт"]);
+    }
+
     public function test_rejects_system_role_and_invalid_payloads(): void
     {
         $this->fakeProvider();

@@ -67,7 +67,7 @@ class DemoController extends Controller
             return response()->json(['reason' => 'unavailable', 'message' => 'Демо временно недоступно.'], 503);
         }
 
-        $reply = mb_substr(trim($result['text']), 0, (int) $cfg['reply_chars']);
+        $reply = mb_substr(self::plainText($result['text']), 0, (int) $cfg['reply_chars']);
         if ($reply === '') {
             Log::warning('demo.ai_failed', ['exception_class' => 'EmptyReply']);
 
@@ -83,5 +83,16 @@ class DemoController extends Controller
         ]);
 
         return response()->json(['reply' => $reply, 'remaining' => max(0, $limit - $sent)]);
+    }
+
+    /** The demo UI renders plain text, so strip markdown emphasis/headings the model sometimes adds. */
+    public static function plainText(string $text): string
+    {
+        $text = preg_replace('/(\*{1,3}|_{2,3})(?=\S)(.+?)(?<=\S)\1/u', '$2', $text);
+        $text = preg_replace('/^\s{0,3}#{1,6}\s+/mu', '', $text);
+        $text = preg_replace('/^\s*[*\-]\s+/mu', '— ', $text);
+        $text = str_replace(['**', '__'], '', $text);
+
+        return trim(preg_replace("/\n{3,}/u", "\n\n", $text));
     }
 }
