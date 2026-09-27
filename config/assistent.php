@@ -19,4 +19,14 @@ return [
     'notification_bot' => env('TELEGRAM_SYSTEM_BOT_USERNAME'),
     'notification_token' => env('TELEGRAM_SYSTEM_BOT_TOKEN'),
     'notification_secret' => env('TELEGRAM_SYSTEM_BOT_SECRET'),
+    // Public website demo (POST /api/v1/demo/messages). Every request costs real provider money.
+    'demo' => [
+        'daily_limit' => (int) env('DEMO_DAILY_LIMIT', 1000),      // all visitors, per calendar day
+        'session_limit' => (int) env('DEMO_SESSION_LIMIT', 4),     // visitor messages per Laravel session
+        'per_minute_ip' => (int) env('DEMO_PER_MINUTE_IP', 6),
+        'per_day_ip' => (int) env('DEMO_PER_DAY_IP', 30),
+        'max_tokens' => (int) env('DEMO_MAX_TOKENS', 400),
+        'history' => 10,                                            // messages sent to the model
+        'reply_chars' => 1500,
+    ],
 ];

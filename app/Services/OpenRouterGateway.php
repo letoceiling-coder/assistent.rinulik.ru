@@ -32,10 +32,10 @@ class OpenRouterGateway
         return $key;
     }
 
-    private function http(): \Illuminate\Http\Client\PendingRequest
+    private function http(string $title = 'ASSISTENT'): \Illuminate\Http\Client\PendingRequest
     {
         $client = Http::withToken($this->key())
-            ->withHeaders(['HTTP-Referer' => config('app.url'), 'X-Title' => 'ASSISTENT'])
+            ->withHeaders(['HTTP-Referer' => config('app.url'), 'X-Title' => $title])
             ->connectTimeout(10)
             ->timeout(90);
         $proxy = config('assistent.openrouter_proxy');
@@ -147,6 +147,43 @@ class OpenRouterGateway
                 throw ValidationException::withMessages(['ai' => 'AI-запрос не завершён. Попробуйте позже или обратитесь к администратору.']);
             }
         });
+    }
+
+    /**
+     * Anonymous website demo: NOT billed to any wallet and NOT stored in ai_usage.
+     * Uses the `conversation` model assignment (model + fallback), one retry on 429/5xx, a short timeout.
+     * Callers must rate-limit (see DemoController). Never logs message text.
+     *
+     * @param  array<int, array{role: string, content: string}>  $messages
+     * @return array{text: string, usage: array<string, mixed>}
+     */
+    public function demoChat(array $messages, int $maxTokens): array
+    {
+        $a = $this->assignment('conversation');
+        $body = ['messages' => $messages, 'temperature' => (float) $a->temperature, 'max_tokens' => $maxTokens, 'usage' => ['include' => true]];
+        $models = array_values(array_unique(array_filter([$a->model, $a->fallback])));
+        $deadline = microtime(true) + 28;
+        foreach ($models as $model) {
+            for ($attempt = 0; $attempt <= 1; $attempt++) {
+                $left = (int) floor($deadline - microtime(true));
+                if ($left < 3) {
+                    break 2;
+                }
+                $res = $this->http('Scrooty')->connectTimeout(5)->timeout(min(25, $left))->post('https://openrouter.ai/api/v1/chat/completions', $body + ['model' => $model]);
+                if ($res->successful() && ! $res->json('error')) {
+                    $text = (string) $res->json('choices.0.message.content', '');
+                    if (trim($text) !== '') {
+                        return ['text' => $text, 'usage' => (array) $res->json('usage', [])];
+                    }
+                    break; // empty answer: try the fallback model
+                }
+                if ($res->status() !== 429 && $res->status() < 500) {
+                    break;
+                }
+                usleep(250000);
+            }
+        }
+        throw new \RuntimeException('Demo provider request failed');
     }
 
     public static function charge(string $usd, string $rate, string $markup): int

@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AssistantController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ConversationController;
+use App\Http\Controllers\DemoController;
 use App\Http\Controllers\IntegrationController;
 use App\Http\Controllers\KnowledgeController;
 use App\Http\Controllers\WebhookController;
@@ -14,6 +15,8 @@ Route::post('/webhooks/notifications', [WebhookController::class, 'notification'
 Route::post('/webhooks/{id}', [WebhookController::class, 'receive'])->middleware('throttle:300,1');
 Route::prefix('api/v1')->group(function () {
     Route::get('csrf', fn () => ['token' => csrf_token()]);
+    // Public website demo with a real model; rate-limited per IP, per session and by a global daily budget.
+    Route::post('demo/messages', [DemoController::class, 'message'])->middleware('throttle:demo');
     Route::middleware('throttle:auth')->group(function () {
         Route::post('register', [AuthController::class, 'register']);
         Route::post('login', [AuthController::class, 'login']);
