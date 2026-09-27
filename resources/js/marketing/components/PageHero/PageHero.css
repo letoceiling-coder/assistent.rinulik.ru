@@ -1,5 +1,11 @@
 .mk-page-hero {
+  position: relative;
+  isolation: isolate;
   padding-block: var(--space-40) var(--space-56);
+  /* Same light-field language as the homepage hero, quieter. */
+  background:
+    radial-gradient(45% 70% at 90% 30%, rgba(174, 203, 247, 0.35), transparent 70%),
+    radial-gradient(40% 60% at 5% 100%, rgba(245, 199, 177, 0.3), transparent 70%);
 }
 
 @media (min-width: 1024px) {
@@ -15,8 +21,9 @@
 }
 
 @media (min-width: 1024px) {
+  /* Copy leads: long channel H1s keep to ~3 lines; the product visual stays a solid second column. */
   .mk-page-hero--split .mk-page-hero__grid {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
     gap: var(--space-56);
   }
 }
@@ -69,6 +76,11 @@
 
 .mk-page-hero__visual {
   min-width: 0;
+}
+
+.mk-page-hero__visual > .mk-window {
+  border-radius: var(--radius-xl);
+  box-shadow: var(--depth-3);
 }
 
 /* Status notice used on channel pages (always states the status in words). */

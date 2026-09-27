@@ -254,7 +254,10 @@ html:has(.mk-drawer[open]) {
   margin: 0;
   padding: 0;
   border: 0;
-  background: var(--color-bg-page);
+  background:
+    radial-gradient(70% 40% at 100% 0%, rgba(174, 203, 247, 0.35), transparent 70%),
+    radial-gradient(70% 40% at 0% 100%, rgba(245, 199, 177, 0.35), transparent 70%),
+    var(--color-bg-page);
   color: var(--color-text-primary);
   box-shadow: var(--shadow-soft);
   transform: translateX(100%);

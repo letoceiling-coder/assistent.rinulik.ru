@@ -29,3 +29,29 @@
   html[data-reveal-ready] [data-reveal-group] > [data-reveal]:nth-child(3) { transition-delay: 140ms; }
   html[data-reveal-ready] [data-reveal-group] > [data-reveal]:nth-child(n + 4) { transition-delay: 210ms; }
 }
+
+/* 'draw': signal paths draw themselves along their own axis when revealed (transform only). */
+@media (prefers-reduced-motion: no-preference) {
+  html[data-reveal-ready] [data-reveal='draw'] {
+    transform-origin: left center;
+    transition: transform 900ms var(--ease-enter), opacity 300ms var(--ease-enter);
+  }
+
+  html[data-reveal-ready] [data-reveal='draw']:not([data-revealed]) {
+    opacity: 1;
+    transform: scaleX(0);
+  }
+
+  /* Vertical paths (journey and handoff on narrow layouts) draw top to bottom. */
+  @media (max-width: 1023px) {
+    html[data-reveal-ready] .mk-journey__line[data-reveal='draw'],
+    html[data-reveal-ready] .mk-handoff__line[data-reveal='draw'] {
+      transform-origin: center top;
+    }
+
+    html[data-reveal-ready] .mk-journey__line[data-reveal='draw']:not([data-revealed]),
+    html[data-reveal-ready] .mk-handoff__line[data-reveal='draw']:not([data-revealed]) {
+      transform: scaleY(0);
+    }
+  }
+}

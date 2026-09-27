@@ -150,6 +150,17 @@
   align-items: center;
 }
 
+/* In two-column splits the headline scales with its column, so H2s stay at 2–3 lines instead of 4. */
+.mk-split > * {
+  min-width: 0;
+  container-type: inline-size;
+}
+
+.mk-split .mk-section-header .mk-h2 {
+  font-size: min(var(--font-size-h2), 8.4cqi);
+  max-width: none;
+}
+
 @media (min-width: 1024px) {
   .mk-split {
     grid-template-columns: minmax(0, 4fr) minmax(0, 5fr);
@@ -210,4 +221,13 @@
   border-left: 2px solid var(--color-text-primary);
   border-bottom: 2px solid var(--color-text-primary);
   transform: rotate(-45deg);
+}
+
+/* Phones: no content text under 14px (labels/pills stay compact UI metadata). */
+@media (max-width: 767px) {
+  .mk-row__meta,
+  .mk-demo .mk-demo__meta,
+  .mk-window__caption {
+    font-size: var(--font-size-ui-sm);
+  }
 }

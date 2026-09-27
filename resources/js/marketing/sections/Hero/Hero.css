@@ -222,6 +222,33 @@
   }
 }
 
+/* Tablet (820–1119, e.g. 834 portrait and 1024 landscape): a real two-column composition, not a stretched phone.
+   The H1 scales with its column (cqi cap) so «Клиент написал.» still holds one line. */
+@media (min-width: 820px) and (max-width: 1119px) {
+  .mk-hero__grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: center;
+    gap: var(--space-32);
+  }
+
+  .mk-hero__visual {
+    max-width: none;
+  }
+
+  .mk-hero__actions .mk-button {
+    flex: 1 1 100%;
+  }
+
+  /* In a half-width stage the source row would wrap; the channels are already named in the copy. */
+  .mk-hero__sources {
+    display: none;
+  }
+
+  .mk-hero__stage {
+    margin-block-start: var(--space-16);
+  }
+}
+
 @media (min-width: 768px) {
   .mk-hero {
     padding-block: var(--space-40) calc(var(--space-72) + var(--space-8)); /* 40 / 80 */
@@ -249,7 +276,8 @@
 
   .mk-hero__grid {
     /* ~48 / 52: wide enough for a one-line «Клиент написал.» at 72px and an inline CTA pair from ~1280px. */
-    grid-template-columns: minmax(0, 12fr) minmax(0, 13fr);
+    /* 1120–1279: copy slightly wider so the CTA pair stays on one line; from 1280 the stage leads (12:13). */
+    grid-template-columns: minmax(0, 13fr) minmax(0, 12fr);
     align-items: center;
     gap: var(--space-56);
     min-height: 704px;
@@ -275,7 +303,7 @@
     position: absolute;
     z-index: 3;
     top: 50%;
-    left: calc(-1 * var(--space-72));
+    left: calc(-1 * var(--space-72) - var(--space-12));
     flex-direction: column;
     align-items: flex-start;
     gap: var(--space-12);
@@ -306,7 +334,19 @@
   }
 
   .mk-hero__source:nth-child(odd) {
-    margin-inline-start: var(--space-8);
+    margin-inline-start: var(--space-4);
+  }
+}
+
+@media (min-width: 1280px) {
+  .mk-hero__grid {
+    grid-template-columns: minmax(0, 12fr) minmax(0, 13fr);
+  }
+}
+
+@media (max-width: 767px) {
+  .mk-hero__support {
+    font-size: var(--font-size-ui-sm);
   }
 }
 

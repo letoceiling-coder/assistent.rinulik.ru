@@ -9,9 +9,18 @@
   }
 }
 
+/* 7 cards without an orphan: 3 (channels) + 4 (actions & API) on a 12-column grid. */
 @media (min-width: 1120px) {
   .mk-integrations {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+
+  .mk-integrations > * {
+    grid-column: span 3;
+  }
+
+  .mk-integrations > :nth-child(-n + 3) {
+    grid-column: span 4;
   }
 }
 
@@ -89,4 +98,10 @@
   border: 1px dashed var(--color-border-strong);
   border-radius: var(--radius-sm);
   font-weight: var(--font-weight-nav);
+}
+
+@media (min-width: 768px) and (max-width: 1119px) {
+  .mk-integrations > :last-child {
+    grid-column: 1 / -1;
+  }
 }

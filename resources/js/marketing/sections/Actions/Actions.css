@@ -6,7 +6,8 @@
   align-items: start;
 }
 
-@media (min-width: 1024px) {
+/* Side-by-side only when the source card can breathe; below, it sits above the actions. */
+@media (min-width: 1280px) {
   .mk-actions__flow {
     grid-template-columns: minmax(0, 3fr) auto minmax(0, 9fr);
     align-items: center;
@@ -33,32 +34,30 @@
   font-size: 0;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1280px) {
   .mk-actions__arrow {
     width: 48px;
     height: 2px;
   }
 }
 
+/* 5 actions without an orphan: 2 wide (available now) + 3 narrow on a 6-column grid. */
 .mk-actions__grid {
   display: grid;
   gap: var(--space-12);
 }
 
-@media (min-width: 560px) {
+@media (min-width: 600px) {
   .mk-actions__grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (min-width: 1280px) {
-  .mk-actions__grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(6, minmax(0, 1fr));
   }
 
-  /* Editorial rhythm: the two available actions lead with more room. */
+  .mk-actions__grid > * {
+    grid-column: span 2;
+  }
+
   .mk-actions__grid > :nth-child(-n + 2) {
-    grid-column: span 1;
+    grid-column: span 3;
   }
 }
 

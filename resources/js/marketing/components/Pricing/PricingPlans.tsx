@@ -1,4 +1,4 @@
-import {useId} from 'react';
+import {useId, useLayoutEffect, useRef, useState} from 'react';
 import {track} from '../../analytics/track';
 import {productLinks} from '../../config/navigation';
 import {limitLabels, planPrice, plans, type BillingPeriod, type Plan, type PlanId} from '../../config/pricing';
@@ -9,15 +9,29 @@ import './Pricing.css';
 /** Monthly / annual switch as a native radio group (keyboard: arrows). */
 export function BillingToggle({value, onChange}: {value: BillingPeriod; onChange: (next: BillingPeriod) => void}) {
   const name = useId();
+  const labels = useRef<Array<HTMLLabelElement | null>>([]);
+  const [pill, setPill] = useState<{x: number; w: number} | null>(null);
+
+  // Shared sliding pill under the selected period (transform/width only).
+  useLayoutEffect(() => {
+    const measure = () => {
+      const el = labels.current[value === 'monthly' ? 0 : 1];
+      if (el) setPill({x: el.offsetLeft, w: el.offsetWidth});
+    };
+    measure();
+    window.addEventListener('resize', measure);
+    return () => window.removeEventListener('resize', measure);
+  }, [value]);
   const options: ReadonlyArray<{id: BillingPeriod; label: string; hint?: string}> = [
     {id: 'monthly', label: 'Помесячно'},
     {id: 'annual', label: 'За год', hint: '2 месяца в подарок'},
   ];
   return (
-    <fieldset className="mk-billing">
+    <fieldset className={cx('mk-billing', pill && 'has-pill')}>
       <legend className="mk-visually-hidden">Период оплаты</legend>
-      {options.map(option => (
-        <label key={option.id} className={cx('mk-billing__option', value === option.id && 'is-selected')}>
+      {pill && <span className="mk-billing__pill" aria-hidden="true" style={{transform: `translateX(${pill.x}px)`, width: pill.w}}/>}
+      {options.map((option, index) => (
+        <label key={option.id} ref={el => { labels.current[index] = el; }} className={cx('mk-billing__option', value === option.id && 'is-selected')}>
           <input
             type="radio"
             name={name}
@@ -51,7 +65,7 @@ function PlanCard({plan, period, compact}: {plan: Plan; period: BillingPeriod; c
       </div>
       <p className="mk-plan__tagline">{plan.tagline}</p>
       <p className="mk-plan__price">
-        <span className="mk-plan__amount">{price.main}</span> {price.unit && <span className="mk-plan__unit">{price.unit}</span>}
+        <span key={price.main} className="mk-plan__amount">{price.main}</span> {price.unit && <span className="mk-plan__unit">{price.unit}</span>}
       </p>
       <p className="mk-plan__note">{price.note}</p>
       <ButtonLink

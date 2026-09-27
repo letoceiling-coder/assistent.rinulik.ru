@@ -1,5 +1,25 @@
 .mk-demo-page {
   padding-block: var(--space-40) var(--space-72);
+  background: var(--atmo-mixed);
+}
+
+.mk-demo-page__stage {
+  padding: var(--space-8);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-stage);
+  background: var(--gradient-product);
+  box-shadow: var(--glass-highlight), var(--depth-2);
+}
+
+@media (min-width: 768px) {
+  .mk-demo-page__stage {
+    padding: var(--space-20);
+  }
+}
+
+.mk-demo-page__stage .mk-demo {
+  border-radius: var(--radius-lg);
+  box-shadow: var(--depth-3);
 }
 
 .mk-demo-page__inner {

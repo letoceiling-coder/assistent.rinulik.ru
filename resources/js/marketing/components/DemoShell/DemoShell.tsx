@@ -20,7 +20,7 @@ export function DemoShell({id, frameRef, label, badge, messages, live, typing, a
   children: ReactNode;
 }) {
   return (
-    <section ref={frameRef} id={id} className="mk-demo" data-attention={attention || undefined} tabIndex={-1} aria-label={label}>
+    <section ref={frameRef} id={id} className="mk-demo" data-live={live || undefined} data-attention={attention || undefined} tabIndex={-1} aria-label={label}>
       <div className="mk-demo__bar">
         <div className="mk-demo__identity">
           <span className="mk-demo__name">Scrooty</span>

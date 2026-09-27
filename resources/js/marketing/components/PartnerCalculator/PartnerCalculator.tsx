@@ -1,4 +1,4 @@
-import {useId, useState} from 'react';
+import {useEffect, useId, useRef, useState} from 'react';
 import {partnerLevels, percent, type PartnerLevelId} from '../../config/partners';
 import {formatRub, plans} from '../../config/pricing';
 import './PartnerCalculator.css';
@@ -19,6 +19,7 @@ export function PartnerCalculator({id}: {id?: string}) {
   const level = partnerLevels.find(l => l.id === levelId)!;
   const safeClients = Number.isFinite(clients) ? Math.min(Math.max(clients, 0), 1000) : 0;
   const monthly = Math.round(safeClients * (plan.monthly ?? 0) * level.rate);
+  const shown = useCountUp(monthly);
 
   return (
     <div id={id} className="mk-calc">
@@ -50,9 +51,11 @@ export function PartnerCalculator({id}: {id?: string}) {
         </label>
       </div>
 
-      <div className="mk-calc__result" aria-live="polite">
+      <div className="mk-calc__result">
         <p className="mk-calc__label">Recurring-комиссия в месяц</p>
-        <p className="mk-calc__value">{formatRub(monthly)}</p>
+        {/* Visible number counts up; assistive tech gets only the final value, once. */}
+        <p className="mk-calc__value" aria-hidden="true">{formatRub(shown)}</p>
+        <p className="mk-visually-hidden" aria-live="polite">{formatRub(monthly)} в месяц</p>
         <p className="mk-calc__formula">
           {safeClients} × {formatRub(plan.monthly!)} × {percent(level.rate)} = {formatRub(monthly)}
         </p>
@@ -60,4 +63,32 @@ export function PartnerCalculator({id}: {id?: string}) {
       </div>
     </div>
   );
+}
+
+/** Short count-up towards the target (≈400ms, rAF). Instant with reduced motion. */
+function useCountUp(target: number): number {
+  const [value, setValue] = useState(target);
+  const from = useRef(target);
+  useEffect(() => {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const start = from.current;
+    if (reduce || start === target) {
+      from.current = target;
+      setValue(target);
+      return;
+    }
+    const t0 = performance.now();
+    let frame = 0;
+    const tick = (now: number) => {
+      const p = Math.min(1, (now - t0) / 400);
+      const eased = 1 - Math.pow(1 - p, 3);
+      const next = Math.round(start + (target - start) * eased);
+      from.current = next;
+      setValue(next);
+      if (p < 1) frame = requestAnimationFrame(tick);
+    };
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
+  }, [target]);
+  return value;
 }

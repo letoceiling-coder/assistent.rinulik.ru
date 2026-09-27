@@ -31,9 +31,9 @@ export function Handoff() {
         </figure>
 
         <div className="mk-handoff__connector">
-          <span className="mk-signal-line mk-handoff__line" aria-hidden="true"/>
+          <span className="mk-signal-line mk-handoff__line" aria-hidden="true" data-reveal="draw"/>
           <span className="mk-glass mk-handoff__pill">Условие: запрос сметы</span>
-          <span className="mk-signal-line mk-handoff__line" aria-hidden="true"/>
+          <span className="mk-signal-line mk-handoff__line" aria-hidden="true" data-reveal="draw"/>
         </div>
 
         <article className="mk-window mk-handoff__summary" aria-label="Карточка для менеджера" data-reveal="scale-soft">

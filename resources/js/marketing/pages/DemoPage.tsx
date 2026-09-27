@@ -26,7 +26,9 @@ export function DemoPage() {
           <h1 id="page-title" className="mk-display-l">Поговорите со Scrooty.</h1>
           <p className="mk-body-l mk-demo-page__body">Опишите свой бизнес или задайте вопрос о продукте. Первые четыре сообщения доступны без регистрации.</p>
         </div>
-        <LiveDemo id="demo"/>
+        <div className="mk-demo-page__stage">
+          <LiveDemo id="demo"/>
+        </div>
       </Container>
     </section>
   );
