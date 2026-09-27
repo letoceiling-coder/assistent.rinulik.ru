@@ -2,11 +2,11 @@
 // message count and conversation. Nothing leaves the browser. Storage failures degrade to memory.
 import type {DemoSession} from './types';
 
-const KEY = 'scrooty.demo.v1';
+const KEY = 'scrooty.demo.v2';
 
 export function createSession(): DemoSession {
   const id = typeof crypto !== 'undefined' && 'randomUUID' in crypto ? crypto.randomUUID() : String(Date.now());
-  return {id, messages: [], sentCount: 0, responseCount: 0, softGateDismissed: false, hardGateReached: false, lastScenario: null};
+  return {id, messages: [], sentCount: 0, responseCount: 0, softGateDismissed: false, hardGateReached: false, lastScenario: null, serverRemaining: null};
 }
 
 export function loadSession(): DemoSession {

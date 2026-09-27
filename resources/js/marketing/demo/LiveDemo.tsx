@@ -11,7 +11,7 @@ import {demoErrorCopy, demoScenarios, sampleConversation} from './sample';
 
 const ATTENTION_MS = 1200;
 
-/** Gate copy: titles/buttons are spec §21; the hard-gate body is adapted — demo context is not transferred yet. */
+/** Gate copy: titles/buttons are spec §21; the hard-gate body is adapted — the demo dialog is not transferred to the account. */
 const gateCopy = {
   soft: {
     title: 'Похоже, Scrooty уже понял ваш сценарий.',
@@ -28,7 +28,7 @@ const gateCopy = {
 } as const;
 
 /**
- * The interactive demo surface (scenario sandbox until the anonymous demo API exists).
+ * The interactive demo surface, answered live by the rate-limited demo endpoint (POST /api/v1/demo/messages).
  * Rendered once per page; registers itself as the page's demo surface for CTAs.
  */
 export function LiveDemo({id}: {id?: string}) {
@@ -113,11 +113,13 @@ export function LiveDemo({id}: {id?: string}) {
         </div>
       </div>
     );
-  } else if (view === 'daily-limit' || view === 'session-expired' || view === 'network-error') {
+  } else if (view === 'daily-limit' || view === 'session-expired' || view === 'network-error' || view === 'rate-limited' || view === 'unavailable') {
     footer = (
       <div className="mk-demo__alert" role="alert">
         <span>{demoErrorCopy[view]}</span>
-        {view === 'network-error' && <Button variant="secondary" size="sm" onClick={demo.retry}>Повторить</Button>}
+        {(view === 'network-error' || view === 'rate-limited' || view === 'unavailable') && (
+          <Button variant="secondary" size="sm" onClick={demo.retry}>Повторить</Button>
+        )}
         {view === 'session-expired' && <Button variant="secondary" size="sm" onClick={demo.restart}>Начать заново</Button>}
         {view === 'daily-limit' && (
           <ButtonLink variant="primary" size="sm" href={productLinks.register} onClick={() => trackSignup('demo_daily_limit')}>
@@ -149,12 +151,15 @@ export function LiveDemo({id}: {id?: string}) {
           onSubmit={demo.send}
           sendDisabled={busy}
           label="Сообщение для Scrooty"
+          maxLength={800}
           placeholder="Опишите свой бизнес или задайте вопрос"
         />
         <p className="mk-demo__meta">
           {started
-            ? `Демо на готовых сценариях · без регистрации осталось сообщений: ${remaining}`
-            : 'Демо на готовых сценариях · 4 сообщения без регистрации'}
+            ? `Демо-версия · отвечает нейросеть Scrooty · без регистрации осталось сообщений: ${remaining}`
+            : 'Демо-версия · отвечает нейросеть Scrooty · 4 сообщения без регистрации'}
+          <br/>
+          <span className="mk-demo__note">Демо без вашей базы знаний: ответы общие, факты о вашем бизнесе Scrooty уточнит.</span>
         </p>
       </>
     );

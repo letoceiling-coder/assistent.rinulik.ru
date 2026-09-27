@@ -213,3 +213,9 @@
     max-width: 88%;
   }
 }
+
+.mk-demo__note {
+  display: inline-block;
+  margin-block-start: 2px;
+  color: var(--color-text-secondary);
+}

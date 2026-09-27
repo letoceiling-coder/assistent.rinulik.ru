@@ -3,12 +3,12 @@
 Frontend-only work cannot close these items. Each entry: CURRENT / DESIRED CONTRACT / WHY / FRONTEND FALLBACK.
 Backend was not changed on the `feat/scrooty-marketing-frontend-v1` branch.
 
-## 1. Anonymous demo API
+## 1. Anonymous demo API — DONE
 
-- **CURRENT:** every conversation endpoint requires auth (`/api/v1/assistants/{id}/test`, `/api/v1/conversations/*`). Replies are produced asynchronously by a queue worker and polled every 3 s.
-- **DESIRED CONTRACT:** `POST /api/v1/demo/sessions` → `{session_id, expires_at, remaining}`; `POST /api/v1/demo/sessions/{id}/messages` `{text, scenario?, request_id}` → `{type: "answer", text} | {type: "refusal"} | {type: "daily_limit"} | {type: "session_expired"}` (sync or with a short poll). Server-side limit of 4 messages per anonymous session and a daily per-IP/device limit; throttling; no PII logging.
-- **WHY:** spec demo = real product answers without registration.
-- **FRONTEND FALLBACK (shipped):** `resources/js/marketing/demo/transport.ts` → `sandboxTransport` answers from prepared scenario texts (no network). UI labels it «Демо на готовых сценариях», answers carry «Пример ответа», unmatched questions get an honest note. A backend adapter only needs to implement `DemoTransport.send()`; the state machine (`useDemoSession`) and gates already handle `refusal`, `daily-limit`, `session-expired` and network errors.
+- `POST /api/v1/demo/messages` (`app/Http/Controllers/DemoController.php`), public, CSRF-protected. Request `{messages: [{role: user|assistant, content}]}` (1–10, user ≤ 800 chars, last = user; `system` never accepted). Response `{reply, remaining}`; errors carry `reason`: 429 `rate_limited` / `daily_limit`, 403 `demo_limit`, 422 validation, 503 `unavailable`.
+- Not billed to wallets, not stored in `ai_usage`, message text never logged (`OpenRouterGateway::demoChat`, `conversation` model assignment + fallback). System prompt: `app/Services/DemoPrompt.php`.
+- Limits (`config/assistent.php` → `demo`, env): `DEMO_SESSION_LIMIT` 4 per session, `DEMO_PER_MINUTE_IP` 6, `DEMO_PER_DAY_IP` 30, `DEMO_DAILY_LIMIT` 1000 global/day, `DEMO_MAX_TOKENS` 400.
+- Frontend: `resources/js/marketing/demo/transport.ts` (`liveTransport`).
 
 ## 2. Demo context → registration
 

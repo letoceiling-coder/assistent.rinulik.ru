@@ -18,11 +18,9 @@ export type DemoScenario = {
   label: string;
   /** Text a suggestion chip puts into the input. Never sent automatically. */
   samplePrompt: string;
-  /** Prepared answer used by the scenario sandbox. Not an AI generation. */
-  sampleAnswer: string;
 };
 
-export type DemoErrorReason = 'network-error' | 'safety-refusal' | 'session-expired' | 'daily-limit';
+export type DemoErrorReason = 'network-error' | 'rate-limited' | 'unavailable' | 'session-expired' | 'daily-limit';
 
 /** Async request lifecycle. Gates are derived from the session counters, not stored here. */
 export type DemoRequestState =
@@ -34,7 +32,7 @@ export type DemoRequestState =
 /** What is needed to (re)request an answer for a visitor message already in the conversation. */
 export type RetryPayload = {text: string; scenario: DemoScenarioId | null; messageNumber: number};
 
-/** Persisted per browser tab (sessionStorage). Contains only what the visitor typed in this tab. */
+/** Persisted per browser tab (sessionStorage): the visible conversation and UI counters. The server keeps the real limit. */
 export type DemoSession = {
   id: string;
   messages: ChatMessageData[];
@@ -42,7 +40,9 @@ export type DemoSession = {
   responseCount: number;
   softGateDismissed: boolean;
   hardGateReached: boolean;
-  lastScenario: DemoScenarioId | 'unmatched' | null;
+  lastScenario: DemoScenarioId | null;
+  /** Last `remaining` reported by the server (source of truth); null before the first answer. */
+  serverRemaining: number | null;
 };
 
 /** Everything the UI needs to know, derived from session + request + draft. */
@@ -56,10 +56,11 @@ export type DemoView =
   | 'hard-gate'
   | DemoErrorReason;
 
-/** Result contract a demo transport returns. A real backend adapter implements the same shape. */
+/** Result contract of the demo transport (maps the endpoint's HTTP outcomes). */
 export type DemoReply =
-  | {type: 'answer'; text: string; scenario: DemoScenarioId; source: 'sample'}
-  | {type: 'unmatched'}
-  | {type: 'refusal'}
+  | {type: 'answer'; text: string; remaining: number}
+  | {type: 'demo-limit'}
+  | {type: 'rate-limited'}
   | {type: 'daily-limit'}
-  | {type: 'session-expired'};
+  | {type: 'session-expired'}
+  | {type: 'unavailable'};

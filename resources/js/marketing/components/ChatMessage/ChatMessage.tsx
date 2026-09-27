@@ -9,7 +9,7 @@ const authorLabel: Record<ChatAuthor, string> = {
 
 /**
  * One chat bubble. Authors differ by alignment, visible label and surface — not by colour alone.
- * `note` is a visible marker such as «Пример ответа» for prepared (non-generated) answers.
+ * `note` is an optional small visible marker next to the author label.
  * Renders an <li>: place inside an <ol>/<ul> conversation list.
  */
 export function ChatMessage({author, text, note, authorName}: {author: ChatAuthor; text: string; note?: string; authorName?: string}) {

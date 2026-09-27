@@ -5,7 +5,7 @@ import './ChatInput.css';
  * Accessible chat composer (controlled). Sending is enabled only when the owner passes `onSubmit`
  * and does not mark it `sendDisabled` (e.g. while an answer is pending).
  */
-export function ChatInput({inputRef, value, onChange, onSubmit, sendDisabled = false, label, placeholder}: {
+export function ChatInput({inputRef, value, onChange, onSubmit, sendDisabled = false, label, placeholder, maxLength}: {
   inputRef?: Ref<HTMLTextAreaElement>;
   value: string;
   onChange: (value: string) => void;
@@ -13,6 +13,7 @@ export function ChatInput({inputRef, value, onChange, onSubmit, sendDisabled = f
   sendDisabled?: boolean;
   label: string;
   placeholder?: string;
+  maxLength?: number;
 }) {
   const id = useId();
   const canSend = Boolean(onSubmit) && !sendDisabled && value.trim().length > 0;
@@ -40,6 +41,7 @@ export function ChatInput({inputRef, value, onChange, onSubmit, sendDisabled = f
         rows={1}
         value={value}
         placeholder={placeholder}
+        maxLength={maxLength}
         onChange={event => onChange(event.target.value)}
         onKeyDown={handleKeyDown}
       />
